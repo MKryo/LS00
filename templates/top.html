@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <title>調査に関するページ</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="{% static '/causalexp/css/css.css' %}">
+    <script>
+        function check_agreement1() {
+            if (document.getElementById('agreement').checked) {
+                document.getElementById('need_agree').style.display = "none";
+                document.getElementById('when_agreeing').style.display = "inline-grid";
+            } else {
+                document.getElementById('need_agree').style.display = "inline-grid";
+                document.getElementById('when_agreeing').style.display = "none";
+            }
+        }
+        function check_agreement2() {
+            let checks = document.getElementsByClassName("checks");
+            let count = 0;
+            for (let i = 0; i < checks.length; i++) {
+                if (checks[i].checked) count++;
+            }
+            if (count == checks.length) {
+                document.getElementById("button").removeAttribute("disabled");
+            } else {
+                document.getElementById("button").setAttribute("disabled", true);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="examine_header">注意</div>
+    <div style="display: inline-grid;">
+        <p>本調査で得られたデータは、個人を特定できない統計データとして学術研究に使用させていただきます。</p>
+        <p>皆様の回答はすべて暗号化し、サーバーに保存されます。</p>
+        <p>また、個人のデータを取り出して分析が行われることもありません。</p>
+        <p>調査にご協力いただける方は、下のボタンから実験ページに遷移し、実験を行ってください.</p>
+        <p>送信が完了すると、8桁の数字列が表示されます。コピーしてクラウドワークスの該当欄に記入してください.</p>
+        <p>回答を確認次第確定処理をいたします。</p>
+    </div>
+    <br>
+    <div>以上に同意していただける場合は以下のチェックボックスをクリックしてください。</div>
+    <div id="need_agree" style="color:red; display:inline-grid;">
+        <p>回答を行う場合は同意が必要です。</p>
+        <p>同意する場合はこちらのチェックボックスを選択して下さい。</p>
+        <p>ご同意頂けない場合はこのまま画面を閉じてください。</p>
+        <p>その場合、報酬はお支払い致しませんのでご了承下さい。</p>
+    </div>
+    <br>
+    <input type="checkbox" id="agreement" onclick="check_agreement1()" />
+    <label for="agreement">同意します</label>
+    <br>
+
+    <p>
+    <div id="when_agreeing" style="margin:auto; display:none;">
+        <p>ありがとうございます。</p>
+        <p>以下のストーリーをお読みいただき、回答ページに進んで下さい。</p>
+        <p>それぞれの項目を読んだら左側のチェックボックスをチェックしてください。</p>
+        <div id="scenario_description" style="margin:auto; text-align: left;">
+            <form action="cgi-bin/abc.cgi" method="post">
+                <p>
+                    <input class="checks" type="checkbox" id="checkbox1" style="transform:scale(1.5)"
+                        onclick="check_agreement2()" />
+                    <label for="checkbox1">あなたは魚卵を販売している業者で、とある種類の魚を養殖していますが、現状の魚卵の生産量に不満を覚えています。</label>
+                </p>
+                <p>
+                    <input class="checks" type="checkbox" id="checkbox2" style="transform:scale(1.5)"
+                        onclick="check_agreement2()" />
+                    <label
+                        for="checkbox2">現在国内では2つの会社のみがこの魚向けの餌を生産しており、それは黒水産株式会社と白水産株式会社です。したがってあなたを含む国内の養殖業者はそのどちらかの会社が製造した餌を用いることになります。</label>
+                </p>
+                <br>
+                <p>
+                    <input class="checks" type="checkbox" id="checkbox3" style="transform:scale(1.5)"
+                        onclick="check_agreement2()" />
+                    <label
+                        for="checkbox3">あなたは今まで黒水産の餌を使用していましたが、それまで黒水産の餌を用いていた同業者が白水産の餌に変えたところ、魚卵の生産量が上がったという噂を聞きました。しかしその噂に関する具体的な根拠はまだなく、使用する餌を白水産のものに変更するにはお金がかかります。</label>
+                </p>
+                <br>
+                <p>
+                    <input class="checks" type="checkbox" id="checkbox4" style="transform:scale(1.5)"
+                        onclick="check_agreement2()" />
+                    <label for="checkbox4">そのため、あなたは白水産の餌が魚卵の生産量を上げる効果があるかどうかを調査することにしました。</label>
+                </p>
+                <br>
+                <p>
+                    <input class="checks" type="checkbox" id="checkbox5" style="transform:scale(1.5)"
+                        onclick="check_agreement2()" />
+                    <label for="checkbox5">これから、「餌の種類が卵の有無に与える影響の強さ」について、合計6回の質問を繰り返します。よく文章を読んだ上で、直感的に回答してください。</label>
+                </p>
+            </form>
+        </div>
+    </div>
+    </p>
+    <br>
+    <form action="/examine/" style="text-align:center;, display:block;">
+        <input type="submit" id='button' value="回答を開始する" disabled>
+    </form>
+</body>
+
+</html>

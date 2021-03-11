@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>結果送信完了ページ</title>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <h1>ご協力ありがとうございました。</h1>
+    <p>以下のコードを指定した回答欄に入力して下さい。</p>
+    <p>※間違ったコードを入力、または入力が無い場合は報酬をお支払いできません。</p><br> 
+
+    <textarea id="complete_code" readonly></textarea><br>
+    <button id="copy_button">数字をコピーする</button>
+
+    <p>表示に数秒かかる場合があります。</p>
+    <p>長時間待っても現れない場合、URLの末尾にございます「id=」に続く</p>
+    <b>数字列全て</b>
+    <p>をコピーし回答にご利用ください。</p>
+<script type="text/javascript">
+function copy(){
+    document.getElementById('complete_code').select();
+    return document.execCommand("copy");
+}
+
+var text = document.getElementById('complete_code');
+text.readonly = false;
+text.value = window.location.search.split('=')[1];
+text.readonly = true;
+document.querySelector("#copy_button").addEventListener("click", copy);
+</script>
+</body>
+
+</html>

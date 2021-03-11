@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<head>
+    {% load static %}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width">
+    <title>回答ページ</title>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=divice-width, initial-scale=1, user-scalable=no">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="{% static '/causalexp/css/css.css' %}">
+</head>
+
+<body>
+    <!-- write code this section -->
+    <script src="{% static '/causalexp/js/examine.js' %}"></script>
+    <div id="header_area">
+        <!--<div id="examine_header" class="title">認知に関する調査</div>-->
+        <div id="scenario_title" class="title"></div>
+    </div>
+    <div id="preload_image">
+        <p>画像を読み込んでいます。</p>
+        <p>しばらくお待ちください。</p>
+    </div>
+    <div id="description_area" class="area" style="display:none;">
+        <p id="same_sentence" style="display:none">以下の文章は、先に提示されたものと同一で内容に変更はありません。<br>読み飛ばしても支障はありません。<br></p>
+        <p id="scenario_description" style="display: none;"></p><br>
+        <div id="description_area_first" class="area" style="display:none;">
+            <p id="check_sentence" style="display:none;">それぞれの項目を読んだら左側のチェックボックスをチェックし、回答ページに進んでください。<br></p>
+            <div id="scenario_description_first" style="text-align: left;">
+                <form action="cgi-bin/abc.cgi" method="post">
+                    <p>
+                        <input class="checks" type="checkbox" id="checkbox1" style="transform:scale(1.5)"
+                            onclick="check_description()" />
+                        <label for="checkbox1" id="scenario_description1"></label>
+                    </p>
+                    <p>
+                        <input class="checks" type="checkbox" id="checkbox2" style="transform:scale(1.5)"
+                            onclick="check_description()" />
+                        <label for="checkbox2" id="scenario_description2"></label>
+                    </p>
+                    <br>
+                    <p>
+                        <input class="checks" type="checkbox" id="checkbox3" style="transform:scale(1.5)"
+                            onclick="check_description()" />
+                        <label for="checkbox3" id="scenario_description3"></label>
+                    </p>
+                    <br>
+                    <p>
+                        <input class="checks" type="checkbox" id="checkbox4" style="transform:scale(1.5)"
+                            onclick="check_description()" />
+                        <label for="checkbox4" id="scenario_description4"></label>
+                    </p>
+                </form>
+            </div>
+        </div>
+        <button id="start_scenario_button" class="next_button" onclick="to_next_new_sample_page()"
+            disabled>このシナリオを<br>開始する</button>
+    </div>
+    <br>
+    <div id="show_sample_area" class="area" style="display:none">
+        <div id="order"></div>
+        <div id="show_area">
+            <img id="sample_before" class="sample">
+            <img id="sample_arrow" class="arrow" src="{% static '/causalexp/img/yajirushi_kururi_right.png' %}">
+            <img id="sample_after" class="sample">
+        </div>
+        <br>
+        <div id="sample_description">
+            <span id='first_sentence'></span>
+            <span id='last_sentence'></span>
+        </div><br>
+        <button id="next_sample" class="next_button" onclick="to_next_sample()">次の事例へ</button>
+    </div>
+    <br>
+    <div id="estimate_input_area" class="area" style="display:none">
+        <div id="estimate_description"></div><br>
+        <form oninput="estimate.value = Number(estimate_gage.value);">
+            <!--{% csrf_token %}-->
+            <b>
+                <p><output id="estimate">0</output></p>
+            </b>
+            <P><input id="estimate_gage" type="range" min="-0" max="100" step="1" value="0" onchange="check_estimate()">
+            </P>
+
+        </form>
+        <br>
+        <input type="checkbox" id="checkbox" style="transform:scale(1.5)" disabled onclick="check_estimate()" />
+        <label for="checkbox">この数値を答えとして回答します<br></label>
+        <div id="notes">
+            <b>ボタンは1回押していただくだけで結構です。</b>
+            <b>送信に時間がかかる場合がありますので、最低30秒お待ちください。</b>
+        </div>
+        <button id="estimate_next_scenario" class="next_button" style="display:inline-grid" disabled
+            onclick="to_next_test()">次のシナリオへ進む</button>
+    </div>
+</body>
+
+</html>
