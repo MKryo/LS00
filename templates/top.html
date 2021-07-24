@@ -63,22 +63,47 @@
         <div id="scenario_description" style="margin:auto; text-align: left;">
             <form action="cgi-bin/abc.cgi" method="post">
                 <p>
-                    あなたは魚卵を販売している業者で、とある種類の魚を養殖していますが、現状の魚卵の生産量に不満を覚えています。
+                    <input class="checks" type="checkbox" id="checkbox1" style="transform:scale(1.5)"
+                        onclick="check_agreement2()" />
+                    <label for="checkbox1">あなたには「化学物質の投与」と「動物の遺伝子の突然変異」という二つの間の関係を調査している研究者を演じてもらいます。</label>
                 </p>
                 <p>
-                    現在国内では2つの会社のみがこの魚向けの餌を生産しており、それは黒水産株式会社と白水産株式会社です。したがってあなたを含む国内の養殖業者はそのどちらかの会社が製造した餌を用いることになります。
+                    <input class="checks" type="checkbox" id="checkbox2" style="transform:scale(1.5)"
+                        onclick="check_agreement2()" />
+                    <label
+                        for="checkbox2">この調査のため、3種類の動物実験が行われました。以下ではその記録を見ていくことにします。
+                        <ul>
+                            <li>一つ目の実験では「5-HSという化学物質をマウスに投与したときの遺伝子の変異を調査しました」</li>
+                            <li>二つ目の実験では「PBTAという化学物質をウサギに投与したときの遺伝子の変異を調査しました」</li>
+                            <li>三つ目の実験では「2,3-MEという化学物質をハトに投与したときの遺伝子の変異を調査しました」</li>
+                        </ul>
+                    </label>
                 </p>
                 <br>
                 <p>
-                    あなたは今まで黒水産の餌を使用していましたが、それまで黒水産の餌を用いていた同業者が白水産の餌に変えたところ、魚卵の生産量が上がったという噂を聞きました。しかしその噂に関する具体的な根拠はまだなく、使用する餌を白水産のものに変更するにはお金がかかります。
+                    <input class="checks" type="checkbox" id="checkbox3" style="transform:scale(1.5)"
+                        onclick="check_agreement2()" />
+                    <label
+                        for="checkbox3">
+                        いずれの実験でも化学物質を投与された動物とされなかった動物がいました。化学物質投与後、しばらくしてからそれぞれの動物の遺伝子を調べ、突然変異が起きているかどうかを確認しました。もちろん化学物質が投与されていない動物でも、自然に遺伝子の突然変異が起こることもあります。
+                    </label>
                 </p>
                 <br>
                 <p>
-                    そのため、あなたは白水産の餌が魚卵の生産量を上げる効果があるかどうかを調査することにしました。
+                    <input class="checks" type="checkbox" id="checkbox4" style="transform:scale(1.5)"
+                        onclick="check_agreement2()" />
+                    <label for="checkbox4">各研究にはそれぞれ60匹の動物を使用したため、合計で180匹の実験記録が得られました。これからその実験記録が一つずつ提示されるので、動物の遺伝子が突然変異するか否かを予測してください。</label>
                 </p>
                 <br>
                 <p>
-                    これから、「餌の種類が卵の有無に与える影響の強さ」について、合計6回の質問を繰り返します。よく文章を読んだ上で、直感的に回答してください。
+                    <input class="checks" type="checkbox" id="checkbox5" style="transform:scale(1.5)"
+                        onclick="check_agreement2()" />
+                    <label for="checkbox5">その後すぐに、動物の遺伝子に実際に変異が起こったかどうかのフィードバックが与えられます。あなたには、このフィードバックを使って「動物に化学物質を投与することが、遺伝子の突然変異を引き起こしているかどうか」について判断してもらいます。</label>
+                </p>
+                <p>
+                    <input class="checks" type="checkbox" id="checkbox6" style="transform:scale(1.5)"
+                        onclick="check_agreement2()" />
+                    <label for="checkbox6">最初は憶測するしかありませんが、最後にはエキスパートになっているでしょう。</label>
                 </p>
             </form>
         </div>
