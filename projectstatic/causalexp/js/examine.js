@@ -188,9 +188,9 @@ function drow_estimate() {
     document.getElementById('estimate').innerHTML = 50;
     document.getElementById('checkbox').checked = false;
 
-    document.getElementById('estimate_description').innerHTML = '<p>' + test_order['result'] + 'と思いますか。</p><br>' + 
-                                                                '<p>0: 魚卵生産量には全く関係がない</p><br>' + 
-                                                                '<p>100: 確実に生産量を向上させる効果がある </p><br>' +
+    document.getElementById('estimate_description').innerHTML = '<p>' + test_order['result'] + 'と思いますか？</p><br>' + 
+                                                                '<p>0: 5-HSの投与は遺伝子の変異を起こさない</p><br>' + 
+                                                                '<p>100: 5-HSの投与は遺伝子の変異を確実に引き起こす </p><br>' +
                                                                 '<p>として、0から100の値で<b>直感的に</b>回答してください。</p><br>'
 
     if (current_test_order >= Object.keys(test_order['samples']).length - 1) {

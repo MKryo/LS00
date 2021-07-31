@@ -7,17 +7,17 @@
         "実験中のメモなどはお控えください。"
     ],
     "images": {
-        "p": "static/causalexp/img/white_feed.jpg",
-        "notp": "static/causalexp/img/black_feed.jpg",
-        "q": "static/causalexp/img/e.jpg",
-        "notq": "static/causalexp/img/not-e.jpg",
+        "p": "static/causalexp/img/mouse_blue.png",
+        "notp": "static/causalexp/img/mouse_blue_kinshi.png",
+        "q": "static/causalexp/img/mouse_mutation.png",
+        "notq": "static/causalexp/img/mouse_unmutation.png",
         "u": "static/causalexp/img/kinshi.png"
     },
     "sentences": {
-        "a": "白水産の餌を与えたグループは、平均以上の割合で卵を持っていた",
-        "b": "白水産の餌を与えたグループは、平均以下の割合でしか卵を持ってなかった",
-        "c": "黒水産の餌を与えたグループは、平均以上の割合で卵を持っていた",
-        "d": "黒水産の餌を与えたグループは、平均以下の割合でしか卵を持ってなかった",
+        "a": "マウスに5-HSを投与した、遺伝子が突然変異した",
+        "b": "マウスに5-HSを投与した、遺伝子が突然変異しなかった",
+        "c": "マウスに5-HSを投与しなかった、遺伝子が突然変異した",
+        "d": "マウスに5-HSを投与しなかった、遺伝子が突然変異しなかった",
         "e": "",
         "f": "",
         "g": "",

@@ -7,17 +7,17 @@
         "注意深く観察した上で、白水産の餌を与えたことが魚卵の生産量にどのような影響を及ぼすか、直感的に回答してください。"
     ],
     "images": {
-        "p": "static/causalexp/img/suppliment.jpg",
-        "notp": "static/causalexp/img/kinshi.jpg",
-        "q": "static/causalexp/img/e.jpg",
-        "notq": "static/causalexp/img/not-e.jpg",
+        "p": "static/causalexp/img/mouse_blue.png",
+        "notp": "static/causalexp/img/mouse_blue_kinshi.png",
+        "q": "static/causalexp/img/mouse_mutation.png",
+        "notq": "static/causalexp/img/mouse_unmutation.png",
         "u": "static/causalexp/img/kinshi.png"
     },
     "sentences": {
-        "a": "サプリメントを与えた魚は、水揚げ時卵を持っていた",
-        "b": "サプリメントを与えた魚は、水揚げ時卵を持っていなかった",
-        "c": "サプリメントを与えなかった魚は、水揚げ時卵を持っていた",
-        "d": "サプリメントを与えなかった魚は、水揚げ時卵を持っていなかった",
+        "a": "マウスに5-HSを投与した、遺伝子が突然変異した",
+        "b": "マウスに5-HSを投与した、遺伝子が突然変異しなかった",
+        "c": "マウスに5-HSを投与しなかった、遺伝子が突然変異した",
+        "d": "マウスに5-HSを投与しなかった、遺伝子が突然変異しなかった",
         "e": "",
         "f": "",
         "g": "",

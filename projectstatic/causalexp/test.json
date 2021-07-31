@@ -7,10 +7,10 @@
         "注意深く観察した上で、白水産の餌を与えたことが魚卵の生産量にどのような影響を及ぼすか、直感的に回答してください。"
     ],
     "images": {
-        "p": "static/causalexp/img/white_feed.jpg",
-        "notp": "static/causalexp/img/black_feed.jpg",
-        "q": "static/causalexp/img/e.jpg",
-        "notq": "static/causalexp/img/not-e.jpg",
+        "p": "static/causalexp/img/mouse_blue.png",
+        "notp": "static/causalexp/img/mouse_blue_kinshi.png",
+        "q": "static/causalexp/img/mouse_mutation.png",
+        "notq": "static/causalexp/img/mouse_unmutation.png",
         "u": "static/causalexp/img/kinshi.png"
     },
     "samples": [

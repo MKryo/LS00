@@ -1,14 +1,13 @@
-var file = '../static/causalexp/test_asy.json';
-var warm_up = '../static/causalexp/demo_data_asy.json';
+var file = '../static/causalexp/test_sy.json';
+var warm_up = '../static/causalexp/demo_data_sy.json';
 
 var test_order = [];
-var next_sample = [];
 var current_sample_selection = [];
 var users_answer = [];
 
 image_type = ["p", "notp", "q", "notq", "u"];
-combination = new Array();
-combination = {
+img_combination = new Array();
+img_combination = {
     'a': {'before': 'p', 'after': 'q'},
     'b': {'before': 'p', 'after': 'notq'},
     'c': {'before': 'notp', 'after': 'q'},
@@ -23,8 +22,7 @@ combination = {
 var flag = 0; // シナリオの初回表示判定に使用
 var current_test_order = 0; //何問目か
 var current_test_page = 0; // 何事例目か
-var sample_sum = 0;
-var sum = 0;
+var sample_num = 0; // 現在の設問の事例の総数
 var rand_id = 0;
 var start_time = getNow();
 
@@ -37,9 +35,8 @@ window.onload = function() {
     test_order = read_json(file);
 
     test_order['samples'] = shuffle(test_order['samples']);
-    test_order['samples'].unshift(warm_up['samples']['0']);
+    test_order['samples'].unshift(warm_up['samples'][0]);
     users_answer = Array((Object.keys(test_order['samples']).length) * 3);
-    // console.log(test_order);
 
     getImages();
 
@@ -130,42 +127,33 @@ function check_description() {
 function to_next_new_sample_page() {
     clear_page();
 
-    sample_sum = 0;
+    var frequency_num = 0;
+
+    sample_num = 0;
     current_test_page = 0;
+    current_sample_selection = [];
 
     document.getElementById('show_sample_area').style.display = "inline";
 
     // 現在の設問の事例の総数を取得
     Object.keys(test_order['samples'][current_test_order]['frequency']).forEach(function(elm) {
-        sample_sum += test_order['samples'][current_test_order]['frequency'][elm];
-    });
-
-    // 事例のシャッフル
-    next_sample = select_random_sample();
-    // console.log(next_sample);
-
-    to_next_sample();
-}
-
-// 事例のシャッフルを行う
-function select_random_sample() {
-    current_sample_selection = [];
-    var frequency_num = 0;
-
-    Object.keys(test_order['samples'][current_test_order]['frequency']).forEach(function(elm) {
-        if (test_order['samples'][current_test_order]['frequency'][elm] > 0) { // 事例が存在する場合
+        if (test_order['samples'][current_test_order]['frequency'][elm] > 0) {
+            sample_num += test_order['samples'][current_test_order]['frequency'][elm];
             frequency_num = test_order['samples'][current_test_order]['frequency'][elm];
-            for (let i = 0 ; i < frequency_num ; i++) { // 事例数分
+            for (let i = 0 ; i < frequency_num ; i++) {
                 current_sample_selection.push(elm);
             }
         }
     });
-    return shuffle(current_sample_selection);
+
+    current_sample_selection = shuffle(current_sample_selection);
+
+    to_next_sample();
 }
 
 // 次の事例があるか確認し、存在しない場合は推定画面へ遷移
 function to_next_sample() {
-    if (current_test_page >= sample_sum) {
+    if (current_test_page >= sample_num) {
         alert('終了しました。次に、回答をしてください。');
         drow_estimate();
         return;
@@ -173,18 +161,15 @@ function to_next_sample() {
     select_next_sample();
 }
 
-// 配列の先頭要素をキーとして事例を表示していく
 function select_next_sample() {
-    var sample = next_sample[0];
+    var sample = current_sample_selection[0];
     var desc = test_order['sentences'][sample];
     desc = desc.split('、');
-    // console.log(sample);
-    // console.log(desc);
 
-    next_sample.shift(); // 配列の先頭要素を削除
+    current_sample_selection.shift(); // 配列の先頭要素を削除
 
-    document.getElementById('sample_before').src = `../${test_order['images'][combination[sample]['before']]}`;
-    document.getElementById('sample_after').src = `../${test_order['images'][combination[sample]['after']]}`;
+    document.getElementById('sample_before').src = `../${test_order['images'][img_combination[sample]['before']]}`;
+    document.getElementById('sample_after').src = `../${test_order['images'][img_combination[sample]['after']]}`;
 
     document.getElementById('order').innerHTML = '設問' + (current_test_order + 1) + ' - ' + (current_test_page + 1) + '件目'
     document.getElementById('first_sentence').innerHTML = desc[0] + '、<br>';
@@ -203,8 +188,8 @@ function drow_estimate() {
     document.getElementById('estimate').innerHTML = 50;
     document.getElementById('checkbox').checked = false;
 
-    document.getElementById('estimate_description').innerHTML = '<p>' + test_order['result'] + 'と思いますか。</p><br>' + 
-                                                                '<p>0: 魚卵生産量には全く関係がない</p><br>' + 
+    document.getElementById('estimate_description').innerHTML = '<p>' + test_order['result'] + 'と思いま</p><br>' + 
+                                                                '<p>0: 化学物質の投与は全く関係がない</p><br>' + 
                                                                 '<p>100: 確実に生産量を向上させる効果がある </p><br>' +
                                                                 '<p>として、0から100の値で<b>直感的に</b>回答してください。</p><br>'
 
@@ -214,15 +199,20 @@ function drow_estimate() {
     }
 }
 
+// 推定画面のチェックが入ってるか確認する
+// ゲージ操作時にチェックボックスがアクティブ化する処理もまとめてしまったので気になるようなら変更してください
 function check_estimate() {
     if (document.getElementById('checkbox').checked) {
         document.getElementById('estimate_next_scenario').removeAttribute("disabled");
     } else {
         document.getElementById('estimate_next_scenario').setAttribute("disabled", true);
     }
+
     document.getElementById('checkbox').removeAttribute("disabled");
 }
 
+// 記録用配列に結果を保存
+// 次のテストケースがある場合はシナリオ画面へ遷移
 function to_next_test() {
     // 元の並び順で何番目か取得
     var order = test_order['samples'][current_test_order]['no'];
@@ -233,6 +223,8 @@ function to_next_test() {
 
     if (current_test_order >= Object.keys(test_order['samples']).length - 1) {
         document.getElementById('estimate_next_scenario').setAttribute("disabled", true);
+        document.getElementById('estimate_gage').setAttribute("disabled", true);
+        document.getElementById('checkbox').setAttribute("disabled", true);
         document.getElementById('estimate_next_scenario').innerHTML = '送信中です...';
         save_users_answer();
     } else {
@@ -240,6 +232,7 @@ function to_next_test() {
     }
 }
 
+// 回答をスプレッドシートに送信する
 function save_users_answer() {
     // ランダム数列の発行
     rand_id = Math.round(Math.random() * 100000000);
@@ -256,10 +249,10 @@ function save_users_answer() {
         dataType: 'text',
     })
         .then(
-            function() {
+            function() { // 成功時
                 location.href = `../end?id=${rand_id}`;
             },
-            function () {
+            function () { // 失敗時
                 alert('回答送信プロセスでエラーが発生しました。このページのまま少し時間を置いて再度お試しいただくか、問い合わせしていただきますようお願いします。');
                 document.getElementById('estimate_next_scenario').removeAttribute("disabled");
             });
@@ -269,6 +262,7 @@ function save_users_answer() {
 // ## functions ##
 // ###############
 
+// 配列内の要素をシャッフルする
 // 引用元(https://www.nxworld.net/js-array-shuffle.html)
 const shuffle = ([...array]) => {
   for (let i = array.length - 1; i >= 0; i--) {
@@ -277,11 +271,14 @@ const shuffle = ([...array]) => {
   }
   return array;
 }
+
+// 0埋め、ランダム数列の桁数を揃えるため使用している
 // 引用元(https://rfs.jp/sb/javascript/js-lab/zeropadding.html)
 function zeroPadding(NUM, LEN){
 	return ( Array(LEN).join('0') + NUM ).slice( -LEN );
 }
 
+// 現在時刻を返す関数
 // 引用元(http://www.shurey.com/js/samples/2_msg10.html)
 function getNow() {
 	var now = new Date();
