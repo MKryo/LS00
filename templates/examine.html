@@ -64,7 +64,6 @@
         <div id="order"></div>
         <div id="show_area">
             <img id="sample_before" class="sample">
-            <img id="sample_arrow" class="arrow" src="{% static '/causalexp/img/yajirushi_kururi_right.png' %}">
             <img id="sample_after" class="sample">
         </div>
         <br>
@@ -72,8 +71,13 @@
             <span id='first_sentence'></span>
             <span id='last_sentence'></span>
         </div><br>
-        <button id="next_sample" class="next_button" onclick="to_next_sample()">次の事例へ</button>
+        <div id="select_mutation">
+        <button onclick="show_back_sample()">変異する</button>
+        <button onclick="show_back_sample()">変異しない</button>
+        </div>
+        <button id="next_sample" class="next_button"  style="display: none" onclick="to_next_sample();">次の事例へ</button>
     </div>
+
     <br>
     <div id="estimate_input_area" class="area" style="display:none">
         <div id="estimate_description"></div><br>

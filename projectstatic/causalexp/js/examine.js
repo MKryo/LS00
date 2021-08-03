@@ -11,12 +11,7 @@ img_combination = {
     'a': {'before': 'p', 'after': 'q'},
     'b': {'before': 'p', 'after': 'notq'},
     'c': {'before': 'notp', 'after': 'q'},
-    'd': {'before': 'notp', 'after': 'notq'},
-    'e': {'before': 'p', 'after': 'u'},
-    'f': {'before': 'u', 'after': 'q'},
-    'g': {'before': 'u', 'after': 'u'},
-    'h': {'before': 'u', 'after': 'notq'},
-    'i': {'before': 'notp', 'after': 'u'},
+    'd': {'before': 'notp', 'after': 'notq'}
 }
 
 var flag = 0; // シナリオの初回表示判定に使用
@@ -134,6 +129,8 @@ function to_next_new_sample_page() {
     current_sample_selection = [];
 
     document.getElementById('show_sample_area').style.display = "inline";
+    document.getElementById('sample_after').style.display = "none";
+    document.getElementById('last_sentence').style.display = "none";
 
     // 現在の設問の事例の総数を取得
     Object.keys(test_order['samples'][current_test_order]['frequency']).forEach(function(elm) {
@@ -159,6 +156,7 @@ function to_next_sample() {
         return;
     }
     select_next_sample();
+    
 }
 
 function select_next_sample() {
@@ -166,16 +164,33 @@ function select_next_sample() {
     var desc = test_order['sentences'][sample];
     desc = desc.split('、');
 
+    document.getElementById('first_sentence').style.display = 'inline';
+    document.getElementById('sample_before').style.display = 'inline';
+    document.getElementById('select_mutation').style.display = 'inline';
+    document.getElementById('last_sentence').style.display = 'none';
+    document.getElementById('sample_after').style.display = 'none';
+    document.getElementById('next_sample').style.display = 'none';
+
     current_sample_selection.shift(); // 配列の先頭要素を削除
 
     document.getElementById('sample_before').src = `../${test_order['images'][img_combination[sample]['before']]}`;
     document.getElementById('sample_after').src = `../${test_order['images'][img_combination[sample]['after']]}`;
 
     document.getElementById('order').innerHTML = '設問' + (current_test_order + 1) + ' - ' + (current_test_page + 1) + '件目'
-    document.getElementById('first_sentence').innerHTML = desc[0] + '、<br>';
+    document.getElementById('first_sentence').innerHTML = desc[0];
     document.getElementById('last_sentence').innerHTML = desc[1];
 
     current_test_page++;
+}
+
+function show_back_sample() {
+    document.getElementById('first_sentence').style.display = 'none';
+    document.getElementById('sample_before').style.display = 'none';
+    document.getElementById('select_mutation').style.display = 'none';
+    document.getElementById('last_sentence').style.display = 'inline';
+    document.getElementById('sample_after').style.display = 'inline';
+    document.getElementById('next_sample').style.display = 'inline';
+
 }
 
 // 推定画面の表示
@@ -189,8 +204,8 @@ function drow_estimate() {
     document.getElementById('checkbox').checked = false;
 
     document.getElementById('estimate_description').innerHTML = '<p>' + test_order['result'] + 'と思いますか？</p><br>' + 
-                                                                '<p>0: 5-HSの投与は遺伝子の変異を起こさない</p><br>' + 
-                                                                '<p>100: 5-HSの投与は遺伝子の変異を確実に引き起こす </p><br>' +
+                                                                '<p>0: 5-HSという化学物質の投与は遺伝子の変異を全く引き起こさない</p><br>' + 
+                                                                '<p>100: 5-HSという化学物質の投与は遺伝子の変異を確実に引き起こす </p><br>' +
                                                                 '<p>として、0から100の値で<b>直感的に</b>回答してください。</p><br>'
 
     if (current_test_order >= Object.keys(test_order['samples']).length - 1) {
