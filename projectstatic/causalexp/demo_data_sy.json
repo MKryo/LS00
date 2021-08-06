@@ -10,33 +10,22 @@
         "p": "static/causalexp/img/mouse_blue.png",
         "notp": "static/causalexp/img/mouse_blue_kinshi.png",
         "q": "static/causalexp/img/mouse_mutation.png",
-        "notq": "static/causalexp/img/mouse_unmutation.png",
-        "u": "static/causalexp/img/kinshi.png"
+        "notq": "static/causalexp/img/mouse_unmutation.png"
     },
     "sentences": {
         "a": "マウスに5-HSを投与した、遺伝子が突然変異した",
         "b": "マウスに5-HSを投与した、遺伝子が突然変異しなかった",
         "c": "マウスに5-HSを投与しなかった、遺伝子が突然変異した",
-        "d": "マウスに5-HSを投与しなかった、遺伝子が突然変異しなかった",
-        "e": "",
-        "f": "",
-        "g": "",
-        "h": "",
-        "i": ""
+        "d": "マウスに5-HSを投与しなかった、遺伝子が突然変異しなかった"
     },
     "samples": [
         {
             "no": 0,
             "frequency": {
-                "a": 1,
-                "b": 1,
-                "c": 1,
-                "d": 1,
-                "e": 0,
-                "f": 0,
-                "g": 0,
-                "h": 0,
-                "i": 0
+                "a": 2,
+                "b": 9,
+                "c": 0,
+                "d": 3
             }
         }
     ],

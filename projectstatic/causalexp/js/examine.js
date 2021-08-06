@@ -115,6 +115,13 @@ function check_description() {
     }
 }
 
+// 進捗バーを更新する関数
+function progress_bar(){
+    document.getElementById('progress_bar').value = current_test_page;
+    document.getElementById('progress_bar').max = sample_num;
+}
+
+
 // 事例を表示する画面へ遷移
 // 次に表示するテストケースの準備
 // start_scenario_buttonから呼び出し
@@ -129,8 +136,10 @@ function to_next_new_sample_page() {
     current_sample_selection = [];
 
     document.getElementById('show_sample_area').style.display = "inline";
+    document.getElementById('Q_select_button').style.display = "inline";
     document.getElementById('sample_after').style.display = "none";
     document.getElementById('last_sentence').style.display = "none";
+    
 
     // 現在の設問の事例の総数を取得
     Object.keys(test_order['samples'][current_test_order]['frequency']).forEach(function(elm) {
@@ -152,9 +161,16 @@ function to_next_new_sample_page() {
 function to_next_sample() {
     if (current_test_page >= sample_num) {
         alert('終了しました。次に、回答をしてください。');
-        drow_estimate();
+        draw_estimate();
         return;
     }
+    // 10刺激ごとに因果関係の強さを聞く
+    else if(current_test_page % 10 == 0 && current_test_page != 0 && current_test_page != sample_num){
+        alert('ここで回答ページへ移ります');
+        draw_estimate_middle();
+        return;
+    }
+    
     select_next_sample();
     
 }
@@ -164,19 +180,26 @@ function select_next_sample() {
     var desc = test_order['sentences'][sample];
     desc = desc.split('、');
 
+    document.getElementById('estimate_input_area').style.display = 'none';
+    document.getElementById('show_sample_area').style.display = "inline";
+
     document.getElementById('first_sentence').style.display = 'inline';
     document.getElementById('sample_before').style.display = 'inline';
     document.getElementById('select_mutation').style.display = 'inline';
+    document.getElementById('Q_select_button').style.display = 'inline';
     document.getElementById('last_sentence').style.display = 'none';
     document.getElementById('sample_after').style.display = 'none';
     document.getElementById('next_sample').style.display = 'none';
+    document.getElementById('Ans_select_button').style.display = 'none';
+    // 進捗バー更新
+    progress_bar();
 
     current_sample_selection.shift(); // 配列の先頭要素を削除
 
     document.getElementById('sample_before').src = `../${test_order['images'][img_combination[sample]['before']]}`;
     document.getElementById('sample_after').src = `../${test_order['images'][img_combination[sample]['after']]}`;
 
-    document.getElementById('order').innerHTML = '設問' + (current_test_order + 1) + ' - ' + (current_test_page + 1) + '件目'
+    //document.getElementById('order').innerHTML = '設問' + (current_test_order + 1) + ' - ' + (current_test_page + 1) + '件目'
     document.getElementById('first_sentence').innerHTML = desc[0];
     document.getElementById('last_sentence').innerHTML = desc[1];
 
@@ -187,6 +210,8 @@ function show_back_sample() {
     document.getElementById('first_sentence').style.display = 'none';
     document.getElementById('sample_before').style.display = 'none';
     document.getElementById('select_mutation').style.display = 'none';
+    document.getElementById('Q_select_button').style.display = 'none';
+    document.getElementById('Ans_select_button').style.display = 'inline';
     document.getElementById('last_sentence').style.display = 'inline';
     document.getElementById('sample_after').style.display = 'inline';
     document.getElementById('next_sample').style.display = 'inline';
@@ -194,7 +219,7 @@ function show_back_sample() {
 }
 
 // 推定画面の表示
-function drow_estimate() {
+function draw_estimate() {
     clear_page();
     document.getElementById('estimate_input_area').style.display = 'inline-block';
     document.getElementById('estimate_next_scenario').setAttribute("disabled", true);
@@ -202,6 +227,8 @@ function drow_estimate() {
     document.getElementById('estimate_gage').value = 50;
     document.getElementById('estimate').innerHTML = 50;
     document.getElementById('checkbox').checked = false;
+    document.getElementById('continue_scenario').style.display = 'none';
+    document.getElementById('estimate_next_scenario').style.display = 'inline';
 
     document.getElementById('estimate_description').innerHTML = '<p>' + test_order['result'] + 'と思いますか？</p><br>' + 
                                                                 '<p>0: 5-HSという化学物質の投与は遺伝子の変異を全く引き起こさない</p><br>' + 
@@ -214,13 +241,37 @@ function drow_estimate() {
     }
 }
 
+
+// 10刺激ごとの推定画面の表示
+function draw_estimate_middle() {
+    clear_page();
+    document.getElementById('estimate_input_area').style.display = 'inline-block';
+    document.getElementById('estimate_next_scenario').setAttribute("disabled", true);
+
+    document.getElementById('estimate_gage').value = 50;
+    document.getElementById('estimate').innerHTML = 50;
+    document.getElementById('checkbox').checked = false;
+    document.getElementById('estimate_next_scenario').style.display = 'none';
+
+    document.getElementById('estimate_description').innerHTML = '<p>' + test_order['result'] + 'と思いますか？</p><br>' + 
+                                                                '<p>0: 5-HSという化学物質の投与は遺伝子の変異を全く引き起こさない</p><br>' + 
+                                                                '<p>100: 5-HSという化学物質の投与は遺伝子の変異を確実に引き起こす </p><br>' +
+                                                                '<p>として、0から100の値で<b>直感的に</b>回答してください。</p><br>'
+    
+}
+
+
+
+
 // 推定画面のチェックが入ってるか確認する
 // ゲージ操作時にチェックボックスがアクティブ化する処理もまとめてしまったので気になるようなら変更してください
 function check_estimate() {
     if (document.getElementById('checkbox').checked) {
         document.getElementById('estimate_next_scenario').removeAttribute("disabled");
+        document.getElementById('continue_scenario').removeAttribute("disabled");
     } else {
         document.getElementById('estimate_next_scenario').setAttribute("disabled", true);
+        document.getElementById('continue_scenario').setAttribute("disabled", true);
     }
 
     document.getElementById('checkbox').removeAttribute("disabled");

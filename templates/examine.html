@@ -61,7 +61,9 @@
     </div>
     <br>
     <div id="show_sample_area" class="area" style="display:none">
-        <div id="order"></div>
+        <div id="order">進捗状況</div>
+        <progress id="progress_bar" max="0" value="0"></progress><br>
+
         <div id="show_area">
             <img id="sample_before" class="sample">
             <img id="sample_after" class="sample">
@@ -70,7 +72,16 @@
         <div id="sample_description">
             <span id='first_sentence'></span>
             <span id='last_sentence'></span>
-        </div><br>
+        </div><hr><br>
+
+        <div id="Q_select_button">
+            <h2>Q. 上記の結果を見てマウスの遺伝子が突然変異したかどうか、正しいと思う方のボタンを選択してください</h2>
+        </div>
+
+        <div id="Ans_select_button">
+            <h2>A. 実際の結果は上の通りでした</h2>
+        </div>
+
         <div id="select_mutation">
         <button onclick="show_back_sample()">変異する</button>
         <button onclick="show_back_sample()">変異しない</button>
@@ -99,6 +110,9 @@
         </div>
         <button id="estimate_next_scenario" class="next_button" style="display:inline-grid" disabled
             onclick="to_next_test()">次のシナリオへ進む</button>
+
+        <button id="continue_scenario" style="display:inline-grid" disabled 
+            onclick="select_next_sample()">シナリオを続ける</button>
     </div>
 </body>
 
