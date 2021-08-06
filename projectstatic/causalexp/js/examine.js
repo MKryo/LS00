@@ -1,11 +1,10 @@
-var file = '../static/causalexp/test_sy.json';
-var warm_up = '../static/causalexp/demo_data_sy.json';
+var file_mouse = '../static/causalexp/test_mouse.json';
 
 var test_order = [];
 var current_sample_selection = [];
 var users_answer = [];
 
-image_type = ["p", "notp", "q", "notq", "u"];
+image_type = ["p", "notp", "q", "notq"];
 img_combination = new Array();
 img_combination = {
     'a': {'before': 'p', 'after': 'q'},
@@ -26,11 +25,8 @@ var start_time = getNow();
 // getImages(): 画像のプリロード
 // to_next_scenario_description(): シナリオの表示
 window.onload = function() {
-    warm_up = read_json(warm_up);
-    test_order = read_json(file);
+    test_order = read_json(file_mouse);
 
-    test_order['samples'] = shuffle(test_order['samples']);
-    test_order['samples'].unshift(warm_up['samples'][0]);
     users_answer = Array((Object.keys(test_order['samples']).length) * 3);
 
     getImages();
