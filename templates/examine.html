@@ -56,7 +56,7 @@
                 </form>
             </div>
         </div>
-        <button id="start_scenario_button" class="next_button" onclick="to_next_new_sample_page()"
+        <button id="start_scenario_button" class="next_button" style="cursor: hand; cursor:pointer;" onclick="to_next_new_sample_page()"
             disabled>このシナリオを<br>開始する</button>
     </div>
     <br>
@@ -83,10 +83,10 @@
         </div>
 
         <div id="select_mutation">
-        <button onclick="show_back_sample()">変異する</button>
-        <button onclick="show_back_sample()">変異しない</button>
+        <button style="cursor: hand; cursor:pointer;" onclick="show_back_sample()">変異する</button>
+        <button style="cursor: hand; cursor:pointer;" onclick="show_back_sample()">変異しない</button>
         </div>
-        <button id="next_sample" class="next_button"  style="display: none" onclick="to_next_sample();">次の事例へ</button>
+        <button id="next_sample" class="next_button"  style="display: none; cursor: hand; cursor:pointer;" onclick="to_next_sample();">次の事例へ</button>
     </div>
 
     <br>
@@ -108,10 +108,10 @@
             <b>ボタンは1回押していただくだけで結構です。</b>
             <b>送信に時間がかかる場合がありますので、最低30秒お待ちください。</b>
         </div>
-        <button id="estimate_next_scenario" class="next_button" style="display:inline-grid" disabled
+        <button id="estimate_next_scenario" class="next_button" style="display:inline-grid; cursor: hand; cursor:pointer;" disabled
             onclick="to_next_test()">次のシナリオへ進む</button>
 
-        <button id="continue_scenario" style="display:inline-grid" disabled 
+        <button id="continue_scenario" style="display:inline-grid; cursor: hand; cursor:pointer;" disabled 
             onclick="select_next_sample()">シナリオを続ける</button>
     </div>
 </body>
