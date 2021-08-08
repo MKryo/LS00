@@ -1,4 +1,4 @@
-var file_mouse = '../static/causalexp/test_mouse.json';
+var file = '../static/causalexp/test_sy.json';
 
 var test_order = [];
 var current_sample_selection = [];
@@ -25,13 +25,18 @@ var start_time = getNow();
 // getImages(): 画像のプリロード
 // to_next_scenario_description(): シナリオの表示
 window.onload = function() {
-    test_order = read_json(file_mouse);
+    test_order = read_json(file);
 
-    users_answer = Array((Object.keys(test_order['samples']).length) * 3);
+    users_answer = Array((Object.keys(test_order['mouse']['samples']).length) * 3);
+    //users_answer = Array((Object.keys(test_order['rabit']['samples']).length) * 3);
+    //users_answer = Array((Object.keys(test_order['pigeon']['samples']).length) * 3);
 
     getImages();
 
-    document.getElementById('scenario_title').innerHTML = test_order['title'];
+    document.getElementById('scenario_title').innerHTML = test_order['mouse']['title'];
+    //document.getElementById('scenario_title_m').innerHTML = test_order['mouse']['title'];
+    //document.getElementById('scenario_title_r').innerHTML = test_order['rabit']['title'];
+    //document.getElementById('scenario_title_p').innerHTML = test_order['pigeon']['title'];
 
     to_next_scenario_description();
 }
@@ -49,7 +54,15 @@ function read_json(filename) {
 function getImages() {
     for(type in image_type){
         var img = document.createElement('img');
-        img.src = `../${test_order['images'][image_type[type]]}`;
+        img.src = `../${test_order['mouse']['images'][image_type[type]]}`;
+    }
+    for(type in image_type){
+        var img = document.createElement('img');
+        img.src = `../${test_order['rabit']['images'][image_type[type]]}`;
+    }
+    for(type in image_type){
+        var img = document.createElement('img');
+        img.src = `../${test_order['pigeon']['images'][image_type[type]]}`;
     }
 
     document.getElementById('preload_image').style.display = "none";
@@ -77,8 +90,8 @@ function to_next_scenario_description() {
         document.getElementById('description_area').style.display = "inline-block";
         document.getElementById('scenario_description').style.display = "inline-block";
 
-        for (i in test_order['description']) {
-            scenario_description += test_order['description'][i] + "<br>"
+        for (i in test_order['mouse']['description']) {
+            scenario_description += test_order['mouse']['description'][i] + "<br>"
         }
         document.getElementById('scenario_description').innerHTML = scenario_description;
 
@@ -91,10 +104,10 @@ function to_next_scenario_description() {
     document.getElementById('description_area').style.display = "inline-block";
     document.getElementById('description_area_first').style.display = "inline-block";
 
-    document.getElementById('scenario_description1').innerHTML = test_order['description'][0];
-    document.getElementById('scenario_description2').innerHTML = test_order['description'][1];
-    document.getElementById('scenario_description3').innerHTML = test_order['description'][2];
-    document.getElementById('scenario_description4').innerHTML = test_order['description'][3];
+    document.getElementById('scenario_description1').innerHTML = test_order['mouse']['description'][0];
+    document.getElementById('scenario_description2').innerHTML = test_order['mouse']['description'][1];
+    document.getElementById('scenario_description3').innerHTML = test_order['mouse']['description'][2];
+    document.getElementById('scenario_description4').innerHTML = test_order['mouse']['description'][3];
 }
 
 // チェックが入っているか確認する
@@ -138,10 +151,10 @@ function to_next_new_sample_page() {
     
 
     // 現在の設問の事例の総数を取得
-    Object.keys(test_order['samples'][current_test_order]['frequency']).forEach(function(elm) {
-        if (test_order['samples'][current_test_order]['frequency'][elm] > 0) {
-            sample_num += test_order['samples'][current_test_order]['frequency'][elm];
-            frequency_num = test_order['samples'][current_test_order]['frequency'][elm];
+    Object.keys(test_order['mouse']['samples'][current_test_order]['frequency']).forEach(function(elm) {
+        if (test_order['mouse']['samples'][current_test_order]['frequency'][elm] > 0) {
+            sample_num += test_order['mouse']['samples'][current_test_order]['frequency'][elm];
+            frequency_num = test_order['mouse']['samples'][current_test_order]['frequency'][elm];
             for (let i = 0 ; i < frequency_num ; i++) {
                 current_sample_selection.push(elm);
             }
@@ -157,13 +170,13 @@ function to_next_new_sample_page() {
 function to_next_sample() {
     if (current_test_page >= sample_num) {
         alert('終了しました。次に、回答をしてください。');
-        draw_estimate();
+        draw_estimate('fin');
         return;
     }
     // 10刺激ごとに因果関係の強さを聞く
     else if(current_test_page % 10 == 0 && current_test_page != 0 && current_test_page != sample_num){
         alert('ここで回答ページへ移ります');
-        draw_estimate_middle();
+        draw_estimate_middle('mid');
         return;
     }
     
@@ -173,7 +186,7 @@ function to_next_sample() {
 
 function select_next_sample() {
     var sample = current_sample_selection[0];
-    var desc = test_order['sentences'][sample];
+    var desc = test_order['mouse']['sentences'][sample];
     desc = desc.split('、');
 
     document.getElementById('estimate_input_area').style.display = 'none';
@@ -192,8 +205,8 @@ function select_next_sample() {
 
     current_sample_selection.shift(); // 配列の先頭要素を削除
 
-    document.getElementById('sample_before').src = `../${test_order['images'][img_combination[sample]['before']]}`;
-    document.getElementById('sample_after').src = `../${test_order['images'][img_combination[sample]['after']]}`;
+    document.getElementById('sample_before').src = `../${test_order['mouse']['images'][img_combination[sample]['before']]}`;
+    document.getElementById('sample_after').src = `../${test_order['mouse']['images'][img_combination[sample]['after']]}`;
 
     //document.getElementById('order').innerHTML = '設問' + (current_test_order + 1) + ' - ' + (current_test_page + 1) + '件目'
     document.getElementById('first_sentence').innerHTML = desc[0];
@@ -213,50 +226,36 @@ function show_back_sample() {
     document.getElementById('next_sample').style.display = 'inline';
 
 }
-
-// 推定画面の表示
-function draw_estimate() {
+function draw_estimate(c) {
     clear_page();
+
     document.getElementById('estimate_input_area').style.display = 'inline-block';
     document.getElementById('estimate_next_scenario').setAttribute("disabled", true);
 
     document.getElementById('estimate_gage').value = 50;
     document.getElementById('estimate').innerHTML = 50;
     document.getElementById('checkbox').checked = false;
-    document.getElementById('continue_scenario').style.display = 'none';
-    document.getElementById('estimate_next_scenario').style.display = 'inline';
 
-    document.getElementById('estimate_description').innerHTML = '<p>' + test_order['result'] + 'と思いますか？</p><br>' + 
-                                                                '<p>0: 5-HSという化学物質の投与は遺伝子の変異を全く引き起こさない</p><br>' + 
-                                                                '<p>100: 5-HSという化学物質の投与は遺伝子の変異を確実に引き起こす </p><br>' +
-                                                                '<p>として、0から100の値で<b>直感的に</b>回答してください。</p><br>'
+    if (c=='fin'){
+        document.getElementById('continue_scenario').style.display = 'none';
+        document.getElementById('estimate_next_scenario').style.display = 'inline';
 
-    if (current_test_order >= Object.keys(test_order['samples']).length - 1) {
-        document.getElementById('estimate_next_scenario').innerHTML = '回答を送信して<br>テストを終了する'
-        document.getElementById('notes').style.display = "inline-grid";
+        // １ユーザーあたり回答、事例、時間の組みを６個、つまり18の回答を保持しつつ、以下の処理に入ったらうさぎの事例に遷移したい
+        // この判定を変えるべき、もはやこのいf文がいらないかも
+        //if (current_test_order >= Object.keys(test_order['mouse']['samples']).length - 1) {
+            //document.getElementById('estimate_next_scenario').innerHTML = '回答を送信して<br>次の実験記録へ進む'
+            document.getElementById('notes').style.display = "inline-grid";
+        //}
     }
+    else{
+        document.getElementById('estimate_next_scenario').style.display = 'none';
+        // ここでユーザーのデータを保存すべき？
+    }
+    document.getElementById('estimate_description').innerHTML = '<p>' + test_order['mouse']['result'] + 'と思いますか？</p><br>' + 
+                                                                '<p>0: 5-HSという化学物質の投与はマウスの遺伝子の変異を全く引き起こさない</p><br>' + 
+                                                                '<p>100: 5-HSという化学物質の投与はマウスの遺伝子の変異を確実に引き起こす </p><br>' +
+                                                                '<p>として、0から100の値で<b>直感的に</b>回答してください。</p><br>'   
 }
-
-
-// 10刺激ごとの推定画面の表示
-function draw_estimate_middle() {
-    clear_page();
-    document.getElementById('estimate_input_area').style.display = 'inline-block';
-    document.getElementById('estimate_next_scenario').setAttribute("disabled", true);
-
-    document.getElementById('estimate_gage').value = 50;
-    document.getElementById('estimate').innerHTML = 50;
-    document.getElementById('checkbox').checked = false;
-    document.getElementById('estimate_next_scenario').style.display = 'none';
-
-    document.getElementById('estimate_description').innerHTML = '<p>' + test_order['result'] + 'と思いますか？</p><br>' + 
-                                                                '<p>0: 5-HSという化学物質の投与は遺伝子の変異を全く引き起こさない</p><br>' + 
-                                                                '<p>100: 5-HSという化学物質の投与は遺伝子の変異を確実に引き起こす </p><br>' +
-                                                                '<p>として、0から100の値で<b>直感的に</b>回答してください。</p><br>'
-    
-}
-
-
 
 
 // 推定画面のチェックが入ってるか確認する
@@ -277,13 +276,13 @@ function check_estimate() {
 // 次のテストケースがある場合はシナリオ画面へ遷移
 function to_next_test() {
     // 元の並び順で何番目か取得
-    var order = test_order['samples'][current_test_order]['no'];
+    var order = test_order['mouse']['samples'][current_test_order]['no'];
 
     users_answer[order * 3] = document.getElementById('estimate_gage').value;
     users_answer[order * 3 + 1] = current_test_order;
     users_answer[order * 3 + 2] = getNow();
 
-    if (current_test_order >= Object.keys(test_order['samples']).length - 1) {
+    if (current_test_order >= Object.keys(test_order['mouse']['samples']).length - 1) {
         document.getElementById('estimate_next_scenario').setAttribute("disabled", true);
         document.getElementById('estimate_gage').setAttribute("disabled", true);
         document.getElementById('checkbox').setAttribute("disabled", true);

@@ -170,13 +170,13 @@ function to_next_new_sample_page() {
 function to_next_sample() {
     if (current_test_page >= sample_num) {
         alert('終了しました。次に、回答をしてください。');
-        draw_estimate();
+        draw_estimate('fin');
         return;
     }
     // 10刺激ごとに因果関係の強さを聞く
     else if(current_test_page % 10 == 0 && current_test_page != 0 && current_test_page != sample_num){
         alert('ここで回答ページへ移ります');
-        draw_estimate_middle();
+        draw_estimate('mid');
         return;
     }
     
@@ -226,50 +226,36 @@ function show_back_sample() {
     document.getElementById('next_sample').style.display = 'inline';
 
 }
-
-// 推定画面の表示
-function draw_estimate() {
+function draw_estimate(c) {
     clear_page();
+
     document.getElementById('estimate_input_area').style.display = 'inline-block';
     document.getElementById('estimate_next_scenario').setAttribute("disabled", true);
 
     document.getElementById('estimate_gage').value = 50;
     document.getElementById('estimate').innerHTML = 50;
     document.getElementById('checkbox').checked = false;
-    document.getElementById('continue_scenario').style.display = 'none';
-    document.getElementById('estimate_next_scenario').style.display = 'inline';
 
-    document.getElementById('estimate_description').innerHTML = '<p>' + test_order['result'] + 'と思いますか？</p><br>' + 
-                                                                '<p>0: 5-HSという化学物質の投与は遺伝子の変異を全く引き起こさない</p><br>' + 
-                                                                '<p>100: 5-HSという化学物質の投与は遺伝子の変異を確実に引き起こす </p><br>' +
-                                                                '<p>として、0から100の値で<b>直感的に</b>回答してください。</p><br>'
+    if (c=='fin'){
+        document.getElementById('continue_scenario').style.display = 'none';
+        document.getElementById('estimate_next_scenario').style.display = 'inline';
 
-    if (current_test_order >= Object.keys(test_order['mouse']['samples']).length - 1) {
-        document.getElementById('estimate_next_scenario').innerHTML = '回答を送信して<br>テストを終了する'
-        document.getElementById('notes').style.display = "inline-grid";
+        // １ユーザーあたり回答、事例、時間の組みを６個、つまり18の回答を保持しつつ、以下の処理に入ったらうさぎの事例に遷移したい
+        // この判定を変えるべき、もはやこのいf文がいらないかも
+        //if (current_test_order >= Object.keys(test_order['mouse']['samples']).length - 1) {
+            //document.getElementById('estimate_next_scenario').innerHTML = '回答を送信して<br>次の実験記録へ進む'
+            document.getElementById('notes').style.display = "inline-grid";
+        //}
     }
-}
-
-
-// 10刺激ごとの推定画面の表示
-function draw_estimate_middle() {
-    clear_page();
-    document.getElementById('estimate_input_area').style.display = 'inline-block';
-    document.getElementById('estimate_next_scenario').setAttribute("disabled", true);
-
-    document.getElementById('estimate_gage').value = 50;
-    document.getElementById('estimate').innerHTML = 50;
-    document.getElementById('checkbox').checked = false;
-    document.getElementById('estimate_next_scenario').style.display = 'none';
-
+    else{
+        document.getElementById('estimate_next_scenario').style.display = 'none';
+        // ここでユーザーのデータを保存すべき？
+    }
     document.getElementById('estimate_description').innerHTML = '<p>' + test_order['mouse']['result'] + 'と思いますか？</p><br>' + 
-                                                                '<p>0: 5-HSという化学物質の投与は遺伝子の変異を全く引き起こさない</p><br>' + 
-                                                                '<p>100: 5-HSという化学物質の投与は遺伝子の変異を確実に引き起こす </p><br>' +
-                                                                '<p>として、0から100の値で<b>直感的に</b>回答してください。</p><br>'
-    
+                                                                '<p>0: 5-HSという化学物質の投与はマウスの遺伝子の変異を全く引き起こさない</p><br>' + 
+                                                                '<p>100: 5-HSという化学物質の投与はマウスの遺伝子の変異を確実に引き起こす </p><br>' +
+                                                                '<p>として、0から100の値で<b>直感的に</b>回答してください。</p><br>'   
 }
-
-
 
 
 // 推定画面のチェックが入ってるか確認する
