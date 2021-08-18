@@ -25,7 +25,6 @@
         <p>しばらくお待ちください。</p>
     </div>
     <div id="description_area" class="area" style="display:none;">
-        <p id="same_sentence" style="display:none">以下の文章は、先に提示されたものと同一で内容に変更はありません。<br>読み飛ばしても支障はありません。<br></p>
         <p id="scenario_description" style="display: none;"></p><br>
         <div id="description_area_first" class="area" style="display:none;">
             <p id="check_sentence" style="display:none;">それぞれの項目を読んだら左側のチェックボックスをチェックし、回答ページに進んでください。<br></p>
@@ -56,10 +55,50 @@
                 </form>
             </div>
         </div>
-        <button id="start_scenario_button" class="next_button" style="cursor: hand; cursor:pointer;" onclick="to_next_new_sample_page()"
+        <button id="start_scenario_button" class="next_button" style="cursor: hand; cursor:pointer;" onclick="to_next_new_sample_page(0)"
             disabled>このシナリオを<br>開始する</button>
     </div>
+
+
+
+    <div id="description_area_rabit" class="area" style="display:none;">
+        <p id="scenario_description_rabit" style="display: none;"></p><br>
+        <div id="description_area_first_rabit" class="area" style="display:none;">
+            <p id="check_sentence_rabit" style="display:none;">それぞれの項目を読んだら左側のチェックボックスをチェックし、回答ページに進んでください。<br></p>
+            <div id="scenario_description_first_rabit" style="text-align: left;">
+                <form action="cgi-bin/abc.cgi" method="post">
+                    <p>
+                        <input class="checks_rabit" type="checkbox" id="checkbox1" style="transform:scale(1.5)"
+                            onclick="check_description_rabit()" />
+                        <label for="checkbox1" id="scenario_description1_rabit"></label>
+                    </p>
+                    <p>
+                        <input class="checks_rabit" type="checkbox" id="checkbox2" style="transform:scale(1.5)"
+                            onclick="check_description_rabit()" />
+                        <label for="checkbox2" id="scenario_description2_rabit"></label>
+                    </p>
+                    <br>
+                    <p>
+                        <input class="checks_rabit" type="checkbox" id="checkbox3" style="transform:scale(1.5)"
+                            onclick="check_description_rabit()" />
+                        <label for="checkbox3" id="scenario_description3_rabit"></label>
+                    </p>
+                    <br>
+                    <p>
+                        <input class="checks_rabit" type="checkbox" id="checkbox4" style="transform:scale(1.5)"
+                            onclick="check_description_rabit()" />
+                        <label for="checkbox4" id="scenario_description4_rabit"></label>
+                    </p>
+                </form>
+            </div>
+        </div>
+        <button id="start_scenario_button_rabit" class="next_button" style="cursor: hand; cursor:pointer;" onclick="to_next_new_sample_page(1)"
+            disabled>このシナリオを<br>開始する</button>
+    </div>
+
+
     <br>
+
     <div id="show_sample_area" class="area" style="display:none">
         <div id="order">進捗状況</div>
         <progress id="progress_bar" max="0" value="0"></progress><br>
@@ -86,7 +125,9 @@
         <button style="cursor: hand; cursor:pointer;" onclick="show_back_sample()">変異する</button>
         <button style="cursor: hand; cursor:pointer;" onclick="show_back_sample()">変異しない</button>
         </div>
-        <button id="next_sample" class="next_button"  style="display: none; cursor: hand; cursor:pointer;" onclick="to_next_sample();">次の事例へ</button>
+        <button id="next_sample" class="next_button"  style="display: none; cursor: hand; cursor:pointer;" onclick="to_next_sample(0);">次の事例へ</button>
+        <button id="next_sample" class="next_button"  style="display: none; cursor: hand; cursor:pointer;" onclick="to_next_sample(1);">次の事例へr</button>
+        <button id="next_sample" class="next_button"  style="display: none; cursor: hand; cursor:pointer;" onclick="to_next_sample(2);">次の事例へp</button>
     </div>
 
     <br>
@@ -99,7 +140,6 @@
             </b>
             <P><input id="estimate_gage" type="range" min="-0" max="100" step="1" value="0" onchange="check_estimate()">
             </P>
-
         </form>
         <br>
         <input type="checkbox" id="checkbox" style="transform:scale(1.5)" disabled onclick="check_estimate()" />
@@ -108,11 +148,19 @@
             <b>ボタンは1回押していただくだけで結構です。</b>
             <b>送信に時間がかかる場合がありますので、最低30秒お待ちください。</b>
         </div>
-        <button id="estimate_next_scenario" class="next_button" style="display:inline-grid; cursor: hand; cursor:pointer;" disabled
+        <button id="estimate_next_scenario" class="next_button" style="display:none; cursor: hand; cursor:pointer;" disabled
+            onclick="to_next_scenario_description(1)">次のシナリオへ進む</button>
+        <button id="estimate_next_scenario" class="next_button" style="display:none; cursor: hand; cursor:pointer;" disabled
+            onclick="show_description_pigeon()">次のシナリオへ進むp</button>
+        <button id="estimate_next_scenario" class="next_button" style="display:none; cursor: hand; cursor:pointer;" disabled
             onclick="to_next_test()">次のシナリオへ進む</button>
 
         <button id="continue_scenario" style="display:inline-grid; cursor: hand; cursor:pointer;" disabled 
-            onclick="select_next_sample()">シナリオを続ける</button>
+            onclick="select_next_sample(0)">シナリオを続ける</button>
+        <button id="continue_scenario_rabit" style="display:none; cursor: hand; cursor:pointer;" disabled 
+            onclick="select_next_sample(1)">シナリオを続けるr</button>
+        <button id="continue_scenario_pigeon" style="display:none; cursor: hand; cursor:pointer;" disabled 
+            onclick="select_next_sample(2)">シナリオを続けるp</button>
     </div>
 </body>
 
