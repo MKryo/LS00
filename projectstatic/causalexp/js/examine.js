@@ -14,13 +14,13 @@ img_combination = {
 }
 
 var flag = 0; // シナリオの初回表示判定に使用
-var current_test_order = 0; //何問目か
+var current_test_order = 0;
 var current_test_page = 0; // 何事例目か
 var sample_num = 0; // 現在の設問の事例の総数
 var rand_id = 0;
 var start_time = getNow();
 
-var animal = 0;
+var animal = 0;// 動物の判別
 
 // 読み込み時に実行される
 // read_json(): jsonファイルを読み込む
@@ -75,8 +75,11 @@ function getImages() {
 function clear_page() {
     document.getElementById('estimate_input_area').style.display = "none";
     document.getElementById('check_sentence').style.display = "none";
+    document.getElementById('check_sentence_rabit').style.display = "none";
     document.getElementById('description_area_first').style.display = "none";
+    document.getElementById('description_area_first_rabit').style.display = "none";
     document.getElementById('description_area').style.display = "none";
+    document.getElementById('description_area_rabit').style.display = "none";
     document.getElementById('show_sample_area').style.display = 'none';
 
 }
@@ -93,23 +96,6 @@ function to_next_scenario_description(animal) {
 
         var scenario_description = [];
 
-        // if (flag == 1) {
-        //     current_test_order++;
-
-        //     document.getElementById('same_sentence').style.display = "inline-block";
-        //     document.getElementById('description_area').style.display = "inline-block";
-        //     document.getElementById('scenario_description').style.display = "inline-block";
-
-        //     for (i in test_order['mouse']['description']) {
-        //         scenario_description += test_order['mouse']['description'][i] + "<br>"
-        //     }
-        //     document.getElementById('scenario_description').innerHTML = scenario_description;
-
-        //     return;
-        // }
-
-        //flag++;
-
         document.getElementById('scenario_description1').innerHTML = test_order['mouse']['description'][0];
         document.getElementById('scenario_description2').innerHTML = test_order['mouse']['description'][1];
         document.getElementById('scenario_description3').innerHTML = test_order['mouse']['description'][2];
@@ -120,37 +106,30 @@ function to_next_scenario_description(animal) {
 
     if(animal == 1){
         document.getElementById('check_sentence_rabit').style.display = "inline-block";
-        document.getElementById('description_area_rabit').style.display = "inline-block";
         document.getElementById('description_area_first_rabit').style.display = "inline-block";
 
         var scenario_description = [];
 
-        
-        current_test_order++;
-
         //document.getElementById('same_sentence_rabit').style.display = "inline-block";
         document.getElementById('description_area_rabit').style.display = "inline-block";
-        document.getElementById('scenario_description_rabit').style.display = "inline-block";
 
             for (i in test_order['rabit']['description']) {
-            scenario_description += test_order['rabit']['description'][i] + "<br>"
-        }
-        document.getElementById('scenario_description_rabit').innerHTML = scenario_description;
+                scenario_description += test_order['rabit']['description'][i] + "<br>"
+                }
+        //document.getElementById('scenario_description_rabit').innerHTML = scenario_description;
 
         document.getElementById('scenario_description1_rabit').innerHTML = test_order['rabit']['description'][0];
         document.getElementById('scenario_description2_rabit').innerHTML = test_order['rabit']['description'][1];
         document.getElementById('scenario_description3_rabit').innerHTML = test_order['rabit']['description'][2];
         document.getElementById('scenario_description4_rabit').innerHTML = test_order['rabit']['description'][3];
         document.getElementById('start_scenario_button').style.display = "none";
-        
+        document.getElementById('start_scenario_button_rabit').style.display = "inline-block";
+
         }
 
 
         if(animal == 2){
             var scenario_description = [];
-
-        
-            current_test_order++;
 
             document.getElementById('same_sentence').style.display = "inline-block";
             document.getElementById('description_area').style.display = "inline-block";
@@ -184,7 +163,7 @@ function check_description() {
     }
 }
 
-// うさぎの事例用
+// ウサギの事例用
 function check_description_rabit() {
     let checks = document.getElementsByClassName("checks_rabit");
     let count = 0;
@@ -197,7 +176,7 @@ function check_description_rabit() {
         document.getElementById('start_scenario_button_rabit').setAttribute("disabled", true);
     }
 }
-// はとの事例用
+// ハトの事例用
 function check_description() {
     let checks = document.getElementsByClassName("checks");
     let count = 0;
@@ -252,11 +231,12 @@ function to_next_new_sample_page(animal) {
         to_next_sample(animal);
     }
     if (animal == 1){
+        alert(animal);
         // 現在の設問の事例の総数を取得
-        Object.keys(test_order['rabit']['samples'][current_test_order]['frequency']).forEach(function(elm) {
-            if (test_order['rabit']['samples'][current_test_order]['frequency'][elm] > 0) {
-                sample_num += test_order['rabit']['samples'][current_test_order]['frequency'][elm];
-                frequency_num = test_order['rabit']['samples'][current_test_order]['frequency'][elm];
+        Object.keys(test_order['rabit']['samples'][0]['frequency']).forEach(function(elm) {
+            if (test_order['rabit']['samples'][0]['frequency'][elm] > 0) {
+                sample_num += test_order['rabit']['samples'][0]['frequency'][elm];
+                frequency_num = test_order['rabit']['samples'][0]['frequency'][elm];
                 for (let i = 0 ; i < frequency_num ; i++) {
                     current_sample_selection.push(elm);
                 }
@@ -302,7 +282,6 @@ function to_next_sample(animal) {
 }
 
 function select_next_sample(animal) {
-
     if (animal == 0){
         var sample = current_sample_selection[0];
         var desc = test_order['mouse']['sentences'][sample];
@@ -343,11 +322,12 @@ function select_next_sample(animal) {
 
         document.getElementById('first_sentence').style.display = 'inline';
         document.getElementById('sample_before').style.display = 'inline';
-        document.getElementById('select_mutation').style.display = 'inline';
-        document.getElementById('Q_select_button').style.display = 'inline';
+        document.getElementById('select_mutation_rabit').style.display = 'inline';
+        document.getElementById('Q_select_button_rabit').style.display = 'inline';
         document.getElementById('last_sentence').style.display = 'none';
         document.getElementById('sample_after').style.display = 'none';
         document.getElementById('next_sample').style.display = 'none';
+        document.getElementById('next_sample_rabit').style.display = 'none';
         document.getElementById('Ans_select_button').style.display = 'none';
         // 進捗バー更新
         progress_bar();
@@ -397,15 +377,28 @@ function select_next_sample(animal) {
 }
 
 
-function show_back_sample() {
+function show_back_sample(animal) {
     document.getElementById('first_sentence').style.display = 'none';
     document.getElementById('sample_before').style.display = 'none';
-    document.getElementById('select_mutation').style.display = 'none';
-    document.getElementById('Q_select_button').style.display = 'none';
+    
+    
     document.getElementById('Ans_select_button').style.display = 'inline';
     document.getElementById('last_sentence').style.display = 'inline';
     document.getElementById('sample_after').style.display = 'inline';
-    document.getElementById('next_sample').style.display = 'inline';
+    if(animal==0){
+        document.getElementById('select_mutation').style.display = 'none';
+        document.getElementById('Q_select_button').style.display = 'none';
+        document.getElementById('next_sample').style.display = 'inline';
+    }
+    if(animal==1){
+        document.getElementById('select_mutation_rabit').style.display = 'none';
+        document.getElementById('Q_select_button_rabit').style.display = 'none';
+        document.getElementById('next_sample_rabit').style.display = 'inline';
+    }
+    if(animal==2){
+        //document.getElementById('select_mutation').style.display = 'none';
+        document.getElementById('next_sample_pigeon').style.display = 'inline';
+    }
 
 }
 function draw_estimate(c) {

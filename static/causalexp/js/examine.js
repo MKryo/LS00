@@ -75,8 +75,11 @@ function getImages() {
 function clear_page() {
     document.getElementById('estimate_input_area').style.display = "none";
     document.getElementById('check_sentence').style.display = "none";
+    document.getElementById('check_sentence_rabit').style.display = "none";
     document.getElementById('description_area_first').style.display = "none";
+    document.getElementById('description_area_first_rabit').style.display = "none";
     document.getElementById('description_area').style.display = "none";
+    document.getElementById('description_area_rabit').style.display = "none";
     document.getElementById('show_sample_area').style.display = 'none';
 
 }
@@ -93,22 +96,22 @@ function to_next_scenario_description(animal) {
 
         var scenario_description = [];
 
-        if (flag == 1) {
-            current_test_order++;
+        // if (flag == 1) {
+        //     current_test_order++;
 
-            document.getElementById('same_sentence').style.display = "inline-block";
-            document.getElementById('description_area').style.display = "inline-block";
-            document.getElementById('scenario_description').style.display = "inline-block";
+        //     document.getElementById('same_sentence').style.display = "inline-block";
+        //     document.getElementById('description_area').style.display = "inline-block";
+        //     document.getElementById('scenario_description').style.display = "inline-block";
 
-            for (i in test_order['mouse']['description']) {
-                scenario_description += test_order['mouse']['description'][i] + "<br>"
-            }
-            document.getElementById('scenario_description').innerHTML = scenario_description;
+        //     for (i in test_order['mouse']['description']) {
+        //         scenario_description += test_order['mouse']['description'][i] + "<br>"
+        //     }
+        //     document.getElementById('scenario_description').innerHTML = scenario_description;
 
-            return;
-        }
+        //     return;
+        // }
 
-        flag++;
+        //flag++;
 
         document.getElementById('scenario_description1').innerHTML = test_order['mouse']['description'][0];
         document.getElementById('scenario_description2').innerHTML = test_order['mouse']['description'][1];
@@ -120,56 +123,46 @@ function to_next_scenario_description(animal) {
 
     if(animal == 1){
         document.getElementById('check_sentence_rabit').style.display = "inline-block";
-        document.getElementById('description_area_rabit').style.display = "inline-block";
         document.getElementById('description_area_first_rabit').style.display = "inline-block";
 
         var scenario_description = [];
 
-        if (flag == 1) {
-            current_test_order++;
+        
+        current_test_order++;
 
-            //document.getElementById('same_sentence_rabit').style.display = "inline-block";
-            document.getElementById('description_area_rabit').style.display = "inline-block";
-            document.getElementById('scenario_description_rabit').style.display = "inline-block";
+        //document.getElementById('same_sentence_rabit').style.display = "inline-block";
+        document.getElementById('description_area_rabit').style.display = "inline-block";
+        
 
-             for (i in test_order['rabit']['description']) {
+            for (i in test_order['rabit']['description']) {
                 scenario_description += test_order['rabit']['description'][i] + "<br>"
-            }
-            document.getElementById('scenario_description_rabit').innerHTML = scenario_description;
-
-            return;
-        }
-
-        flag++;
+                }
+        //document.getElementById('scenario_description_rabit').innerHTML = scenario_description;
 
         document.getElementById('scenario_description1_rabit').innerHTML = test_order['rabit']['description'][0];
         document.getElementById('scenario_description2_rabit').innerHTML = test_order['rabit']['description'][1];
         document.getElementById('scenario_description3_rabit').innerHTML = test_order['rabit']['description'][2];
         document.getElementById('scenario_description4_rabit').innerHTML = test_order['rabit']['description'][3];
         document.getElementById('start_scenario_button').style.display = "none";
-        
+        document.getElementById('start_scenario_button_rabit').style.display = "inline-block";
+
         }
 
 
         if(animal == 2){
             var scenario_description = [];
 
-            if (flag == 1) {
-                current_test_order++;
+        
+            current_test_order++;
 
-                document.getElementById('same_sentence').style.display = "inline-block";
-                document.getElementById('description_area').style.display = "inline-block";
-                document.getElementById('scenario_description').style.display = "inline-block";
+            document.getElementById('same_sentence').style.display = "inline-block";
+            document.getElementById('description_area').style.display = "inline-block";
+            document.getElementById('scenario_description').style.display = "inline-block";
 
-                for (i in test_order['pigeon']['description']) {
-                    scenario_description += test_order['pigeon']['description'][i] + "<br>"
-                }
-                document.getElementById('scenario_description').innerHTML = scenario_description;
-
-                return;
+            for (i in test_order['pigeon']['description']) {
+                scenario_description += test_order['pigeon']['description'][i] + "<br>"
             }
-
-            flag++;
+            document.getElementById('scenario_description').innerHTML = scenario_description;
 
             document.getElementById('scenario_description1').innerHTML = test_order['pigeon']['description'][0];
             document.getElementById('scenario_description2').innerHTML = test_order['pigeon']['description'][1];
@@ -344,6 +337,7 @@ function select_next_sample(animal) {
         current_test_page++;
     }
     if (animal == 1){
+        console.log(animal);
         var sample = current_sample_selection[0];
         var desc = test_order['rabit']['sentences'][sample];
         desc = desc.split('、');
