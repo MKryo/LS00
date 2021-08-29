@@ -1,4 +1,4 @@
 # examine test
-gspread_url = "https://docs.google.com/spreadsheets/d/1RB6pJB51h8dE1cxNwxUiJNTumVbB66qQ-Nmg3k4kpPE/edit?usp=sharing"
+gspread_url = "https://docs.google.com/spreadsheets/d/1dbBNIAEfX83nWX8sgmWslubiSPApWf8h3_0NUWm2uzc/edit#gid=0"
 
-jsonkey_path = './projectstatic/causalexp/beaming-oarlock-290513-869915675292.json'
+jsonkey_path = './projectstatic/causalexp/example-ci-2020-304004-d4521ec44947.json'

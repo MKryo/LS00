@@ -13,7 +13,7 @@ def send(request):
         scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
         credentials = ServiceAccountCredentials.from_json_keyfile_name(gspread_auth.jsonkey_path, scope)
         gc = gspread.authorize(credentials)
-        worksheet = gc.open_by_url(gspread_auth.gspread_url).worksheet("symmetry")
+        worksheet = gc.open_by_url(gspread_auth.gspread_url).worksheet("test")
 
         data = dict(request.POST.lists())
         worksheet.append_row(data['data[]'])
