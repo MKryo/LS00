@@ -203,18 +203,18 @@
             <b>送信に時間がかかる場合がありますので、最低30秒お待ちください。</b>
         </div>
         <button id="estimate_next_scenario" class="next_button" style="display:none; cursor: hand; cursor:pointer;" disabled
-            onclick="to_next_scenario_description(1)">次のシナリオへ進む</button>
+            onclick="to_next_scenario_description(1);get_value()">次のシナリオへ進む</button>
         <button id="estimate_next_scenario_rabit" class="next_button" style="display:none; cursor: hand; cursor:pointer;" disabled
-            onclick="to_next_scenario_description(2)">次のシナリオへ進む</button>
+            onclick="to_next_scenario_description(2);get_value()">次のシナリオへ進む</button>
         <button id="estimate_next_scenario_pigeon" class="next_button" style="display:none; cursor: hand; cursor:pointer;" disabled
-            onclick="save_users_answer()">回答を終了する</button>
+            onclick="get_value_fin()">回答を終了する</button>
 
         <button id="continue_scenario" style="display:inline-grid; cursor: hand; cursor:pointer;" disabled 
-            onclick="select_next_sample(0)">シナリオを続ける</button>
+            onclick="select_next_sample(0);get_value()">シナリオを続ける</button>
         <button id="continue_scenario_rabit" style="display:none; cursor: hand; cursor:pointer;" disabled 
-            onclick="select_next_sample(1)">シナリオを続ける</button>
+            onclick="select_next_sample(1);get_value()">シナリオを続ける</button>
         <button id="continue_scenario_pigeon" style="display:none; cursor: hand; cursor:pointer;" disabled 
-            onclick="select_next_sample(2)">シナリオを続ける</button>
+            onclick="select_next_sample(2);get_value()">シナリオを続ける</button>
     </div>
 </body>
 

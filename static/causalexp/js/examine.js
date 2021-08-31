@@ -195,7 +195,6 @@ function progress_bar(){
     document.getElementById('progress_bar').max = sample_num;
 }
 
-
 // 事例を表示する画面へ遷移
 // 次に表示するテストケースの準備
 // start_scenario_buttonから呼び出し
@@ -280,7 +279,6 @@ function to_next_sample(animal) {
 }
 
 function select_next_sample(animal) {
-    get_value();
 
     if (animal == 0){
         var sample = current_sample_selection[0];
@@ -402,9 +400,7 @@ function show_back_sample(animal) {
 
 }
 
-function get_value() {
-    users_answer.push(document.getElementById('estimate_gage').value);
-}
+
 
 function draw_estimate(c, animal,i) {
     clear_page();
@@ -469,6 +465,14 @@ function draw_estimate(c, animal,i) {
                                                                     '<p>100: 5-HSという化学物質の投与はハトの遺伝子の変異を確実に引き起こす </p><br>' +
                                                                     '<p>として、0から100の値で<b>直感的に</b>回答してください。</p><br>'       
     }
+}
+
+function get_value() {
+    users_answer.push(document.getElementById('estimate_gage').value);
+}
+function get_value_fin() {
+    users_answer.push(document.getElementById('estimate_gage').value);
+    save_users_answer();
 }
 
 // 推定画面のチェックが入ってるか確認する
