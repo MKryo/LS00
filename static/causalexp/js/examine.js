@@ -34,9 +34,8 @@ window.onload = function() {
     getImages();
 
     document.getElementById('scenario_title').innerHTML = test_order['mouse']['title'];
-    //document.getElementById('scenario_title_m').innerHTML = test_order['mouse']['title'];
-    //document.getElementById('scenario_title_r').innerHTML = test_order['rabit']['title'];
-    //document.getElementById('scenario_title_p').innerHTML = test_order['pigeon']['title'];
+    document.getElementById('scenario_title_rabit').innerHTML = test_order['rabit']['title'];
+    document.getElementById('scenario_title_pigeon').innerHTML = test_order['pigeon']['title'];
 
     to_next_scenario_description(animal);
 }
@@ -317,6 +316,8 @@ function select_next_sample(animal) {
         var desc = test_order['rabit']['sentences'][sample];
         desc = desc.split('、');
 
+        document.getElementById('scenario_title').style.display = 'none';
+        document.getElementById('scenario_title_rabit').style.display = 'inline';
         document.getElementById('estimate_input_area').style.display = 'none';
         document.getElementById('show_sample_area').style.display = "inline";
 
@@ -349,6 +350,8 @@ function select_next_sample(animal) {
         var desc = test_order['pigeon']['sentences'][sample];
         desc = desc.split('、');
 
+        document.getElementById('scenario_title_rabit').style.display = 'none';
+        document.getElementById('scenario_title_pigeon').style.display = 'inline';
         document.getElementById('estimate_input_area').style.display = 'none';
         document.getElementById('show_sample_area').style.display = "inline";
 
@@ -404,27 +407,32 @@ function show_back_sample(animal) {
     }
 
 }
+
+function get_value() {
+    users_answer.push(document.getElementById('estimate_gage').value);
+}
+
 function draw_estimate(c, animal,i) {
     clear_page();
 
     if(animal==0){
-    document.getElementById('estimate_input_area').style.display = 'inline-block';
-    document.getElementById('estimate_next_scenario').setAttribute("disabled", true);
+        document.getElementById('estimate_input_area').style.display = 'inline-block';
+        document.getElementById('estimate_next_scenario').setAttribute("disabled", true);
 
-    document.getElementById('estimate_gage').value = 50;
-    document.getElementById('estimate').innerHTML = 50;
-    document.getElementById('checkbox').checked = false;
+        document.getElementById('estimate_gage').value = 50;
+        document.getElementById('estimate').innerHTML = 50;
+        document.getElementById('checkbox').checked = false;
 
     if (c=='fin'){
         document.getElementById('continue_scenario').style.display = 'none';
         document.getElementById('estimate_next_scenario').style.display = 'inline';
     }
 
-    document.getElementById('estimate_description').innerHTML = '<p>' + test_order['mouse']['result'] + 'と思いますか？</p><br>' + 
+        document.getElementById('estimate_description').innerHTML = '<p>' + test_order['mouse']['result'] + 'と思いますか？</p><br>' + 
                                                                 '<p>0: 5-HSという化学物質の投与はマウスの遺伝子の変異を全く引き起こさない</p><br>' + 
                                                                 '<p>100: 5-HSという化学物質の投与はマウスの遺伝子の変異を確実に引き起こす </p><br>' +
                                                                 '<p>として、0から100の値で<b>直感的に</b>回答してください。</p><br>'   
-    users_answer.push(document.getElementById('estimate_gage').value);
+        get_value();
     }
     if(animal==1){
         document.getElementById('estimate_next_scenario').style.display = 'none';
@@ -434,6 +442,7 @@ function draw_estimate(c, animal,i) {
         document.getElementById('estimate_gage').value = 50;
         document.getElementById('estimate').innerHTML = 50;
         document.getElementById('checkbox').checked = false;
+        document.getElementById('continue_scenario_rabit').style.display = 'inline';
     
         if (c=='fin'){
             document.getElementById('continue_scenario_rabit').style.display = 'none';
@@ -444,7 +453,7 @@ function draw_estimate(c, animal,i) {
                                                                     '<p>0: 5-HSという化学物質の投与はウサギの遺伝子の変異を全く引き起こさない</p><br>' + 
                                                                     '<p>100: 5-HSという化学物質の投与はウサギの遺伝子の変異を確実に引き起こす </p><br>' +
                                                                     '<p>として、0から100の値で<b>直感的に</b>回答してください。</p><br>'
-        users_answer.push(document.getElementById('estimate_gage').value);
+        get_value();
         }
         if(animal==2){
             document.getElementById('estimate_input_area').style.display = 'inline-block';
@@ -453,6 +462,8 @@ function draw_estimate(c, animal,i) {
             document.getElementById('estimate_gage').value = 50;
             document.getElementById('estimate').innerHTML = 50;
             document.getElementById('checkbox').checked = false;
+            document.getElementById('continue_scenario_pigeon').style.display = 'inline';
+            document.getElementById('estimate_next_scenario_rabit').style.display = 'none';
         
             if (c=='fin'){
                 document.getElementById('continue_scenario_pigeon').style.display = 'none';
@@ -465,7 +476,7 @@ function draw_estimate(c, animal,i) {
                                                                         '<p>0: 5-HSという化学物質の投与はハトの遺伝子の変異を全く引き起こさない</p><br>' + 
                                                                         '<p>100: 5-HSという化学物質の投与はハトの遺伝子の変異を確実に引き起こす </p><br>' +
                                                                         '<p>として、0から100の値で<b>直感的に</b>回答してください。</p><br>'   
-            users_answer.push(document.getElementById('estimate_gage').value);
+            get_value();
             }
 }
 
@@ -494,7 +505,7 @@ function check_estimate() {
 
 // 回答をスプレッドシートに送信する
 function save_users_answer() {
-    alert(users_answer);
+    
     // ランダム数列の発行
     rand_id = Math.round(Math.random() * 100000000);
     rand_id = zeroPadding(rand_id, 8);
@@ -502,6 +513,8 @@ function save_users_answer() {
     users_answer.push(start_time);
     users_answer.push(getNow());
     users_answer.push(window.navigator.userAgent);
+
+    alert(users_answer);
 
     $.ajax({
         type: 'POST',
