@@ -66,7 +66,8 @@ function getImages() {
 // 表示・非表示処理多すぎて見づらかったので一括で処理
 // 消えないのあったら適宜追加
 function clear_page() {
-    document.getElementById('estimate_input_area').style.display = "none";
+    $("#estimate_input_area").css("display", "none");
+    //document.getElementById('estimate_input_area').style.display = "none";
     document.getElementById('check_sentence').style.display = "none";
     document.getElementById('check_sentence_rabit').style.display = "none";
     document.getElementById('check_sentence_pigeon').style.display = "none";
@@ -101,8 +102,10 @@ function to_next_scenario_description(animal) {
     } else if(animal == 1){
         $('#scenario_title').html(test_order['rabit']['title']);
         //document.getElementById('scenario_title').innerHTML = test_order['rabit']['title'];
-        document.getElementById('check_sentence_rabit').style.display = "inline-block";
-        document.getElementById('description_area_first_rabit').style.display = "inline-block";
+        $("#check_sentence_rabit").css("display", "inline-block");
+        //document.getElementById('check_sentence_rabit').style.display = "inline-block";
+        $("#description_area_first_rabit").css("display", "inline-block");
+        //document.getElementById('description_area_first_rabit').style.display = "inline-block";
 
         var scenario_description = [];
 
