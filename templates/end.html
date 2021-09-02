@@ -13,17 +13,17 @@
 </head>
 
 <body>
-    <h1>ご協力ありがとうございました。</h1>
-    <p>以下のコードを指定した回答欄に入力して下さい。</p>
-    <p>※間違ったコードを入力、または入力が無い場合は報酬をお支払いできません。</p><br> 
+    <div style="background-color: #AEFFBD; padding: 1px 11px;">
+    <h2 style="color: green">実験へのご協力ありがとうございました。</h2>
+    </div>
+    
+    <b><p>[報酬の受け取りについて]</p></b>
+    <p> 以下のコードを指定した回答欄に入力して下さい。</p>
+    <p><textarea id="complete_code" readonly></textarea><br><button id="copy_button">数字をコピーする</button></p>
+    <p>表示には数秒かかる場合があります。</p>
+    <p>長時間待ってもコードが表示されない場合、URLの末尾の「id=」から始まる数字をコードとしてご利用ください。</p>
+    <p>間違ったコードを入力、または入力が無い場合は報酬をお支払いできませんのでご了承ください。</p>
 
-    <textarea id="complete_code" readonly></textarea><br>
-    <button id="copy_button">数字をコピーする</button>
-
-    <p>表示に数秒かかる場合があります。</p>
-    <p>長時間待っても現れない場合、URLの末尾にございます「id=」に続く</p>
-    <b>数字列全て</b>
-    <p>をコピーし回答にご利用ください。</p>
 <script type="text/javascript">
 function copy(){
     document.getElementById('complete_code').select();

@@ -256,13 +256,13 @@ function to_next_new_sample_page(animal) {
 // 次の事例があるか確認し、存在しない場合は推定画面へ遷移
 function to_next_sample(animal) {
     if (current_test_page >= sample_num) {
-        alert('終了しました。次に、回答をしてください。');
+        alert('この動物の実験結果は以上になります。');
         draw_estimate('fin',animal);
         return;
     }
     // 10刺激ごとに因果関係の強さを聞く
     else if(current_test_page % 10 == 0 && current_test_page != 0 && current_test_page != sample_num){
-        alert('ここで回答ページへ移ります');
+        alert('回答ページへ移ります。');
         i = current_test_page / 10;
         draw_estimate('mid',animal,i);
         return;

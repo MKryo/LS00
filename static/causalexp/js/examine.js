@@ -67,8 +67,7 @@ function getImages() {
 // 消えないのあったら適宜追加
 function clear_page() {
     $("#estimate_input_area").css("display", "none");
-    //document.getElementById('estimate_input_area').style.display = "none";
-    document.getElementById('check_sentence').style.display = "none";
+    $("#estimate_input_area").css("display", "none");
     document.getElementById('check_sentence_rabit').style.display = "none";
     document.getElementById('check_sentence_pigeon').style.display = "none";
     document.getElementById('description_area_first').style.display = "none";
@@ -84,7 +83,6 @@ function clear_page() {
 function to_next_scenario_description(animal) {
     clear_page();
     
-
     if(animal == 0){
         document.getElementById('scenario_title').innerHTML = test_order['mouse']['title'];
         document.getElementById('check_sentence').style.display = "inline-block";
@@ -101,22 +99,16 @@ function to_next_scenario_description(animal) {
         
     } else if(animal == 1){
         $('#scenario_title').html(test_order['rabit']['title']);
-        //document.getElementById('scenario_title').innerHTML = test_order['rabit']['title'];
         $("#check_sentence_rabit").css("display", "inline-block");
-        //document.getElementById('check_sentence_rabit').style.display = "inline-block";
         $("#description_area_first_rabit").css("display", "inline-block");
-        //document.getElementById('description_area_first_rabit').style.display = "inline-block";
 
         var scenario_description = [];
 
-        //document.getElementById('same_sentence_rabit').style.display = "inline-block";
         document.getElementById('description_area_rabit').style.display = "inline-block";
 
         for (i in test_order['rabit']['description']) {
             scenario_description += test_order['rabit']['description'][i] + "<br>"
         }
-        
-        //document.getElementById('scenario_description').innerHTML = scenario_description;
 
         document.getElementById('scenario_description1_rabit').innerHTML = test_order['rabit']['description'][0];
         document.getElementById('scenario_description2_rabit').innerHTML = test_order['rabit']['description'][1];
@@ -264,13 +256,13 @@ function to_next_new_sample_page(animal) {
 // 次の事例があるか確認し、存在しない場合は推定画面へ遷移
 function to_next_sample(animal) {
     if (current_test_page >= sample_num) {
-        alert('終了しました。次に、回答をしてください。');
+        alert('この動物の実験結果は以上になります。');
         draw_estimate('fin',animal);
         return;
     }
     // 10刺激ごとに因果関係の強さを聞く
     else if(current_test_page % 10 == 0 && current_test_page != 0 && current_test_page != sample_num){
-        alert('ここで回答ページへ移ります');
+        alert('回答ページへ移ります。');
         i = current_test_page / 10;
         draw_estimate('mid',animal,i);
         return;

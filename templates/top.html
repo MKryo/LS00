@@ -33,8 +33,12 @@
 </head>
 
 <body>
-    <div id="examine_header">注意</div>
-    <div style="display: inline-grid;">
+    <h1 id="examine_header">注意事項</h1>
+    <p>以下の内容に同意いただける方はチェックボックスをクリックし、回答を開始してください。</p>
+    <p>同意いただけない方はこのまま画面を閉じてください。</p>
+
+    <div>
+    <div style="display: inline-grid;">    
         <p>本調査で得られたデータは、個人を特定できない統計データとして学術研究に使用させていただきます。</p>
         <p>皆様の回答はすべて暗号化し、サーバーに保存されます。</p>
         <p>また、個人のデータを取り出して分析が行われることもありません。</p>
@@ -51,6 +55,7 @@
         <p>その場合、報酬はお支払い致しませんのでご了承下さい。</p>
     </div>
     <br>
+    </div>
     <input type="checkbox" id="agreement" onclick="check_agreement1()" />
     <label for="agreement">同意します</label>
     <br>
