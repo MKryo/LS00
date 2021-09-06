@@ -13,17 +13,19 @@
 </head>
 
 <body>
-    <div style="background-color: #AEFFBD; padding: 1px 11px;">
-    <h2 style="color: green">実験へのご協力ありがとうございました。</h2>
+    <div style="background-color: #defae3; padding: 1px 11px;">
+    <h2 style="color: rgb(1, 110, 1); text-align: center;">実験へのご協力ありがとうございました。</h2>
     </div>
-    
-    <b><p>[報酬の受け取りについて]</p></b>
-    <p> 以下のコードを指定した回答欄に入力して下さい。</p>
-    <p><textarea id="complete_code" readonly></textarea><br><button id="copy_button">数字をコピーする</button></p>
-    <p>表示には数秒かかる場合があります。</p>
-    <p>長時間待ってもコードが表示されない場合、URLの末尾の「id=」から始まる数字をコードとしてご利用ください。</p>
-    <p>間違ったコードを入力、または入力が無い場合は報酬をお支払いできませんのでご了承ください。</p>
-
+    <div style="padding-left: 200px !important;padding-right: 200px !important;">
+    <ul style="background: #f3f9fc;border: 2px skyblue dashed;">
+        <h3>報酬の受け取りについて</h3>
+        <li> 以下のコードを指定した回答欄に入力して下さい。</li>
+        <li><textarea id="complete_code" readonly></textarea><br><button id="copy_button">数字をコピーする</button></li>
+        <li>表示には数秒かかる場合があります。</li>
+        <li>長時間待ってもコードが表示されない場合、URLの末尾の「id=」から始まる数字をコードとしてご利用ください。</li>
+        <li>間違ったコードを入力、または入力が無い場合は報酬をお支払いできませんのでご了承ください。</li>
+    </ul>
+    </div>
 <script type="text/javascript">
 function copy(){
     document.getElementById('complete_code').select();
