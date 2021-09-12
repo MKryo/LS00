@@ -10,8 +10,8 @@
         "images": {
             "p": "static/causalexp/img/mouse_blue.png",
             "notp": "static/causalexp/img/mouse_blue_kinshi.png",
-            "q": "static/causalexp/img/mouse_mutation.png",
-            "notq": "static/causalexp/img/mouse_unmutation.png"
+            "q": "static/causalexp/img/mutation.png",
+            "notq": "static/causalexp/img/unmutation.png"
         },
         "sentences": {
             "a": "マウスに5-HSという化学物質を投与した、遺伝子が突然変異した",
@@ -50,8 +50,8 @@
         "images": {
             "p": "static/causalexp/img/rabit_blue.png",
             "notp": "static/causalexp/img/rabit_blue_kinshi.png",
-            "q": "static/causalexp/img/rabit_mutation.png",
-            "notq": "static/causalexp/img/rabit_unmutation.png"
+            "q": "static/causalexp/img/mutation.png",
+            "notq": "static/causalexp/img/unmutation.png"
         },
         "sentences": {
             "a": "ウサギにPBTAという化学物質を投与した、遺伝子が突然変異した",

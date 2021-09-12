@@ -470,6 +470,8 @@ function get_value_fin() {
 // 推定画面のチェックが入ってるか確認する
 // ゲージ操作時にチェックボックスがアクティブ化する処理もまとめてしまったので気になるようなら変更してください
 function check_estimate() {
+
+    document.getElementById('checkbox').setAttribute("disabled",true);
     
     if (document.getElementById('checkbox').checked) {
         document.getElementById('estimate_next_scenario').removeAttribute("disabled");
@@ -486,7 +488,6 @@ function check_estimate() {
         document.getElementById('estimate_next_scenario_pigeon').setAttribute("disabled", true);
         document.getElementById('continue_scenario_pigeon').setAttribute("disabled", true);
     }
-
     document.getElementById('checkbox').removeAttribute("disabled");
 }
 

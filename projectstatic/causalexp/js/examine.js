@@ -396,6 +396,7 @@ function show_back_sample(animal) {
 
 function draw_estimate(c, animal,i) {
     clear_page();
+    document.getElementById('checkbox').setAttribute("disabled",true);
 
     if(animal==0){
         document.getElementById('estimate_input_area').style.display = 'inline-block';
@@ -486,7 +487,6 @@ function check_estimate() {
         document.getElementById('estimate_next_scenario_pigeon').setAttribute("disabled", true);
         document.getElementById('continue_scenario_pigeon').setAttribute("disabled", true);
     }
-
     document.getElementById('checkbox').removeAttribute("disabled");
 }
 
