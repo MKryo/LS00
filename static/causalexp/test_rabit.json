@@ -7,10 +7,10 @@
         "実験中のメモなどはお控えください。"
     ],
     "images": {
-        "p": "static/causalexp/img/rabit_blue.png",
-        "notp": "static/causalexp/img/rabit_blue_kinshi.png",
-        "q": "static/causalexp/img/rabit_mutation.png",
-        "notq": "static/causalexp/img/rabit_unmutation.png"
+        "p": "static/causalexp/img/rabbit_blue.png",
+        "notp": "static/causalexp/img/rabbit_blue_kinshi.png",
+        "q": "static/causalexp/img/rabbit_mutation.png",
+        "notq": "static/causalexp/img/rabbit_unmutation.png"
     },
     "sentences": {
         "a": "うさぎにPBTAという化学物質を投与した、遺伝子が突然変異した",
