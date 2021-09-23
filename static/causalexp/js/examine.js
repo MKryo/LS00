@@ -352,6 +352,8 @@ function select_next_sample(animal) {
         document.getElementById('next_sample_rabbit').style.display = 'none';
         document.getElementById('next_sample_pigeon').style.display = 'none';
         document.getElementById('Ans_select_button').style.display = 'none';
+        document.getElementById('Q_select_button').style.display = 'none';
+        document.getElementById('select_mutation').style.display = 'none';
         // 進捗バー更新
         progress_bar();
 
@@ -403,7 +405,6 @@ function show_back_sample(animal,isMutate) {
         document.getElementById('Q_select_button_pigeon').style.display = 'none';
         document.getElementById('next_sample_pigeon').style.display = 'inline';
     }
-
 }
 
 

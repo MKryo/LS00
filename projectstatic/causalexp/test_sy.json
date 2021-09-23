@@ -90,8 +90,8 @@
         "images": {
             "p": "static/causalexp/img/pigeon_blue.png",
             "notp": "static/causalexp/img/pigeon_blue_kinshi.png",
-            "q": "static/causalexp/img/pigeon_mutation.png",
-            "notq": "static/causalexp/img/pigeon_unmutation.png"
+            "q": "static/causalexp/img/mutation.png",
+            "notq": "static/causalexp/img/unmutation.png"
         },
         "sentences": {
             "a": "ハトに2,3-MEという化学物質を投与した、遺伝子が突然変異した",
