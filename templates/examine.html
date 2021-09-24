@@ -55,85 +55,11 @@
                 </form>
             </div>
         </div>
-        <button id="start_scenario_button" class="next_button" style="cursor: hand; cursor:pointer;" onclick="to_next_new_sample_page(0)"
-            disabled>このシナリオを<br>開始する</button>
-    </div>
-
-
-
-    <div id="description_area_rabbit" class="area" style="display:none;">
-        <p id="scenario_description_rabbit" style="display: none;"></p><br>
-        <div id="description_area_first_rabbit" class="area" style="display:none;">
-            <p id="check_sentence_rabbit" style="display:none;">それぞれの項目を読んだら左側のチェックボックスをチェックし、回答ページに進んでください。<br></p>
-            <div id="scenario_description_first_rabbit" style="text-align: left;">
-                <form action="cgi-bin/abc.cgi" method="post">
-                    <p>
-                        <input class="checks_rabbit" type="checkbox" style="transform:scale(1.5)"
-                            onclick="check_description_rabbit()" />
-                        <label for="checkbox1" id="scenario_description1_rabbit"></label>
-                    </p>
-                    <p>
-                        <input class="checks_rabbit" type="checkbox" style="transform:scale(1.5)"
-                            onclick="check_description_rabbit()" />
-                        <label for="checkbox2" id="scenario_description2_rabbit"></label>
-                    </p>
-                    <br>
-                    <p>
-                        <input class="checks_rabbit" type="checkbox" style="transform:scale(1.5)"
-                            onclick="check_description_rabbit()" />
-                        <label for="checkbox3" id="scenario_description3_rabbit"></label>
-                    </p>
-                    <br>
-                    <p>
-                        <input class="checks_rabbit" type="checkbox" style="transform:scale(1.5)"
-                            onclick="check_description_rabbit()" />
-                        <label for="checkbox4" id="scenario_description4_rabbit"></label>
-                    </p>
-                </form>
-            </div>
+        <div>
+            <button id="start_scenario_button" class="next_button" style="cursor: hand; cursor:pointer;" onclick="to_next_new_sample_page()"
+                disabled>このシナリオを<br>開始する</button>
         </div>
-        <button id="start_scenario_button_rabbit" class="next_button" style="cursor: hand; cursor:pointer;" onclick="to_next_new_sample_page(1)"
-            disabled>このシナリオを<br>開始する</button>
     </div>
-
-
-    <div id="description_area_pigeon" class="area" style="display:none;">
-        <p id="scenario_description_pigeon" style="display: none;"></p><br>
-        <div id="description_area_first_pigeon" class="area" style="display:none;">
-            <p id="check_sentence_pigeon" style="display:none;">それぞれの項目を読んだら左側のチェックボックスをチェックし、回答ページに進んでください。<br></p>
-            <div id="scenario_description_first_pigeon" style="text-align: left;">
-                <form action="cgi-bin/abc.cgi" method="post">
-                    <p>
-                        <input class="checks_pigeon" type="checkbox" style="transform:scale(1.5)"
-                            onclick="check_description_pigeon()" />
-                        <label for="checkbox1" id="scenario_description1_pigeon"></label>
-                    </p>
-                    <p>
-                        <input class="checks_pigeon" type="checkbox" style="transform:scale(1.5)"
-                            onclick="check_description_pigeon()" />
-                        <label for="checkbox2" id="scenario_description2_pigeon"></label>
-                    </p>
-                    <br>
-                    <p>
-                        <input class="checks_pigeon" type="checkbox" style="transform:scale(1.5)"
-                            onclick="check_description_pigeon()" />
-                        <label for="checkbox3" id="scenario_description3_pigeon"></label>
-                    </p>
-                    <br>
-                    <p>
-                        <input class="checks_pigeon" type="checkbox" style="transform:scale(1.5)"
-                            onclick="check_description_pigeon()" />
-                        <label for="checkbox4" id="scenario_description4_pigeon"></label>
-                    </p>
-                </form>
-            </div>
-        </div>
-        <button id="start_scenario_button_pigeon" class="next_button" style="cursor: hand; cursor:pointer;" onclick="to_next_new_sample_page(2)"
-            disabled>このシナリオを<br>開始する</button>
-    </div>
-
-
-
 
     <br>
 
@@ -151,49 +77,30 @@
             <span id='last_sentence'></span>
         </div><hr><br>
 
-        <div id="Q_select_button">
-            <h2>Q. 上記の結果を見てマウスの遺伝子が突然変異したかどうか、正しいと思う方のボタンを直感で選択してください</h2>
-        </div>
-
-        <div id="Q_select_button_rabbit" style="display: none;">
-            <h2>Q. 上記の結果を見てウサギの遺伝子が突然変異したかどうか、正しいと思う方のボタンを直感で選択してください</h2>
-        </div>
-
-        <div id="Q_select_button_pigeon" style="display: none;">
-            <h2>Q. 上記の結果を見てハトの遺伝子が突然変異したかどうか、正しいと思う方のボタンを直感で選択してください</h2>
-        </div>
+        <div id="Q_select_button"></div>
 
         <div id="Ans_select_button">
             <h2>A. 実際の結果は上の通りでした</h2>
         </div>
 
-        <div id="select_mutation">
-            <button style="cursor: hand; cursor:pointer;" onclick="show_back_sample(0,1)">変異する</button>
-            <button style="cursor: hand; cursor:pointer;" onclick="show_back_sample(0,0)">変異しない</button>
+        <div id="predict_effect">
+            <button style="cursor: hand; cursor:pointer;" onclick="show_back_sample(1)">変異する</button>
+            <button style="cursor: hand; cursor:pointer;" onclick="show_back_sample(0)">変異しない</button>
         </div>
-        <div id="select_mutation_rabbit" style="display: none;">
-            <button style="cursor: hand; cursor:pointer; " onclick="show_back_sample(1,1)">変異する</button>
-            <button style="cursor: hand; cursor:pointer; " onclick="show_back_sample(1,0)">変異しない</button>
-        </div>
-        <div id="select_mutation_pigeon" style="display: none;">
-            <button style="cursor: hand; cursor:pointer; " onclick="show_back_sample(2,1)">変異する</button>
-            <button style="cursor: hand; cursor:pointer; " onclick="show_back_sample(2,0)">変異しない</button>
-        </div>
-        <button id="next_sample" class="next_button"  style="display: none; cursor: hand; cursor:pointer;" onclick="to_next_sample(0);">次の事例へ</button>
-        <button id="next_sample_rabbit" class="next_button"  style="display: none; cursor: hand; cursor:pointer;" onclick="to_next_sample(1);">次の事例へ</button>
-        <button id="next_sample_pigeon" class="next_button"  style="display: none; cursor: hand; cursor:pointer;" onclick="to_next_sample(2);">次の事例へ</button>
+        <button id="next_sample" class="next_button"  style="display: none; cursor: hand; cursor:pointer;" onclick="to_next_sample();">次の事例へ</button>
     </div>
 
     <br>
     <div id="estimate_input_area" class="area" style="display:none">
         <div id="estimate_description"></div><br>
-        <form oninput="estimate.value = Number(estimate_gage.value);">
+        <form oninput="estimate.value = Number(estimate_slider.value);">
             <!--{% csrf_token %}-->
-            <b>
-                <p><output id="estimate">0</output></p>
-            </b>
-            <P><input id="estimate_gage" type="range" min="-0" max="100" step="1" value="0" onchange="check_estimate()">
-            </P>
+            <p>
+                <b><output id="estimate">0</output></b>
+            </p>
+            <p>
+                <input id="estimate_slider" type="range" min="-0" max="100" step="1" value="0" onchange="check_estimate()">
+            </p>
         </form>
         <br>
         <input type="checkbox" id="checkbox" style="transform:scale(1.5)" disabled onclick="check_estimate()" />
@@ -202,19 +109,13 @@
             <b>ボタンは1回押していただくだけで結構です。</b>
             <b>送信に時間がかかる場合がありますので、最低30秒お待ちください。</b>
         </div>
-        <button id="estimate_next_scenario" class="next_button" style="display:none; cursor: hand; cursor:pointer;" disabled
-            onclick="to_next_scenario_description(1);get_value(0)">次のシナリオへ進む</button>
-        <button id="estimate_next_scenario_rabbit" class="next_button" style="display:none; cursor: hand; cursor:pointer;" disabled
-            onclick="to_next_scenario_description(2);get_value(1)">次のシナリオへ進む</button>
-        <button id="estimate_next_scenario_pigeon" class="next_button" style="display:none; cursor: hand; cursor:pointer;" disabled
-            onclick="get_value_fin(2)">回答を終了する</button>
+        <button id="next_scenario" style="display:none; cursor: hand; cursor:pointer;" disabled
+            onclick="to_next_scenario_description();get_value()">次のシナリオへ進む</button>
+        <button id="finish_all_scenarios" style="display:none; cursor: hand; cursor:pointer;" disabled
+            onclick="get_value_fin()">回答を終了する</button>
 
         <button id="continue_scenario" style="display:inline-grid; cursor: hand; cursor:pointer;" disabled 
-            onclick="select_next_sample(0);get_value(0)">シナリオを続ける</button>
-        <button id="continue_scenario_rabbit" style="display:none; cursor: hand; cursor:pointer;" disabled 
-            onclick="select_next_sample(1);get_value(1)">シナリオを続ける</button>
-        <button id="continue_scenario_pigeon" style="display:none; cursor: hand; cursor:pointer;" disabled 
-            onclick="select_next_sample(2);get_value(2)">シナリオを続ける</button>
+            onclick="select_next_sample();get_value()">シナリオを続ける</button>
     </div>
 </body>
 

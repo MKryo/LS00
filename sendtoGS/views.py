@@ -11,8 +11,8 @@ def send(request):
     try:
         raw_data = dict(request.POST)
         data = json.loads(raw_data["data"][0])
-        sheet_name = raw_data["sheet_name"][0]
-        filepath = os.path.join('.', 'res_' + sheet_name + '.csv')
+        file_name = raw_data["file_name"][0]
+        filepath = os.path.join('.', 'res_' + file_name + '.csv')
 
         # res.csvが存在しないとき，作成し，ヘッダーを書き込む
         if not os.path.exists(filepath):

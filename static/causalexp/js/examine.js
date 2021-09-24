@@ -1,5 +1,4 @@
-var file = '../static/causalexp/test_sy.json';
-
+let file = '../static/causalexp/test_sy.json';
 var user_data = [];
 var test_order = [];
 var current_sample_selection = [];
@@ -7,10 +6,10 @@ var estimations = [];
 var predictions = [];
 var sample_order = [];
 var mutation_prediction = [];
-
-image_type = ["p", "notp", "q", "notq"];
-img_combination = new Array();
-img_combination = {
+let scenarios = shuffle(['mouse','rabbit','pigeon']);
+let image_type = ["p", "notp", "q", "notq"];
+// img_combination = new Array();
+let img_combination = {
     'a': {'cause': 'p', 'effect': 'q'},
     'b': {'cause': 'p', 'effect': 'notq'},
     'c': {'cause': 'notp', 'effect': 'q'},
@@ -22,15 +21,13 @@ let stim_dict = {
     'c': {'cause': 0, 'effect': 1},
     'd': {'cause': 0, 'effect': 0}
 }
-
 var flag = 0; // シナリオの初回表示判定に使用
 var current_test_order = 0;
 var current_test_page = 0; // 何事例目か
 var sample_size = 0; // 現在の設問の事例の総数
 var user_id = 0;
 var start_time = getNow();
-
-var animal = 0;// 動物の判別
+var sce_idx = 0;// 動物の判別
 var pred_i = 0;
 var EST_INTERVAL = 10;
 var cell_size = 0;
@@ -43,11 +40,10 @@ window.onload = function() {
     // ランダム数列の発行
     user_id = Math.round(Math.random() * 100000000);
     user_id = zeroPadding(user_id, 8);
-
     test_order = read_json(file);
     estimations = new Array();
     getImages();
-    to_next_scenario_description(animal);
+    to_next_scenario_description();
 }
 
 function read_json(filename) {
@@ -61,19 +57,12 @@ function read_json(filename) {
 }
 
 function getImages() {
-    for(type in image_type){
-        var img = document.createElement('img');
-        img.src = `../${test_order['mouse']['images'][image_type[type]]}`;
+    for (scenario in scenarios){
+        for(type in image_type){
+            var img = document.createElement('img');
+            img.src = `../${test_order[scenarios[scenario]]['images'][image_type[type]]}`;
+        }
     }
-    for(type in image_type){
-        var img = document.createElement('img');
-        img.src = `../${test_order['rabbit']['images'][image_type[type]]}`;
-    }
-    for(type in image_type){
-        var img = document.createElement('img');
-        img.src = `../${test_order['pigeon']['images'][image_type[type]]}`;
-    }
-
     document.getElementById('preload_image').style.display = "none";
 }
 
@@ -81,75 +70,30 @@ function getImages() {
 // 消えないのあったら適宜追加
 function clear_page() {
     $("#estimate_input_area").css("display", "none");
-    $("#estimate_input_area").css("display", "none");
-    document.getElementById('check_sentence_rabbit').style.display = "none";
-    document.getElementById('check_sentence_pigeon').style.display = "none";
-    document.getElementById('description_area_first').style.display = "none";
-    document.getElementById('description_area_first_rabbit').style.display = "none";
-    document.getElementById('description_area_first_pigeon').style.display = "none";
-    document.getElementById('description_area').style.display = "none";
-    document.getElementById('description_area_rabbit').style.display = "none";
-    document.getElementById('description_area_pigeon').style.display = "none";
-    document.getElementById('show_sample_area').style.display = 'none';
+    // document.getElementById('check_sentence_rabbit').style.display = "none";
+    // document.getElementById('check_sentence_pigeon').style.display = "none";
+    // document.getElementById('description_area_first').style.display = "none";
+    // document.getElementById('description_area_first_rabbit').style.display = "none";
+    // document.getElementById('description_area_first_pigeon').style.display = "none";
+    // document.getElementById('description_area').style.display = "none";
+    // document.getElementById('description_area_rabbit').style.display = "none";
+    // document.getElementById('description_area_pigeon').style.display = "none";
+    // document.getElementById('show_sample_area').style.display = 'none';
 }
 
-// シナリオの表示 (初回のみチェックボックス有)
-function to_next_scenario_description(animal) {
+// シナリオの表示
+function to_next_scenario_description() {
+    sce_idx++;
     clear_page();
-    
-    if(animal == 0){
-        document.getElementById('scenario_title').innerHTML = test_order['mouse']['title'];
-        document.getElementById('check_sentence').style.display = "inline-block";
-        document.getElementById('description_area').style.display = "inline-block";
-        document.getElementById('description_area_first').style.display = "inline-block";
-
-        var scenario_description = [];
-
-        document.getElementById('scenario_description1').innerHTML = test_order['mouse']['description'][0];
-        document.getElementById('scenario_description2').innerHTML = test_order['mouse']['description'][1];
-        document.getElementById('scenario_description3').innerHTML = test_order['mouse']['description'][2];
-        document.getElementById('scenario_description4').innerHTML = test_order['mouse']['description'][3];
-        document.getElementById('start_scenario_button_rabbit').style.display = "none";
-        
-    } else if(animal == 1){
-        $('#scenario_title').html(test_order['rabbit']['title']);
-        $("#check_sentence_rabbit").css("display", "inline-block");
-        $("#description_area_first_rabbit").css("display", "inline-block");
-
-        var scenario_description = [];
-
-        document.getElementById('description_area_rabbit').style.display = "inline-block";
-
-        for (i in test_order['rabbit']['description']) {
-            scenario_description += test_order['rabbit']['description'][i] + "<br>"
-        }
-
-        document.getElementById('scenario_description1_rabbit').innerHTML = test_order['rabbit']['description'][0];
-        document.getElementById('scenario_description2_rabbit').innerHTML = test_order['rabbit']['description'][1];
-        document.getElementById('scenario_description3_rabbit').innerHTML = test_order['rabbit']['description'][2];
-        document.getElementById('scenario_description4_rabbit').innerHTML = test_order['rabbit']['description'][3];
-        document.getElementById('start_scenario_button').style.display = "none";
-        document.getElementById('start_scenario_button_rabbit').style.display = "inline-block";
-
-    } else if(animal == 2){
-        var scenario_description = [];
-        document.getElementById('scenario_title').innerHTML = test_order['pigeon']['title'];
-        document.getElementById('check_sentence_pigeon').style.display = "inline-block";
-        document.getElementById('description_area_first_pigeon').style.display = "inline-block";
-        document.getElementById('description_area_pigeon').style.display = "inline-block";
-        
-
-        for (i in test_order['pigeon']['description']) {
-            scenario_description += test_order['pigeon']['description'][i] + "<br>"
-        }
-        document.getElementById('scenario_description').innerHTML = scenario_description;
-
-        document.getElementById('scenario_description1_pigeon').innerHTML = test_order['pigeon']['description'][0];
-        document.getElementById('scenario_description2_pigeon').innerHTML = test_order['pigeon']['description'][1];
-        document.getElementById('scenario_description3_pigeon').innerHTML = test_order['pigeon']['description'][2];
-        document.getElementById('scenario_description4_pigeon').innerHTML = test_order['pigeon']['description'][3];
-        document.getElementById('start_scenario_button_rabbit').style.display = "none";
-        document.getElementById('start_scenario_button_pigeon').style.display = "inline-block";
+    document.getElementById('scenario_title').innerHTML = test_order[scenarios[sce_idx]]['jp_name'] + 
+        "に" + test_order[scenarios[sce_idx]]['chemicals'] + "という化学物質を投与した時の実験記録";
+    document.getElementById('check_sentence').style.display = "inline-block";
+    document.getElementById('description_area').style.display = "inline-block";
+    document.getElementById('description_area_first').style.display = "inline-block";
+    let desc_len = test_order[scenarios[sce_idx]]['descriptions'];
+    console.log(desc_len);
+    for (let i = 0; i < desc_len; i++) {
+        document.getElementById('scenario_description'+String(i+1)).innerHTML = test_order[scenarios[sce_idx]]['description'][i];
     }
 }
 
@@ -162,38 +106,8 @@ function check_description() {
     }
     if (count == checks.length) {
         document.getElementById('start_scenario_button').removeAttribute("disabled");
-    } else {
-        document.getElementById('start_scenario_button').setAttribute("disabled", true);
     }
 }
-
-// ウサギの事例用
-function check_description_rabbit() {
-    let checks = document.getElementsByClassName("checks_rabbit");
-    let count = 0;
-    for (let i = 0 ; i < checks.length ; i++) {
-        if (checks[i].checked) count++;
-    }
-    if (count == checks.length) {
-        document.getElementById('start_scenario_button_rabbit').removeAttribute("disabled");
-    } else {
-        document.getElementById('start_scenario_button_rabbit').setAttribute("disabled", true);
-    }
-}
-// ハトの事例用
-function check_description_pigeon() {
-    let checks = document.getElementsByClassName("checks_pigeon");
-    let count = 0;
-    for (let i = 0 ; i < checks.length ; i++) {
-        if (checks[i].checked) count++;
-    }
-    if (count == checks.length) {
-        document.getElementById('start_scenario_button_pigeon').removeAttribute("disabled");
-    } else {
-        document.getElementById('start_scenario_button_pigeon').setAttribute("disabled", true);
-    }
-}
-
 
 // 進捗バーを更新する関数
 function progress_bar(){
@@ -202,314 +116,143 @@ function progress_bar(){
 }
 
 // 事例を表示する画面へ遷移
-// 次に表示するテストケースの準備
-// start_scenario_buttonから呼び出し
-// シャッフルされた事例がnext_sampleに格納される
-function to_next_new_sample_page(animal) {
+function to_next_new_sample_page() {
     clear_page();
-    sample_size = 0;
     current_test_page = 0;
-    current_sample_selection = [];
-
     document.getElementById('show_sample_area').style.display = "inline";
     document.getElementById('sample_after').style.display = "none";
     document.getElementById('last_sentence').style.display = "none";
 
-    if (animal == 0){
-        // 現在の設問の事例の総数を取得
-        Object.keys(test_order['mouse']['samples'][current_test_order]['frequency']).forEach(function(elm) {
-            if (test_order['mouse']['samples'][current_test_order]['frequency'][elm] > 0) {
-                sample_size += test_order['mouse']['samples'][current_test_order]['frequency'][elm];
-                cell_size = test_order['mouse']['samples'][current_test_order]['frequency'][elm];
-                for (let i = 0 ; i < cell_size ; i++) {
-                    current_sample_selection.push(elm);
-                }
+    // 提示するサンプルのリストを作り、サンプルサイズを求める。
+    current_sample_selection = [];
+    sample_size = 0;
+    Object.keys(test_order[scenarios[sce_idx]]['samples']['frequency']).forEach(function(elm) {
+        if (test_order[scenarios[sce_idx]]['samples']['frequency'][elm] > 0) {
+            sample_size += test_order[scenarios[sce_idx]]['samples']['frequency'][elm];
+            cell_size = test_order[scenarios[sce_idx]]['samples']['frequency'][elm];
+            for (let i = 0 ; i < cell_size ; i++) {
+                current_sample_selection.push(elm);
             }
-        });
+        }
+    });
+    current_sample_selection = shuffle(current_sample_selection);
 
-        current_sample_selection = shuffle(current_sample_selection);
-
-        to_next_sample(animal);
-    }
-    if (animal == 1){
-        // 現在の設問の事例の総数を取得
-        Object.keys(test_order['rabbit']['samples'][0]['frequency']).forEach(function(elm) {
-            if (test_order['rabbit']['samples'][0]['frequency'][elm] > 0) {
-                sample_size += test_order['rabbit']['samples'][0]['frequency'][elm];
-                cell_size = test_order['rabbit']['samples'][0]['frequency'][elm];
-                for (let i = 0 ; i < cell_size ; i++) {
-                    current_sample_selection.push(elm);
-                }
-            }
-        });
-
-        current_sample_selection = shuffle(current_sample_selection);
-
-        to_next_sample(animal);
-    }
-    if (animal == 2){
-        // 現在の設問の事例の総数を取得
-        Object.keys(test_order['pigeon']['samples'][0]['frequency']).forEach(function(elm) {
-            if (test_order['pigeon']['samples'][0]['frequency'][elm] > 0) {
-                sample_size += test_order['pigeon']['samples'][0]['frequency'][elm];
-                cell_size = test_order['pigeon']['samples'][0]['frequency'][elm];
-                for (let i = 0 ; i < cell_size ; i++) {
-                    current_sample_selection.push(elm);
-                }
-            }
-        });
-
-        current_sample_selection = shuffle(current_sample_selection);
-
-        to_next_sample(animal);
-    }
+    to_next_sample();
 }
 
 // 次の事例があるか確認し、存在しない場合は推定画面へ遷移
-function to_next_sample(animal) {
+function to_next_sample() {
     if (current_test_page >= sample_size) {
         alert('この動物の実験結果は以上になります。');
-        draw_estimate('fin',animal);
+        draw_estimate('fin');
         return;
     }
     // 10刺激ごとに因果関係の強さを聞く
     else if(current_test_page % EST_INTERVAL == 0 && current_test_page != 0 && current_test_page != sample_size){
         alert('回答ページへ移ります。');
-        i = current_test_page / EST_INTERVAL;
-        draw_estimate('mid',animal,i);
+        draw_estimate('mid');
         return;
     }
-    select_next_sample(animal);
+    select_next_sample();
 }
 
-function select_next_sample(animal) {
+function select_next_sample() {
     var sample = current_sample_selection[pred_i];
-    if (animal == 0){
-        var desc = test_order['mouse']['sentences'][sample];
-        desc = desc.split('、');
-        
-        document.getElementById('estimate_input_area').style.display = 'none';
-        document.getElementById('show_sample_area').style.display = "inline";
-
-        document.getElementById('first_sentence').style.display = 'inline';
-        document.getElementById('sample_before').style.display = 'inline';
-        document.getElementById('select_mutation').style.display = 'inline';
-        document.getElementById('Q_select_button').style.display = 'inline';
-        document.getElementById('last_sentence').style.display = 'none';
-        document.getElementById('sample_after').style.display = 'none';
-        document.getElementById('next_sample').style.display = 'none';
-        document.getElementById('Ans_select_button').style.display = 'none';
-        // 進捗バー更新
-        progress_bar();
-
-
-        document.getElementById('sample_before').src = `../${test_order['mouse']['images'][img_combination[sample]['cause']]}`;
-        document.getElementById('sample_after').src = `../${test_order['mouse']['images'][img_combination[sample]['effect']]}`;
-
-        //document.getElementById('order').innerHTML = '設問' + (current_test_order + 1) + ' - ' + (current_test_page + 1) + '件目'
-        
-
-        current_test_page++;
-    } else if (animal == 1){
-        var desc = test_order['rabbit']['sentences'][sample];
-        desc = desc.split('、');
-
-        document.getElementById('estimate_input_area').style.display = 'none';
-        document.getElementById('show_sample_area').style.display = "inline";
-
-        document.getElementById('first_sentence').style.display = 'inline';
-        document.getElementById('sample_before').style.display = 'inline';
-        document.getElementById('select_mutation_rabbit').style.display = 'inline';
-        document.getElementById('Q_select_button_rabbit').style.display = 'inline';
-        document.getElementById('last_sentence').style.display = 'none';
-        document.getElementById('sample_after').style.display = 'none';
-        document.getElementById('next_sample').style.display = 'none';
-        document.getElementById('next_sample_rabbit').style.display = 'none';
-        document.getElementById('Ans_select_button').style.display = 'none';
-        // 進捗バー更新
-        progress_bar();
-
-        document.getElementById('sample_before').src = `../${test_order['rabbit']['images'][img_combination[sample]['cause']]}`;
-        document.getElementById('sample_after').src = `../${test_order['rabbit']['images'][img_combination[sample]['effect']]}`;
-
-        //document.getElementById('order').innerHTML = '設問' + (current_test_order + 1) + ' - ' + (current_test_page + 1) + '件目'
-
-        current_test_page++;
-    } else if (animal == 2){
-        var desc = test_order['pigeon']['sentences'][sample];
-        desc = desc.split('、');
-
-        document.getElementById('estimate_input_area').style.display = 'none';
-        document.getElementById('show_sample_area').style.display = "inline";
-
-        document.getElementById('first_sentence').style.display = 'inline';
-        document.getElementById('sample_before').style.display = 'inline';
-        document.getElementById('select_mutation_pigeon').style.display = 'inline';
-        document.getElementById('Q_select_button_pigeon').style.display = 'inline';
-        document.getElementById('last_sentence').style.display = 'none';
-        document.getElementById('sample_after').style.display = 'none';
-        document.getElementById('next_sample').style.display = 'none';
-        document.getElementById('next_sample_rabbit').style.display = 'none';
-        document.getElementById('next_sample_pigeon').style.display = 'none';
-        document.getElementById('Ans_select_button').style.display = 'none';
-        document.getElementById('Q_select_button').style.display = 'none';
-        document.getElementById('select_mutation').style.display = 'none';
-        // 進捗バー更新
-        progress_bar();
-
-        document.getElementById('sample_before').src = `../${test_order['pigeon']['images'][img_combination[sample]['cause']]}`;
-        document.getElementById('sample_after').src = `../${test_order['pigeon']['images'][img_combination[sample]['effect']]}`;
-
-        //document.getElementById('order').innerHTML = '設問' + (current_test_order + 1) + ' - ' + (current_test_page + 1) + '件目'
-        current_test_page++;
-    }
+    var desc = test_order[scenarios[sce_idx]]['sentences'][sample];
+    desc = desc.split('、');
     document.getElementById('first_sentence').innerHTML = desc[0];
     document.getElementById('last_sentence').innerHTML = desc[1];
+
+    document.getElementById('estimate_input_area').style.display = 'none';
+    document.getElementById('show_sample_area').style.display = "inline";
+    document.getElementById('first_sentence').style.display = 'inline';
+    document.getElementById('sample_before').style.display = 'inline';
+    document.getElementById('select_mutation').style.display = 'inline';
+    document.getElementById('Q_select_button').style.display = 'inline';
+    document.getElementById('last_sentence').style.display = 'none';
+    document.getElementById('sample_after').style.display = 'none';
+    document.getElementById('next_sample').style.display = 'none';
+    document.getElementById('Ans_select_button').style.display = 'none';
+    document.getElementById('sample_before').src = `../${test_order[scenarios[sce_idx]]['images'][img_combination[sample]['cause']]}`;
+    document.getElementById('sample_after').src = `../${test_order[scenarios[sce_idx]]['images'][img_combination[sample]['effect']]}`;
+    // 進捗バー更新
+    progress_bar();
+    current_test_page++;
 }
 
-
-
-function show_back_sample(animal,isMutate) {
+function show_back_sample(is_mutate) {
     let stim = current_sample_selection[pred_i];
 
     append_prediction(
-        animal=animal,
+        animal=scenarios[sce_idx],
         pred_i=pred_i,
         stimulation=stim,
         cause=stim_dict[stim]['cause'],
         effect=stim_dict[stim]['effect'], 
-        prediction=isMutate
+        prediction=is_mutate
     );
     pred_i++;
     pred_i %= sample_size;
     
     document.getElementById('first_sentence').style.display = 'none';
     document.getElementById('sample_before').style.display = 'none';
-    
-    
+    document.getElementById('select_mutation').style.display = 'none';
+    document.getElementById('Q_select_button').style.display = 'none';
     document.getElementById('Ans_select_button').style.display = 'inline';
     document.getElementById('last_sentence').style.display = 'inline';
     document.getElementById('sample_after').style.display = 'inline';
-    if(animal==0){
-        document.getElementById('select_mutation').style.display = 'none';
-        document.getElementById('Q_select_button').style.display = 'none';
-        document.getElementById('next_sample').style.display = 'inline';
-    }
-    if(animal==1){
-        document.getElementById('select_mutation_rabbit').style.display = 'none';
-        document.getElementById('Q_select_button_rabbit').style.display = 'none';
-        document.getElementById('next_sample_rabbit').style.display = 'inline';
-    }
-    if(animal==2){
-        document.getElementById('select_mutation_pigeon').style.display = 'none';
-        document.getElementById('Q_select_button_pigeon').style.display = 'none';
-        document.getElementById('next_sample_pigeon').style.display = 'inline';
-    }
+    document.getElementById('next_sample').style.display = 'inline';
 }
 
-
-
-function draw_estimate(c, animal,i) {
+function draw_estimate(c) {
     clear_page();
     document.getElementById('checkbox').setAttribute("disabled",true);
+    document.getElementById('next_scenario').style.display = 'none';
+    document.getElementById('estimate_input_area').style.display = 'inline-block';
+    document.getElementById('next_scenario').setAttribute("disabled", true);
+    document.getElementById('continue_scenario').style.display = 'inline';
+    document.getElementById('estimate_slider').value = 50;
+    document.getElementById('estimate').innerHTML = 50;
+    document.getElementById('checkbox').checked = false;
 
-    if(animal==0){
-        document.getElementById('estimate_input_area').style.display = 'inline-block';
-        document.getElementById('estimate_next_scenario').setAttribute("disabled", true);
-
-        document.getElementById('estimate_gage').value = 50;
-        document.getElementById('estimate').innerHTML = 50;
-        document.getElementById('checkbox').checked = false;
-
-        if (c=='fin'){
-            document.getElementById('continue_scenario').style.display = 'none';
-            document.getElementById('estimate_next_scenario').style.display = 'inline';
-        }
-
-        document.getElementById('estimate_description').innerHTML = '<p>' + test_order['mouse']['result'] + 'と思いますか？</p><br>' + 
-                                                                '<p>0: 5-HSという化学物質の投与はマウスの遺伝子の変異を全く引き起こさない</p><br>' + 
-                                                                '<p>100: 5-HSという化学物質の投与はマウスの遺伝子の変異を確実に引き起こす </p><br>' +
-                                                                '<p>として、0から100の値で<b>直感的に</b>回答してください。</p><br>'   
+    if (c=='fin'){
+        document.getElementById('continue_scenario').style.display = 'none';
+        document.getElementById('next_scenario').style.display = 'inline';
     }
-    if(animal==1){
-        document.getElementById('estimate_next_scenario').style.display = 'none';
-        document.getElementById('estimate_input_area').style.display = 'inline-block';
-        document.getElementById('estimate_next_scenario_rabbit').setAttribute("disabled", true);
-    
-        document.getElementById('estimate_gage').value = 50;
-        document.getElementById('estimate').innerHTML = 50;
-        document.getElementById('checkbox').checked = false;
-        document.getElementById('continue_scenario_rabbit').style.display = 'inline';
-    
-        if (c=='fin'){
-            document.getElementById('continue_scenario_rabbit').style.display = 'none';
-            document.getElementById('estimate_next_scenario_rabbit').style.display = 'inline';
-        }
-    
-        document.getElementById('estimate_description').innerHTML = '<p>' + test_order['rabbit']['result'] + 'と思いますか？</p><br>' + 
-                                                                    '<p>0: 5-HSという化学物質の投与はウサギの遺伝子の変異を全く引き起こさない</p><br>' + 
-                                                                    '<p>100: 5-HSという化学物質の投与はウサギの遺伝子の変異を確実に引き起こす </p><br>' +
-                                                                    '<p>として、0から100の値で<b>直感的に</b>回答してください。</p><br>'
-    }
-    if(animal==2){
-        document.getElementById('estimate_input_area').style.display = 'inline-block';
-        document.getElementById('estimate_next_scenario_pigeon').setAttribute("disabled", true);
-    
-        document.getElementById('estimate_gage').value = 50;
-        document.getElementById('estimate').innerHTML = 50;
-        document.getElementById('checkbox').checked = false;
-        document.getElementById('continue_scenario_pigeon').style.display = 'inline';
-        document.getElementById('estimate_next_scenario_rabbit').style.display = 'none';
-    
-        if (c=='fin'){
-            document.getElementById('continue_scenario_pigeon').style.display = 'none';
-            document.getElementById('estimate_next_scenario_rabbit').style.display = 'none';
-            document.getElementById('estimate_next_scenario_pigeon').style.display = 'inline';
-            
-        }
-    
-        document.getElementById('estimate_description').innerHTML = '<p>' + test_order['pigeon']['result'] + 'と思いますか？</p><br>' + 
-                                                                    '<p>0: 5-HSという化学物質の投与はハトの遺伝子の変異を全く引き起こさない</p><br>' + 
-                                                                    '<p>100: 5-HSという化学物質の投与はハトの遺伝子の変異を確実に引き起こす </p><br>' +
-                                                                    '<p>として、0から100の値で<b>直感的に</b>回答してください。</p><br>'       
-    }
+
+    document.getElementById('estimate_description').innerHTML = 
+        '<p>' + test_order[scenarios[sce_idx]]['result'] + 'と思いますか？</p><br>' + 
+        '<p>0: ' + test_order[scenarios[sce_idx]]['chemicals'] + 'という化学物質の投与は' +
+        test_order[scenarios[sce_idx]]['jp_name'] + 'の遺伝子の変異を全く引き起こさない</p><br>' + 
+        '<p>100: ' + test_order[scenarios[sce_idx]]['chemicals'] + 'という化学物質の投与は' +
+        test_order[scenarios[sce_idx]]['jp_name'] + 'の遺伝子の変異を確実に引き起こす </p><br>' +
+        '<p>として、0から100の値で<b>直感的に</b>回答してください。</p><br>'
 }
 
-function get_value(animal) {
-
+function get_value() {
     let est_i = parseInt(pred_i / EST_INTERVAL, 10);
-    
     append_estimation(
-        animal=animal,
+        animal=scenarios[sce_idx],
         est_i=est_i,
-        estimation=document.getElementById('estimate_gage').value
+        estimation=document.getElementById('estimate_slider').value
     );
 }
-function get_value_fin(animal) {
-    get_value(animal);
+
+function get_value_fin() {
+    get_value();
     save_estimations();
 }
 
 // 推定画面のチェックが入ってるか確認する
 // ゲージ操作時にチェックボックスがアクティブ化する処理もまとめてしまったので気になるようなら変更してください
 function check_estimate() {
-    
     if (document.getElementById('checkbox').checked) {
-        document.getElementById('estimate_next_scenario').removeAttribute("disabled");
+        document.getElementById('next_scenario').removeAttribute("disabled");
         document.getElementById('continue_scenario').removeAttribute("disabled");
-        document.getElementById('estimate_next_scenario_rabbit').removeAttribute("disabled");
-        document.getElementById('continue_scenario_rabbit').removeAttribute("disabled");
-        document.getElementById('estimate_next_scenario_pigeon').removeAttribute("disabled");
-        document.getElementById('continue_scenario_pigeon').removeAttribute("disabled");
+        document.getElementById('finish_all_scenario').removeAttribute("disabled");
     } else {
-        document.getElementById('estimate_next_scenario').setAttribute("disabled", true);
-        document.getElementById('continue_scenario').setAttribute("disabled", true);
-        document.getElementById('estimate_next_scenario_rabbit').setAttribute("disabled", true);
-        document.getElementById('continue_scenario_rabbit').setAttribute("disabled", true);
-        document.getElementById('estimate_next_scenario_pigeon').setAttribute("disabled", true);
-        document.getElementById('continue_scenario_pigeon').setAttribute("disabled", true);
+        document.getElementById('checkbox').removeAttribute("disabled");
     }
-    document.getElementById('checkbox').removeAttribute("disabled");
 }
 
 // 回答をスプレッドシートに送信する
@@ -524,19 +267,19 @@ function save_estimations() {
 // ## functions ##
 // ###############
 
-function  append_estimation(animal, est_i, estimation) {
+function  append_estimation(est_i, estimation) {
     let data = {};
     data['user_id'] = user_id;
-    data['animal'] = animal;
+    data['animal'] = scenarios[sce_idx];
     data['est_i'] = est_i;
     data['estimation'] = estimation;
     estimations.push(data);
 }
 
-function  append_prediction(animal, pred_i, stimulation, cause, effect, prediction) {
+function  append_prediction(pred_i, stimulation, cause, effect, prediction) {
     let data = {};
     data['user_id'] = user_id;
-    data['animal'] = animal;
+    data['animal'] = scenarios[sce_idx];
     data['pred_i'] = pred_i;
     data['stimulation'] = stimulation;
     data['cause'] = cause;
@@ -559,9 +302,8 @@ function export_user_info() {
         async: false,
         data: {
             'data': JSON.stringify(user_data),
-            'sheet_name': 'user_info'
+            'file_name': 'user_info'
         },
-        
     }).then(
         function() { // 成功時
             // location.href = `../end?id=${user_id}`;
@@ -579,9 +321,8 @@ function export_estimations() {
         async: false,
         data: {
             'data': JSON.stringify(estimations),
-            'sheet_name': 'estimations'
+            'file_name': 'estimations'
         },
-        
     }).then(
         function() { // 成功時
             // location.href = `../end?id=${user_id}`;
@@ -599,9 +340,8 @@ function export_predictions() {
         async: false,
         data: {
             'data': JSON.stringify(predictions),
-            'sheet_name': 'predictions'
+            'file_name': 'predictions'
         },
-        
     }).then(
         function() { // 成功時
             // location.href = `../end?id=${user_id}`;
@@ -612,16 +352,14 @@ function export_predictions() {
     });
 }
 
-
-
 // 配列内の要素をシャッフルする
 // 引用元(https://www.nxworld.net/js-array-shuffle.html)
-const shuffle = ([...array]) => {
-  for (let i = array.length - 1; i >= 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
+function shuffle ([...array]) {
+    for (let i = array.length - 1; i >= 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
 }
 
 // 0埋め、ランダム数列の桁数を揃えるため使用している
@@ -635,7 +373,7 @@ function zeroPadding(NUM, LEN){
 function getNow() {
 	var now = new Date();
 	var year = now.getFullYear();
-	var mon = now.getMonth()+1;
+	var mon = now.getMonth()+1;  // １を足すこと
 	var day = now.getDate();
 	var hour = now.getHours();
 	var min = now.getMinutes();
