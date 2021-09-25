@@ -88,7 +88,6 @@ function to_next_scenario_description(is_first_time=false) {
         test_order[scenarios[sce_idx]]['jp_name'] + "の遺伝子が突然変異したかどうか、正しいと思う方のボタンを直感で選択してください</h2>";
     document.getElementById('check_sentence').style.display = "inline-block";
     document.getElementById('description_area').style.display = "inline-block";
-    document.getElementById('description_area_first').style.display = "inline-block";
     let desc_len = test_order[scenarios[sce_idx]]['descriptions'].length;
     for (let i = 0; i < desc_len; i++) {
         document.getElementById('scenario_description'+String(i+1)).innerHTML = test_order[scenarios[sce_idx]]['descriptions'][i];
@@ -97,12 +96,12 @@ function to_next_scenario_description(is_first_time=false) {
 
 // チェックが入っているか確認する
 function check_description() {
-    let checks = document.getElementsByClassName("checks");
+    let checkbox = document.getElementsByClassName("checkbox");
     let count = 0;
-    for (let i = 0 ; i < checks.length ; i++) {
-        if (checks[i].checked) count++;
+    for (let i = 0 ; i < checkbox.length ; i++) {
+        if (checkbox[i].checked) count++;
     }
-    if (count == checks.length) {
+    if (count == checkbox.length) {
         document.getElementById('start_scenario_button').removeAttribute("disabled");
     }
 }
@@ -116,6 +115,10 @@ function progress_bar(){
 // 事例を表示する画面へ遷移
 function to_next_new_sample_page() {
     clear_page();
+    let list = document.getElementsByClassName("checkbox");
+    for (let index = 0; index < list.length; ++index) {
+        list[index].checked = false;
+    }
     current_test_page = 0;
     document.getElementById('show_sample_area').style.display = "inline";
     document.getElementById('sample_after').style.display = "none";
@@ -189,7 +192,6 @@ function show_back_sample(is_mutate) {
     );
     pred_i++;
     pred_i %= sample_size;
-    console.log("show_back: " + String(pred_i));
     
     document.getElementById('first_sentence').style.display = 'none';
     document.getElementById('sample_before').style.display = 'none';
@@ -203,15 +205,14 @@ function show_back_sample(is_mutate) {
 
 function draw_estimate(c) {
     clear_page();
-    document.getElementById('checkbox').setAttribute("disabled",true);
+    document.getElementById("checkbox").setAttribute("disabled",true);
     document.getElementById('next_scenario').style.display = 'none';
     document.getElementById('estimate_input_area').style.display = 'inline-block';
     document.getElementById('next_scenario').setAttribute("disabled", true);
     document.getElementById('continue_scenario').style.display = 'inline';
     document.getElementById('estimate_slider').value = 50;
     document.getElementById('estimate').innerHTML = 50;
-    document.getElementById('checkbox').checked = false;
-
+    document.getElementById("checkbox").checked = false;
     if (c=='fin'){
         document.getElementById('continue_scenario').style.display = 'none';
         if (sce_idx == scenarios.length - 1){
@@ -232,7 +233,6 @@ function draw_estimate(c) {
 
 function get_value() {
     let est_i = parseInt(pred_i / EST_INTERVAL, 10);
-    console.log("get_value: " + String(est_i));
     append_estimation(
         est_i=est_i,
         estimation=document.getElementById('estimate_slider').value
@@ -252,7 +252,7 @@ function check_estimate() {
         document.getElementById('continue_scenario').removeAttribute("disabled");
         document.getElementById('finish_all_scenarios').removeAttribute("disabled");
     } else {
-        document.getElementById('checkbox').removeAttribute("disabled");
+        document.getElementById("checkbox").removeAttribute("disabled");
     }
 }
 
@@ -272,7 +272,6 @@ function  append_estimation(est_i, estimation) {
     let data = {};
     data['user_id'] = user_id;
     data['animal'] = scenarios[sce_idx];
-    console.log("append_est: " + String(est_i));
     data['est_i'] = est_i;
     data['estimation'] = estimation;
     estimations.push(data);
@@ -282,7 +281,6 @@ function  append_prediction(pred_i, stimulation, cause, effect, prediction) {
     let data = {};
     data['user_id'] = user_id;
     data['animal'] = scenarios[sce_idx];
-    console.log("append_pred: " + String(pred_i));
     data['pred_i'] = pred_i;
     data['stimulation'] = stimulation;
     data['cause'] = cause;

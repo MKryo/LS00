@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <meta name="viewport" content="width=divice-width, initial-scale=1, user-scalable=no">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <link rel="stylesheet" href="{% static '/causalexp/css/css.css' %}">
+    <link rel="stylesheet" href="{% static '/causalexp/css/examine.css' %}">
 </head>
 
 <body>
@@ -24,36 +24,35 @@
         <p>ページを読み込んでいます。</p>
         <p>しばらくお待ちください。</p>
     </div>
+    <!-- <p id="scenario_description" style="display: none;"></p><br> -->
     <div id="description_area" class="area" style="display:none;">
-        <p id="scenario_description" style="display: none;"></p><br>
-        <div id="description_area_first" class="area" style="display:none;">
-            <p id="check_sentence" style="display:none;">それぞれの項目を読んだら左側のチェックボックスをチェックし、回答ページに進んでください。<br></p>
-            <div id="scenario_description_first" style="text-align: left;">
-                <form action="cgi-bin/abc.cgi" method="post">
-                    <p>
-                        <input class="checks" type="checkbox" id="checkbox1" style="transform:scale(1.5)"
-                            onclick="check_description()" />
-                        <label for="checkbox1" id="scenario_description1"></label>
-                    </p>
-                    <p>
-                        <input class="checks" type="checkbox" id="checkbox2" style="transform:scale(1.5)"
-                            onclick="check_description()" />
-                        <label for="checkbox2" id="scenario_description2"></label>
-                    </p>
-                    <br>
-                    <p>
-                        <input class="checks" type="checkbox" id="checkbox3" style="transform:scale(1.5)"
-                            onclick="check_description()" />
-                        <label for="checkbox3" id="scenario_description3"></label>
-                    </p>
-                    <br>
-                    <p>
-                        <input class="checks" type="checkbox" id="checkbox4" style="transform:scale(1.5)"
-                            onclick="check_description()" />
-                        <label for="checkbox4" id="scenario_description4"></label>
-                    </p>
-                </form>
-            </div>
+        <p id="check_sentence" style="display:none;">それぞれの項目を読んだら左側のチェックボックスをチェックし、回答ページに進んでください。</p>
+        <br>
+        <div id="scenario_descriptions" style="text-align: left;">
+            <form action="cgi-bin/abc.cgi" method="post">
+                <p>
+                    <input class="checkbox" type="checkbox" id="checkbox1" style="transform:scale(1.5)"
+                        onclick="check_description()" />
+                    <label for="checkbox1" id="scenario_description1"></label>
+                </p>
+                <p>
+                    <input class="checkbox" type="checkbox" id="checkbox2" style="transform:scale(1.5)"
+                        onclick="check_description()" />
+                    <label for="checkbox2" id="scenario_description2"></label>
+                </p>
+                <br>
+                <p>
+                    <input class="checkbox" type="checkbox" id="checkbox3" style="transform:scale(1.5)"
+                        onclick="check_description()" />
+                    <label for="checkbox3" id="scenario_description3"></label>
+                </p>
+                <br>
+                <p>
+                    <input class="checkbox" type="checkbox" id="checkbox4" style="transform:scale(1.5)"
+                        onclick="check_description()" />
+                    <label for="checkbox4" id="scenario_description4"></label>
+                </p>
+            </form>
         </div>
         <div>
             <button id="start_scenario_button" class="next_button" style="cursor: hand; cursor:pointer;" onclick="to_next_new_sample_page()"
@@ -110,12 +109,12 @@
             <b>送信に時間がかかる場合がありますので、最低30秒お待ちください。</b>
         </div>
         <button id="next_scenario" style="display:none; cursor: hand; cursor:pointer;" disabled
-            onclick="to_next_scenario_description();get_value()">次のシナリオへ進む</button>
+            onclick="get_value();to_next_scenario_description()">次のシナリオへ進む</button>
         <button id="finish_all_scenarios" style="display:none; cursor: hand; cursor:pointer;" disabled
             onclick="get_value_fin()">回答を終了する</button>
 
         <button id="continue_scenario" style="display:inline-grid; cursor: hand; cursor:pointer;" disabled 
-            onclick="select_next_sample();get_value()">シナリオを続ける</button>
+            onclick="get_value();select_next_sample()">シナリオを続ける</button>
     </div>
 </body>
 

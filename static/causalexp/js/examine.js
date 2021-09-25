@@ -6,7 +6,8 @@ var estimations = [];
 var predictions = [];
 var sample_order = [];
 var mutation_prediction = [];
-let scenarios = shuffle(['mouse','rabbit','pigeon']);
+// let scenarios = shuffle(['mouse','rabbit','pigeon']);
+let scenarios = ['mouse','rabbit','pigeon'];
 let image_type = ["p", "notp", "q", "notq"];
 // img_combination = new Array();
 let img_combination = {
@@ -27,7 +28,7 @@ var current_test_page = 0; // 何事例目か
 var sample_size = 0; // 現在の設問の事例の総数
 var user_id = 0;
 var start_time = getNow();
-var sce_idx = 0;// 動物の判別
+var sce_idx = 0;  // 動物の判別
 var pred_i = 0;
 var EST_INTERVAL = 10;
 var cell_size = 0;
@@ -43,7 +44,7 @@ window.onload = function() {
     test_order = read_json(file);
     estimations = new Array();
     getImages();
-    to_next_scenario_description();
+    to_next_scenario_description(is_first_time=true);
 }
 
 function read_json(filename) {
@@ -69,31 +70,28 @@ function getImages() {
 // 表示・非表示処理多すぎて見づらかったので一括で処理
 // 消えないのあったら適宜追加
 function clear_page() {
-    $("#estimate_input_area").css("display", "none");
-    // document.getElementById('check_sentence_rabbit').style.display = "none";
-    // document.getElementById('check_sentence_pigeon').style.display = "none";
-    // document.getElementById('description_area_first').style.display = "none";
-    // document.getElementById('description_area_first_rabbit').style.display = "none";
-    // document.getElementById('description_area_first_pigeon').style.display = "none";
-    // document.getElementById('description_area').style.display = "none";
-    // document.getElementById('description_area_rabbit').style.display = "none";
-    // document.getElementById('description_area_pigeon').style.display = "none";
-    // document.getElementById('show_sample_area').style.display = 'none';
+    document.getElementById('estimate_input_area').style.display = "none";
+    document.getElementById('check_sentence').style.display = "none";
+    document.getElementById('description_area').style.display = "none";
+    document.getElementById('show_sample_area').style.display = 'none';
 }
 
 // シナリオの表示
-function to_next_scenario_description() {
-    sce_idx++;
+function to_next_scenario_description(is_first_time=false) {
     clear_page();
+    if (!is_first_time){
+        sce_idx++;
+    }
     document.getElementById('scenario_title').innerHTML = test_order[scenarios[sce_idx]]['jp_name'] + 
         "に" + test_order[scenarios[sce_idx]]['chemicals'] + "という化学物質を投与した時の実験記録";
+    document.getElementById('Q_select_button').innerHTML = "<h2>Q. 上記の結果を見て" + 
+        test_order[scenarios[sce_idx]]['jp_name'] + "の遺伝子が突然変異したかどうか、正しいと思う方のボタンを直感で選択してください</h2>";
     document.getElementById('check_sentence').style.display = "inline-block";
     document.getElementById('description_area').style.display = "inline-block";
     document.getElementById('description_area_first').style.display = "inline-block";
-    let desc_len = test_order[scenarios[sce_idx]]['descriptions'];
-    console.log(desc_len);
+    let desc_len = test_order[scenarios[sce_idx]]['descriptions'].length;
     for (let i = 0; i < desc_len; i++) {
-        document.getElementById('scenario_description'+String(i+1)).innerHTML = test_order[scenarios[sce_idx]]['description'][i];
+        document.getElementById('scenario_description'+String(i+1)).innerHTML = test_order[scenarios[sce_idx]]['descriptions'][i];
     }
 }
 
@@ -162,12 +160,11 @@ function select_next_sample() {
     desc = desc.split('、');
     document.getElementById('first_sentence').innerHTML = desc[0];
     document.getElementById('last_sentence').innerHTML = desc[1];
-
     document.getElementById('estimate_input_area').style.display = 'none';
     document.getElementById('show_sample_area').style.display = "inline";
     document.getElementById('first_sentence').style.display = 'inline';
     document.getElementById('sample_before').style.display = 'inline';
-    document.getElementById('select_mutation').style.display = 'inline';
+    document.getElementById('predict_effect').style.display = 'inline';
     document.getElementById('Q_select_button').style.display = 'inline';
     document.getElementById('last_sentence').style.display = 'none';
     document.getElementById('sample_after').style.display = 'none';
@@ -184,7 +181,6 @@ function show_back_sample(is_mutate) {
     let stim = current_sample_selection[pred_i];
 
     append_prediction(
-        animal=scenarios[sce_idx],
         pred_i=pred_i,
         stimulation=stim,
         cause=stim_dict[stim]['cause'],
@@ -196,7 +192,7 @@ function show_back_sample(is_mutate) {
     
     document.getElementById('first_sentence').style.display = 'none';
     document.getElementById('sample_before').style.display = 'none';
-    document.getElementById('select_mutation').style.display = 'none';
+    document.getElementById('predict_effect').style.display = 'none';
     document.getElementById('Q_select_button').style.display = 'none';
     document.getElementById('Ans_select_button').style.display = 'inline';
     document.getElementById('last_sentence').style.display = 'inline';
@@ -217,7 +213,11 @@ function draw_estimate(c) {
 
     if (c=='fin'){
         document.getElementById('continue_scenario').style.display = 'none';
-        document.getElementById('next_scenario').style.display = 'inline';
+        if (sce_idx == scenarios.length - 1){
+            document.getElementById('finish_all_scenarios').style.display = 'inline';
+        } else {
+            document.getElementById('next_scenario').style.display = 'inline';
+        }
     }
 
     document.getElementById('estimate_description').innerHTML = 
@@ -232,7 +232,6 @@ function draw_estimate(c) {
 function get_value() {
     let est_i = parseInt(pred_i / EST_INTERVAL, 10);
     append_estimation(
-        animal=scenarios[sce_idx],
         est_i=est_i,
         estimation=document.getElementById('estimate_slider').value
     );
@@ -249,7 +248,7 @@ function check_estimate() {
     if (document.getElementById('checkbox').checked) {
         document.getElementById('next_scenario').removeAttribute("disabled");
         document.getElementById('continue_scenario').removeAttribute("disabled");
-        document.getElementById('finish_all_scenario').removeAttribute("disabled");
+        document.getElementById('finish_all_scenarios').removeAttribute("disabled");
     } else {
         document.getElementById('checkbox').removeAttribute("disabled");
     }
