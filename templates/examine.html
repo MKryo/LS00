@@ -54,7 +54,7 @@
                 </p>
             </form>
         </div>
-        <div>
+        <div style="padding: 20px 20px;">
             <button id="start_scenario_button" class="next_button" style="cursor: hand; cursor:pointer;" onclick="to_next_new_sample_page()"
                 disabled>このシナリオを<br>開始する</button>
         </div>
@@ -65,7 +65,8 @@
     <div id="show_sample_area" class="area" style="display:none">
         <div id="order">進捗状況</div>
         <progress id="progress_bar" max="0" value="0"></progress><br>
-
+        <div id="order">正答率</div>
+        <progress id="correct_answer_rate" max="0" value="0"></progress><br>
         <div id="show_area">
             <img id="sample_before" class="sample">
             <img id="sample_after" class="sample">
@@ -75,13 +76,8 @@
             <span id='first_sentence'></span>
             <span id='last_sentence'></span>
         </div><hr><br>
-
-        <div id="Q_select_button"></div>
-
-        <div id="Ans_select_button">
-            <h2>A. 実際の結果は上の通りでした</h2>
-        </div>
-
+        <div id="pred_button"></div>
+        <div id="pred_ans"></div>
         <div id="predict_effect">
             <button style="cursor: hand; cursor:pointer;" onclick="show_back_sample(1)">変異する</button>
             <button style="cursor: hand; cursor:pointer;" onclick="show_back_sample(0)">変異しない</button>
@@ -117,5 +113,4 @@
             onclick="get_value();select_next_sample()">シナリオを続ける</button>
     </div>
 </body>
-
 </html>

@@ -9,15 +9,15 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="{% static '/causalexp/css/end.css' %}">
 </head>
 
 <body>
-    <div style="background-color: #defae3; padding: 1px 11px;">
-    <h2 style="color: rgb(1, 110, 1); text-align: center;">実験へのご協力ありがとうございました。</h2>
+    <div id="end_area">
+    <h2 id="end_message">実験へのご協力ありがとうございました。</h2>
     </div>
-    <div style="padding-left: 200px !important;padding-right: 200px !important;">
-    <ul style="background: #f3f9fc;border: 2px skyblue dashed;">
+    <div id="reward_area">
+    <ul>
         <h3>謝金の受け取りについて</h3>
         <li> 以下のコードを指定した回答欄に入力して下さい。</li>
         <li><textarea id="complete_code" readonly></textarea><br><button id="copy_button">数字をコピーする</button></li>

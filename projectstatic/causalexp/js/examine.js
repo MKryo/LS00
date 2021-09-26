@@ -6,8 +6,8 @@ var estimations = [];
 var predictions = [];
 var sample_order = [];
 var mutation_prediction = [];
-// let scenarios = shuffle(['mouse','rabbit','pigeon']);
-let scenarios = ['mouse','rabbit','pigeon'];
+let scenarios = shuffle(['mouse','rabbit','pigeon']);
+//let scenarios = ['mouse','rabbit','pigeon'];
 let image_type = ["p", "notp", "q", "notq"];
 // img_combination = new Array();
 let img_combination = {
@@ -32,6 +32,7 @@ var sce_idx = 0;  // 動物の判別
 var pred_i = 0;
 var EST_INTERVAL = 10;
 var cell_size = 0;
+var correct_count = 0; // predictionの正解数カウント
 
 // 読み込み時に実行される
 // read_json(): jsonファイルを読み込む
@@ -79,13 +80,14 @@ function clear_page() {
 // シナリオの表示
 function to_next_scenario_description(is_first_time=false) {
     clear_page();
+    correct_count = 0;  // 正答率のリセット
     if (!is_first_time){
         sce_idx++;
     }
-    document.getElementById('scenario_title').innerHTML = test_order[scenarios[sce_idx]]['jp_name'] + 
-        "に" + test_order[scenarios[sce_idx]]['chemicals'] + "という化学物質を投与した時の実験記録";
-    document.getElementById('Q_select_button').innerHTML = "<h2>Q. 上記の結果を見て" + 
-        test_order[scenarios[sce_idx]]['jp_name'] + "の遺伝子が突然変異したかどうか、正しいと思う方のボタンを直感で選択してください</h2>";
+    document.getElementById('scenario_title').innerHTML = "<h2>" + test_order[scenarios[sce_idx]]['jp_name'] + 
+        "に" + test_order[scenarios[sce_idx]]['chemicals'] + "という化学物質を投与した時の実験記録</h2>";
+    document.getElementById('pred_button').innerHTML = "<h4>Q. 上記の結果を見て" + 
+        test_order[scenarios[sce_idx]]['jp_name'] + "の遺伝子が突然変異したかどうか、正しいと思う方のボタンを直感で選択してください</h4>";
     document.getElementById('check_sentence').style.display = "inline-block";
     document.getElementById('description_area').style.display = "inline-block";
     let desc_len = test_order[scenarios[sce_idx]]['descriptions'].length;
@@ -104,12 +106,6 @@ function check_description() {
     if (count == checkbox.length) {
         document.getElementById('start_scenario_button').removeAttribute("disabled");
     }
-}
-
-// 進捗バーを更新する関数
-function progress_bar(){
-    document.getElementById('progress_bar').value = current_test_page;
-    document.getElementById('progress_bar').max = sample_size;
 }
 
 // 事例を表示する画面へ遷移
@@ -161,27 +157,49 @@ function select_next_sample() {
     var sample = current_sample_selection[pred_i];
     var desc = test_order[scenarios[sce_idx]]['sentences'][sample];
     desc = desc.split('、');
-    document.getElementById('first_sentence').innerHTML = desc[0];
-    document.getElementById('last_sentence').innerHTML = desc[1];
-    document.getElementById('estimate_input_area').style.display = 'none';
+    document.getElementById('first_sentence').innerHTML = "<h4>" + desc[0] + "</h4>";
+    document.getElementById('last_sentence').innerHTML = "<h4>" + desc[1] + "</h4>";
     document.getElementById('show_sample_area').style.display = "inline";
     document.getElementById('first_sentence').style.display = 'inline';
     document.getElementById('sample_before').style.display = 'inline';
     document.getElementById('predict_effect').style.display = 'inline';
-    document.getElementById('Q_select_button').style.display = 'inline';
+    document.getElementById('pred_button').style.display = 'inline';
     document.getElementById('last_sentence').style.display = 'none';
     document.getElementById('sample_after').style.display = 'none';
     document.getElementById('next_sample').style.display = 'none';
-    document.getElementById('Ans_select_button').style.display = 'none';
+    document.getElementById('pred_ans').style.display = 'none';
     document.getElementById('sample_before').src = `../${test_order[scenarios[sce_idx]]['images'][img_combination[sample]['cause']]}`;
     document.getElementById('sample_after').src = `../${test_order[scenarios[sce_idx]]['images'][img_combination[sample]['effect']]}`;
     // 進捗バー更新
     progress_bar();
+    //正答率の更新
+    correct_answer_rate();
     current_test_page++;
 }
 
+// 進捗バーを更新する関数
+function progress_bar(){
+    document.getElementById('progress_bar').value = current_test_page;
+    document.getElementById('progress_bar').max = sample_size;
+}
+
+// 正答率を更新する関数
+function correct_answer_rate(){
+    document.getElementById('correct_answer_rate').value = correct_count;
+    document.getElementById('correct_answer_rate').max = sample_size;
+}
+
+// 予測の結果を表示する関数
 function show_back_sample(is_mutate) {
     let stim = current_sample_selection[pred_i];
+    if (is_mutate == stim_dict[stim]['effect']){
+        document.getElementById('pred_ans').innerHTML = '<h2>A. 正解です</h2>';
+        document.getElementById('pred_ans').style.display = 'inline';
+        correct_count++;
+    } else if (is_mutate != stim_dict[stim]['effect']){
+        document.getElementById('pred_ans').innerHTML = '<h2>A. 不正解です</h2>';
+        document.getElementById('pred_ans').style.display = 'inline';
+    }
 
     append_prediction(
         pred_i=pred_i,
@@ -196,8 +214,8 @@ function show_back_sample(is_mutate) {
     document.getElementById('first_sentence').style.display = 'none';
     document.getElementById('sample_before').style.display = 'none';
     document.getElementById('predict_effect').style.display = 'none';
-    document.getElementById('Q_select_button').style.display = 'none';
-    document.getElementById('Ans_select_button').style.display = 'inline';
+    document.getElementById('pred_button').style.display = 'none';
+    
     document.getElementById('last_sentence').style.display = 'inline';
     document.getElementById('sample_after').style.display = 'inline';
     document.getElementById('next_sample').style.display = 'inline';

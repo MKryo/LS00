@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <title>調査に関するページ</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="{% static '/causalexp/css/examine.css' %}">
+    <link rel="stylesheet" href="{% static '/causalexp/css/top.css' %}">
     <script>
         function check_agreement1() {
             if (document.getElementById('agreement').checked) {
@@ -64,7 +64,7 @@
         <p>ありがとうございます。</p>
         <p>以下のストーリーをお読みいただき、回答ページに進んで下さい。</p>
         <p>それぞれの項目を読んだら左側のチェックボックスをチェックしてください。</p>
-        <div id="scenario_description" style="margin:auto; text-align: left;">
+        <div id="scenario_descriptions" style="margin:auto; text-align: left;">
             <form action="cgi-bin/abc.cgi" method="post">
                 <p>
                     <input class="checks" type="checkbox" id="checkbox1" style="transform:scale(1.5)"
