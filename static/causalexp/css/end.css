@@ -1,8 +1,16 @@
-.end_area{
+#end_area{
     background-color: #defae3; 
     padding: 1px 11px;
 }
-.end_message{
+#end_message{
     color: rgb(1, 110, 1); 
     text-align: center;
+}
+#reward_area{
+    padding-left: 200px !important;
+    padding-right: 200px !important;
+}
+ul{
+    background: #f3f9fc;
+    border: 2px skyblue dashed;
 }

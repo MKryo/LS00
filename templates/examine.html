@@ -17,14 +17,13 @@
     <!-- write code this section -->
     <script src="{% static '/causalexp/js/examine.js' %}"></script>
     <div id="header_area">
-        <!--<div id="examine_header" class="title">認知に関する調査</div>-->
         <div id="scenario_title" class="title"></div>
+        <div id="page"></div>
     </div>
     <div id="preload_image">
         <p>ページを読み込んでいます。</p>
         <p>しばらくお待ちください。</p>
     </div>
-    <!-- <p id="scenario_description" style="display: none;"></p><br> -->
     <div id="description_area" class="area" style="display:none;">
         <p id="check_sentence" style="display:none;">それぞれの項目を読んだら左側のチェックボックスをチェックし、回答ページに進んでください。</p>
         <br>
@@ -65,8 +64,6 @@
     <div id="show_sample_area" class="area" style="display:none">
         <div id="order">進捗状況</div>
         <progress id="progress_bar" max="0" value="0"></progress><br>
-        <div id="order">正答率</div>
-        <progress id="correct_answer_rate" max="0" value="0"></progress><br>
         <div id="show_area">
             <img id="sample_before" class="sample">
             <img id="sample_after" class="sample">
@@ -94,12 +91,12 @@
                 <b><output id="estimate">0</output></b>
             </p>
             <p>
-                <input id="estimate_slider" type="range" min="-0" max="100" step="1" value="0" onchange="check_estimate()">
+                <input id="estimate_slider" type="range" min="-0" max="100" step="1" value="0" onclick="check_estimate()">
             </p>
         </form>
         <br>
         <input type="checkbox" id="checkbox" style="transform:scale(1.5)" disabled onclick="check_estimate()" />
-        <label for="checkbox">この数値を答えとして回答します<br></label>
+        <label for="checkbox">この数値を答えとして回答します（もしもちょうど50と回答されたい場合は、一度50からスライダーの場所をずらしてから戻していただければ回答できます）<br></label>
         <div id="notes">
             <b>ボタンは1回押していただくだけで結構です。</b>
             <b>送信に時間がかかる場合がありますので、最低30秒お待ちください。</b>

@@ -80,7 +80,6 @@ function clear_page() {
 // シナリオの表示
 function to_next_scenario_description(is_first_time=false) {
     clear_page();
-    correct_count = 0;  // 正答率のリセット
     if (!is_first_time){
         sce_idx++;
     }
@@ -115,6 +114,7 @@ function to_next_new_sample_page() {
     for (let index = 0; index < list.length; ++index) {
         list[index].checked = false;
     }
+    document.getElementById('page').innerHTML = "<h4>"+ (sce_idx+1) + '/' + scenarios.length +"匹目</h4>";
     current_test_page = 0;
     document.getElementById('show_sample_area').style.display = "inline";
     document.getElementById('sample_after').style.display = "none";
@@ -164,6 +164,7 @@ function select_next_sample() {
     document.getElementById('sample_before').style.display = 'inline';
     document.getElementById('predict_effect').style.display = 'inline';
     document.getElementById('pred_button').style.display = 'inline';
+    document.getElementById('estimate_input_area').style.display = 'none';
     document.getElementById('last_sentence').style.display = 'none';
     document.getElementById('sample_after').style.display = 'none';
     document.getElementById('next_sample').style.display = 'none';
@@ -172,8 +173,6 @@ function select_next_sample() {
     document.getElementById('sample_after').src = `../${test_order[scenarios[sce_idx]]['images'][img_combination[sample]['effect']]}`;
     // 進捗バー更新
     progress_bar();
-    //正答率の更新
-    correct_answer_rate();
     current_test_page++;
 }
 
@@ -181,12 +180,6 @@ function select_next_sample() {
 function progress_bar(){
     document.getElementById('progress_bar').value = current_test_page;
     document.getElementById('progress_bar').max = sample_size;
-}
-
-// 正答率を更新する関数
-function correct_answer_rate(){
-    document.getElementById('correct_answer_rate').value = correct_count;
-    document.getElementById('correct_answer_rate').max = sample_size;
 }
 
 // 予測の結果を表示する関数
@@ -227,6 +220,7 @@ function draw_estimate(c) {
     document.getElementById('next_scenario').style.display = 'none';
     document.getElementById('estimate_input_area').style.display = 'inline-block';
     document.getElementById('next_scenario').setAttribute("disabled", true);
+    document.getElementById('continue_scenario').setAttribute("disabled", true);
     document.getElementById('continue_scenario').style.display = 'inline';
     document.getElementById('estimate_slider').value = 50;
     document.getElementById('estimate').innerHTML = 50;
@@ -249,6 +243,7 @@ function draw_estimate(c) {
         '<p>として、0から100の値で<b>直感的に</b>回答してください。</p><br>'
 }
 
+// 因果関係の強さの推定値を取得する
 function get_value() {
     let est_i = parseInt(pred_i / EST_INTERVAL, 10);
     append_estimation(
@@ -263,7 +258,6 @@ function get_value_fin() {
 }
 
 // 推定画面のチェックが入ってるか確認する
-// ゲージ操作時にチェックボックスがアクティブ化する処理もまとめてしまったので気になるようなら変更してください
 function check_estimate() {
     if (document.getElementById('checkbox').checked) {
         document.getElementById('next_scenario').removeAttribute("disabled");
@@ -273,6 +267,10 @@ function check_estimate() {
         document.getElementById("checkbox").removeAttribute("disabled");
     }
 }
+
+// スライダーを触った時のイベントリスナー（機能しない）
+const el = document.getElementById("estimate_slider");
+el.addEventListener("click", check_estimate, false);
 
 // 回答をスプレッドシートに送信する
 function save_estimations() {
@@ -400,3 +398,8 @@ function getNow() {
 	var s = year + "/" + mon + "/" + day + " " + hour + ":" + min + ":" + sec; 
 	return s;
 }
+
+history.pushState(null, null, location.href);
+window.addEventListener('popstate', (e) => {
+    history.go(1);
+});
