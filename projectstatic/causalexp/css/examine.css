@@ -12,10 +12,6 @@ p{
     display: inline-block;
     margin: 0.5em 0 0.5em 0;
 }
-#examine_header{
-    margin: 1em 0 2em 0;
-    font-weight: bold;
-}
 #scenario_descriptions{
     background: #f3f9fc;
     border: 2px skyblue dashed; 
@@ -33,9 +29,6 @@ p{
     width: 100%;
     text-align: center;
     margin:auto;
-}
-#same_sentence{
-    width: 100%;
 }
 #estimate_description{
     display:inline-grid;

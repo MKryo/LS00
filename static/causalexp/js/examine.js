@@ -7,9 +7,7 @@ var predictions = [];
 var sample_order = [];
 var mutation_prediction = [];
 let scenarios = shuffle(['mouse','rabbit','pigeon']);
-//let scenarios = ['mouse','rabbit','pigeon'];
 let image_type = ["p", "notp", "q", "notq"];
-// img_combination = new Array();
 let img_combination = {
     'a': {'cause': 'p', 'effect': 'q'},
     'b': {'cause': 'p', 'effect': 'notq'},
@@ -67,6 +65,8 @@ function getImages() {
     }
     document.getElementById('preload_image').style.display = "none";
 }
+
+preventBrowserBack();
 
 // 表示・非表示処理多すぎて見づらかったので一括で処理
 // 消えないのあったら適宜追加
@@ -269,8 +269,8 @@ function check_estimate() {
 }
 
 // スライダーを触った時のイベントリスナー（機能しない）
-const el = document.getElementById("estimate_slider");
-el.addEventListener("click", check_estimate, false);
+// const el = document.getElementById("estimate_slider");
+// el.addEventListener("click", check_estimate, false);
 
 // 回答をスプレッドシートに送信する
 function save_estimations() {
@@ -399,7 +399,10 @@ function getNow() {
 	return s;
 }
 
-history.pushState(null, null, location.href);
-window.addEventListener('popstate', (e) => {
-    history.go(1);
-});
+// ブラウザバックを禁止する関数
+function preventBrowserBack() {
+    history.pushState(null, null, location.href);
+    window.addEventListener('popstate', (e) => {
+        history.go(1);
+    });
+}
