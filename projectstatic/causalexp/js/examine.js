@@ -83,12 +83,14 @@ function to_next_scenario_description(is_first_time=false) {
     if (!is_first_time){
         sce_idx++;
     }
+    document.getElementById('page').innerHTML = "<h4>"+ (sce_idx+1) + '/' + scenarios.length +"種類目</h4>";
     document.getElementById('scenario_title').innerHTML = "<h2>" + test_order[scenarios[sce_idx]]['jp_name'] + 
         "に" + test_order[scenarios[sce_idx]]['chemicals'] + "という化学物質を投与した時の実験記録</h2>";
     document.getElementById('pred_button').innerHTML = "<h4>Q. 上記の結果を見て" + 
         test_order[scenarios[sce_idx]]['jp_name'] + "の遺伝子が突然変異したかどうか、正しいと思う方のボタンを直感で選択してください</h4>";
     document.getElementById('check_sentence').style.display = "inline-block";
     document.getElementById('description_area').style.display = "inline-block";
+    document.getElementById('start_scenario_button').setAttribute("disabled",true);
     let desc_len = test_order[scenarios[sce_idx]]['descriptions'].length;
     for (let i = 0; i < desc_len; i++) {
         document.getElementById('scenario_description'+String(i+1)).innerHTML = test_order[scenarios[sce_idx]]['descriptions'][i];
@@ -114,7 +116,7 @@ function to_next_new_sample_page() {
     for (let index = 0; index < list.length; ++index) {
         list[index].checked = false;
     }
-    document.getElementById('page').innerHTML = "<h4>"+ (sce_idx+1) + '/' + scenarios.length +"匹目</h4>";
+    
     current_test_page = 0;
     document.getElementById('show_sample_area').style.display = "inline";
     document.getElementById('sample_after').style.display = "none";
