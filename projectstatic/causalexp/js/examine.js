@@ -7,6 +7,7 @@ var predictions = [];
 var sample_order = [];
 var mutation_prediction = [];
 let scenarios = shuffle(['mouse','rabbit','pigeon']);
+let bgcolors = shuffle(['#FFFFF0','#FFF0F5','#F0F8FF']);
 let image_type = ["p", "notp", "q", "notq"];
 let img_combination = {
     'a': {'cause': 'p', 'effect': 'q'},
@@ -83,6 +84,7 @@ function to_next_scenario_description(is_first_time=false) {
     if (!is_first_time){
         sce_idx++;
     }
+    resetBackGround();
     document.getElementById('page').innerHTML = "<h4>"+ (sce_idx+1) + '/' + scenarios.length +"種類目</h4>";
     document.getElementById('scenario_title').innerHTML = "<h2>" + test_order[scenarios[sce_idx]]['jp_name'] + 
         "に" + test_order[scenarios[sce_idx]]['chemicals'] + "という化学物質を投与した時の実験記録</h2>";
@@ -121,6 +123,7 @@ function to_next_new_sample_page() {
     document.getElementById('show_sample_area').style.display = "inline";
     document.getElementById('sample_after').style.display = "none";
     document.getElementById('last_sentence').style.display = "none";
+    changeBackGround();
 
     // 提示するサンプルのリストを作り、サンプルサイズを求める。
     current_sample_selection = [];
@@ -407,4 +410,14 @@ function preventBrowserBack() {
     window.addEventListener('popstate', (e) => {
         history.go(1);
     });
+}
+
+// backgroundColorを変更する関数
+function changeBackGround(){
+	document.body.style.backgroundColor = bgcolors[sce_idx];
+}
+
+// backgroundColorをリセットする関数
+function resetBackGround(){
+    document.body.style.backgroundColor = 'Transparent';
 }
