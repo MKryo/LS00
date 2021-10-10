@@ -123,7 +123,9 @@ function to_next_new_sample_page() {
     document.getElementById('show_sample_area').style.display = "inline";
     document.getElementById('sample_after').style.display = "none";
     document.getElementById('last_sentence').style.display = "none";
+    document.getElementById('order').innerHTML = test_order[scenarios[sce_idx]]['jp_name'] + "の進捗状況";
     changeBackGround();
+
 
     // 提示するサンプルのリストを作り、サンプルサイズを求める。
     current_sample_selection = [];
