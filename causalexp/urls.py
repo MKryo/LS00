@@ -19,7 +19,9 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     url(r'^top/', include('top.urls')),
+    url(r'^top_ls00/', include('top_ls00.urls')),
     url(r'^examine/', include('examine.urls')),
+    url(r'^examine_ls00/', include('examine_ls00.urls')),
     url(r'^end/', include('end.urls')),
     url(r'^sendtoGS/', include('sendtoGS.urls')),
     url(r'^admin/', admin.site.urls),

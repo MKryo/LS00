@@ -88,6 +88,8 @@ function to_next_scenario_description(is_first_time=false) {
     document.getElementById('page').innerHTML = "<h4>"+ (sce_idx+1) + '/' + scenarios.length +"種類目</h4>";
     document.getElementById('scenario_title').innerHTML = "<h2>" + test_order[scenarios[sce_idx]]['jp_name'] + 
         "に" + test_order[scenarios[sce_idx]]['chemicals'] + "という化学物質を投与した時の実験記録</h2>";
+    document.getElementById('pred_button').innerHTML = "<h4>Q. 上記の結果を見て" + 
+        test_order[scenarios[sce_idx]]['jp_name'] + "の遺伝子が突然変異したかどうか、正しいと思う方のボタンを直感で選択してください</h4>";
     document.getElementById('check_sentence').style.display = "inline-block";
     document.getElementById('description_area').style.display = "inline-block";
     document.getElementById('start_scenario_button').setAttribute("disabled",true);
@@ -116,10 +118,14 @@ function to_next_new_sample_page() {
     for (let index = 0; index < list.length; ++index) {
         list[index].checked = false;
     }
+    
     current_test_page = 0;
     document.getElementById('show_sample_area').style.display = "inline";
+    document.getElementById('sample_after').style.display = "none";
+    document.getElementById('last_sentence').style.display = "none";
     document.getElementById('order').innerHTML = test_order[scenarios[sce_idx]]['jp_name'] + "の進捗状況";
     changeBackGround();
+
 
     // 提示するサンプルのリストを作り、サンプルサイズを求める。
     current_sample_selection = [];
@@ -140,7 +146,6 @@ function to_next_new_sample_page() {
 
 // 次の事例があるか確認し、存在しない場合は推定画面へ遷移
 function to_next_sample() {
-    let stim = current_sample_selection[pred_i];
     if (current_test_page >= sample_size) {
         alert('この動物の実験結果は以上になります。');
         draw_estimate('fin');
@@ -152,14 +157,6 @@ function to_next_sample() {
         draw_estimate('mid');
         return;
     }
-    append_prediction(
-        pred_i=pred_i,
-        stimulation=stim,
-        cause=stim_dict[stim]['cause'],
-        effect=stim_dict[stim]['effect']
-    );
-    pred_i++;
-    pred_i %= sample_size;
     select_next_sample();
 }
 
@@ -172,15 +169,18 @@ function select_next_sample() {
     document.getElementById('show_sample_area').style.display = "inline";
     document.getElementById('first_sentence').style.display = 'inline';
     document.getElementById('sample_before').style.display = 'inline';
+    document.getElementById('predict_effect').style.display = 'inline';
+    document.getElementById('pred_button').style.display = 'inline';
     document.getElementById('estimate_input_area').style.display = 'none';
-    document.getElementById('next_sample').style.display = 'inline';
+    document.getElementById('last_sentence').style.display = 'none';
+    document.getElementById('sample_after').style.display = 'none';
+    document.getElementById('next_sample').style.display = 'none';
+    document.getElementById('pred_ans').style.display = 'none';
     document.getElementById('sample_before').src = `../${test_order[scenarios[sce_idx]]['images'][img_combination[sample]['cause']]}`;
-    document.getElementById('arrow').src = `../${test_order[scenarios[sce_idx]]['images']['arrow']}`;
     document.getElementById('sample_after').src = `../${test_order[scenarios[sce_idx]]['images'][img_combination[sample]['effect']]}`;
     // 進捗バー更新
     progress_bar();
     current_test_page++;
-    document.getElementById('current_page').innerHTML = current_test_page;
 }
 
 // 進捗バーを更新する関数
@@ -189,34 +189,37 @@ function progress_bar(){
     document.getElementById('progress_bar').max = sample_size;
 }
 
-// // 予測の結果を表示する関数
-// function show_back_sample(is_mutate) {
-//     let stim = current_sample_selection[pred_i];
-//     if (is_mutate == stim_dict[stim]['effect']){
-//         document.getElementById('pred_ans').innerHTML = '<h2>A. 正解です</h2>';
-//         document.getElementById('pred_ans').style.display = 'inline';
-//         correct_count++;
-//     } else if (is_mutate != stim_dict[stim]['effect']){
-//         document.getElementById('pred_ans').innerHTML = '<h2>A. 不正解です</h2>';
-//         document.getElementById('pred_ans').style.display = 'inline';
-//     }
+// 予測の結果を表示する関数
+function show_back_sample(is_mutate) {
+    let stim = current_sample_selection[pred_i];
+    if (is_mutate == stim_dict[stim]['effect']){
+        document.getElementById('pred_ans').innerHTML = '<h2>A. 正解です</h2>';
+        document.getElementById('pred_ans').style.display = 'inline';
+        correct_count++;
+    } else if (is_mutate != stim_dict[stim]['effect']){
+        document.getElementById('pred_ans').innerHTML = '<h2>A. 不正解です</h2>';
+        document.getElementById('pred_ans').style.display = 'inline';
+    }
 
-//     append_stimulation(
-//         pred_i=pred_i,
-//         stimulation=stim,
-//         cause=stim_dict[stim]['cause'],
-//         effect=stim_dict[stim]['effect'], 
-//         prediction=is_mutate
-//     );
-//     pred_i++;
-//     pred_i %= sample_size;
+    append_prediction(
+        pred_i=pred_i,
+        stimulation=stim,
+        cause=stim_dict[stim]['cause'],
+        effect=stim_dict[stim]['effect'], 
+        prediction=is_mutate
+    );
+    pred_i++;
+    pred_i %= sample_size;
     
-//     document.getElementById('first_sentence').style.display = 'none';
-//     document.getElementById('sample_before').style.display = 'none';
-//     document.getElementById('last_sentence').style.display = 'inline';
-//     document.getElementById('sample_after').style.display = 'inline';
-//     document.getElementById('next_sample').style.display = 'inline';
-// }
+    document.getElementById('first_sentence').style.display = 'none';
+    document.getElementById('sample_before').style.display = 'none';
+    document.getElementById('predict_effect').style.display = 'none';
+    document.getElementById('pred_button').style.display = 'none';
+    
+    document.getElementById('last_sentence').style.display = 'inline';
+    document.getElementById('sample_after').style.display = 'inline';
+    document.getElementById('next_sample').style.display = 'inline';
+}
 
 function draw_estimate(c) {
     clear_page();
@@ -280,7 +283,7 @@ function check_estimate() {
 function save_estimations() {
     export_user_info();
     export_estimations();
-    export_stimulations();
+    export_predictions();
     location.href = `../end?id=${user_id}`;
 }
 
@@ -354,7 +357,7 @@ function export_estimations() {
     });
 }
 
-function export_stimulations() {
+function export_predictions() {
     $.ajax({
         type: 'POST',
         url: '../sendtoGS/',
