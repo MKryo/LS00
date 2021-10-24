@@ -30,15 +30,6 @@ p{
     text-align: center;
     margin:auto;
 }
-#sample_before{
-    width: 40%;
-}
-#arrow{
-    width: 10%;
-}
-#sample_after{
-    width: 40%;
-}
 #estimate_description{
     display:inline-grid;
 }
