@@ -1,4 +1,4 @@
-let file = '../static/causalexp/test_sy.json';
+let file = '../static/causalexp/material_ls00.json';
 var user_data = [];
 var test_order = [];
 var current_sample_selection = [];

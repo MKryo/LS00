@@ -1,4 +1,4 @@
-let file = '../static/causalexp/test_sy.json';
+let file = '../static/causalexp/material.json';
 var user_data = [];
 var test_order = [];
 var current_sample_selection = [];
@@ -188,35 +188,6 @@ function progress_bar(){
     document.getElementById('progress_bar').value = current_test_page;
     document.getElementById('progress_bar').max = sample_size;
 }
-
-// // 予測の結果を表示する関数
-// function show_back_sample(is_mutate) {
-//     let stim = current_sample_selection[pred_i];
-//     if (is_mutate == stim_dict[stim]['effect']){
-//         document.getElementById('pred_ans').innerHTML = '<h2>A. 正解です</h2>';
-//         document.getElementById('pred_ans').style.display = 'inline';
-//         correct_count++;
-//     } else if (is_mutate != stim_dict[stim]['effect']){
-//         document.getElementById('pred_ans').innerHTML = '<h2>A. 不正解です</h2>';
-//         document.getElementById('pred_ans').style.display = 'inline';
-//     }
-
-//     append_stimulation(
-//         pred_i=pred_i,
-//         stimulation=stim,
-//         cause=stim_dict[stim]['cause'],
-//         effect=stim_dict[stim]['effect'], 
-//         prediction=is_mutate
-//     );
-//     pred_i++;
-//     pred_i %= sample_size;
-    
-//     document.getElementById('first_sentence').style.display = 'none';
-//     document.getElementById('sample_before').style.display = 'none';
-//     document.getElementById('last_sentence').style.display = 'inline';
-//     document.getElementById('sample_after').style.display = 'inline';
-//     document.getElementById('next_sample').style.display = 'inline';
-// }
 
 function draw_estimate(c) {
     clear_page();
