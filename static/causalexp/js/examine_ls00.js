@@ -1,4 +1,4 @@
-let file = '../static/causalexp/test_sy.json';
+let file = '../static/causalexp/material_ls00.json';
 var user_data = [];
 var test_order = [];
 var current_sample_selection = [];
@@ -260,6 +260,7 @@ function get_value() {
 }
 
 function get_value_fin() {
+    document.getElementById('finish_all_scenarios').disabled = true;
     get_value();
     save_estimations();
 }
@@ -270,6 +271,7 @@ function check_estimate() {
         document.getElementById('next_scenario').removeAttribute("disabled");
         document.getElementById('continue_scenario').removeAttribute("disabled");
         document.getElementById('finish_all_scenarios').removeAttribute("disabled");
+
     } else {
         document.getElementById("checkbox").removeAttribute("disabled");
     }
@@ -279,7 +281,7 @@ function check_estimate() {
 // const el = document.getElementById("estimate_slider");
 // el.addEventListener("click", check_estimate, false);
 
-// 回答をスプレッドシートに送信する
+// 回答を送信する
 function save_estimations() {
     export_user_info();
     export_estimations();
@@ -326,8 +328,9 @@ function export_user_info() {
         async: false,
         data: {
             'data': JSON.stringify(user_data),
-            'file_name': 'user_info'
+            'file_name': 'user_info_ls00'
         },
+        timeout: 50000
     }).then(
         function() { // 成功時
             // location.href = `../end?id=${user_id}`;
@@ -345,7 +348,7 @@ function export_estimations() {
         async: false,
         data: {
             'data': JSON.stringify(estimations),
-            'file_name': 'estimations'
+            'file_name': 'estimations_ls00'
         },
     }).then(
         function() { // 成功時
@@ -364,7 +367,7 @@ function export_predictions() {
         async: false,
         data: {
             'data': JSON.stringify(predictions),
-            'file_name': 'predictions'
+            'file_name': 'predictions_ls00'
         },
     }).then(
         function() { // 成功時
