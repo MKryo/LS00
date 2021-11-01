@@ -331,13 +331,13 @@ function export_user_info() {
             'file_name': 'user_info_ls00'
         },
         timeout: 50000
-    }).then(
-        function() { // 成功時
-            // location.href = `../end?id=${user_id}`;
-        },
-        function () { // 失敗時
-            alert('回答送信プロセスでエラーが発生しました。このページのまま少し時間を置いて再度お試しいただくか、問い合わせしていただきますようお願いします。');
-            document.getElementById('estimate_next_scenario').removeAttribute("disabled");
+    }).done(function (response) {
+        alert("データ送信成功");
+        move_end_block()
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        alert("回答送信中にエラーが発生しました。再送信ボタンを押して再送信してください。何度も発生する場合は直接問い合わせてください");
+        document.getElementById('finish_all_scenarios').removeAttribute("disabled");
+        throw 'Server Error';
     });
 }
 
@@ -350,13 +350,14 @@ function export_estimations() {
             'data': JSON.stringify(estimations),
             'file_name': 'estimations_ls00'
         },
-    }).then(
-        function() { // 成功時
-            // location.href = `../end?id=${user_id}`;
-        },
-        function () { // 失敗時
-            alert('回答送信プロセスでエラーが発生しました。このページのまま少し時間を置いて再度お試しいただくか、問い合わせしていただきますようお願いします。');
-            document.getElementById('estimate_next_scenario').removeAttribute("disabled");
+        timeout: 50000
+    }).done(function (response) {
+        alert("データ送信成功");
+        move_end_block()
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        alert("回答送信中にエラーが発生しました。再送信ボタンを押して再送信してください。何度も発生する場合は直接問い合わせてください");
+        document.getElementById('finish_all_scenarios').removeAttribute("disabled");
+        throw 'Server Error';
     });
 }
 
@@ -369,13 +370,14 @@ function export_predictions() {
             'data': JSON.stringify(predictions),
             'file_name': 'predictions_ls00'
         },
-    }).then(
-        function() { // 成功時
-            // location.href = `../end?id=${user_id}`;
-        },
-        function () { // 失敗時
-            alert('回答送信プロセスでエラーが発生しました。このページのまま少し時間を置いて再度お試しいただくか、問い合わせしていただきますようお願いします。');
-            document.getElementById('estimate_next_scenario').removeAttribute("disabled");
+        timeout: 50000
+    }).done(function (response) {
+        alert("データ送信成功");
+        move_end_block()
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        alert("回答送信中にエラーが発生しました。再送信ボタンを押して再送信してください。何度も発生する場合は直接問い合わせてください");
+        document.getElementById('finish_all_scenarios').removeAttribute("disabled");
+        throw 'Server Error';
     });
 }
 
