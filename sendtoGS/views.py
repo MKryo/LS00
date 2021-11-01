@@ -10,19 +10,21 @@ def send(request):
 
     try:
         raw_data = dict(request.POST)
-        data = json.loads(raw_data["data"][0])
-        file_name = raw_data["file_name"][0]
-        filepath = os.path.join('.', 'res_' + file_name + '.csv')
+        suffix = raw_data["file_name_suffix"][0]
+        for data_name in ["user_data", "predictions", "estimations"]:
+            data = json.loads(raw_data[data_name][0])
+            file_name = data_name + "_" + suffix
+            filepath = os.path.join('.', 'res_' + file_name + '.csv')
 
-        # res.csvが存在しないとき，作成し，ヘッダーを書き込む
-        if not os.path.exists(filepath):
-            with open(filepath, 'w', newline='') as f:
+            # res.csvが存在しないとき，作成し，ヘッダーを書き込む
+            if not os.path.exists(filepath):
+                with open(filepath, 'w', newline='') as f:
+                    writer = csv.DictWriter(f, data[0].keys())
+                    writer.writeheader()
+
+            with open(filepath, 'a', newline='') as f:
                 writer = csv.DictWriter(f, data[0].keys())
-                writer.writeheader()
-
-        with open(filepath, 'a', newline='') as f:
-            writer = csv.DictWriter(f, data[0].keys())
-            writer.writerows(data)
+                writer.writerows(data)
 
     except Exception as e:
         import traceback

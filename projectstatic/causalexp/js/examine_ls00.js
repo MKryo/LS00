@@ -283,10 +283,7 @@ function check_estimate() {
 
 // 回答を送信する
 function save_estimations() {
-    export_user_info();
-    export_estimations();
-    export_predictions();
-    location.href = `../end?id=${user_id}`;
+    export_results();
 }
 
 // ###############
@@ -314,7 +311,7 @@ function  append_prediction(pred_i, stimulation, cause, effect, prediction) {
     predictions.push(data);
 }
 
-function export_user_info() {
+function export_results() {
     let data = {};
     data['user_id'] = user_id;
     data['start_time'] = start_time;
@@ -327,55 +324,16 @@ function export_user_info() {
         url: '../sendtoGS/',
         async: false,
         data: {
-            'data': JSON.stringify(user_data),
-            'file_name': 'user_info_ls00'
+            'user_data': JSON.stringify(user_data),
+            'estimations': JSON.stringify(estimations),
+            'predictions': JSON.stringify(predictions),
+            'file_name_suffix': 'ls00'
         },
         timeout: 50000
     }).done(function (response) {
-        alert("データ送信成功");
-        move_end_block()
+        location.href = `../end?id=${user_id}`;
     }).fail(function (jqXHR, textStatus, errorThrown) {
-        alert("回答送信中にエラーが発生しました。再送信ボタンを押して再送信してください。何度も発生する場合は直接問い合わせてください");
-        document.getElementById('finish_all_scenarios').removeAttribute("disabled");
-        throw 'Server Error';
-    });
-}
-
-function export_estimations() {
-    $.ajax({
-        type: 'POST',
-        url: '../sendtoGS/',
-        async: false,
-        data: {
-            'data': JSON.stringify(estimations),
-            'file_name': 'estimations_ls00'
-        },
-        timeout: 50000
-    }).done(function (response) {
-        alert("データ送信成功");
-        move_end_block()
-    }).fail(function (jqXHR, textStatus, errorThrown) {
-        alert("回答送信中にエラーが発生しました。再送信ボタンを押して再送信してください。何度も発生する場合は直接問い合わせてください");
-        document.getElementById('finish_all_scenarios').removeAttribute("disabled");
-        throw 'Server Error';
-    });
-}
-
-function export_predictions() {
-    $.ajax({
-        type: 'POST',
-        url: '../sendtoGS/',
-        async: false,
-        data: {
-            'data': JSON.stringify(predictions),
-            'file_name': 'predictions_ls00'
-        },
-        timeout: 50000
-    }).done(function (response) {
-        alert("データ送信成功");
-        move_end_block()
-    }).fail(function (jqXHR, textStatus, errorThrown) {
-        alert("回答送信中にエラーが発生しました。再送信ボタンを押して再送信してください。何度も発生する場合は直接問い合わせてください");
+        alert("回答送信中にエラーが発生しました。もう一度終了ボタンを押してください。");
         document.getElementById('finish_all_scenarios').removeAttribute("disabled");
         throw 'Server Error';
     });
