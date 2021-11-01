@@ -130,10 +130,10 @@ function to_next_new_sample_page() {
     // 提示するサンプルのリストを作り、サンプルサイズを求める。
     current_sample_selection = [];
     sample_size = 0;
-    Object.keys(test_order[scenarios[sce_idx]]['samples']['frequency_test']).forEach(function(elm) {
-        if (test_order[scenarios[sce_idx]]['samples']['frequency_test'][elm] > 0) {
-            sample_size += test_order[scenarios[sce_idx]]['samples']['frequency_test'][elm];
-            cell_size = test_order[scenarios[sce_idx]]['samples']['frequency_test'][elm];
+    Object.keys(test_order[scenarios[sce_idx]]['samples']['frequency']).forEach(function(elm) {
+        if (test_order[scenarios[sce_idx]]['samples']['frequency'][elm] > 0) {
+            sample_size += test_order[scenarios[sce_idx]]['samples']['frequency'][elm];
+            cell_size = test_order[scenarios[sce_idx]]['samples']['frequency'][elm];
             for (let i = 0 ; i < cell_size ; i++) {
                 current_sample_selection.push(elm);
             }
@@ -153,7 +153,7 @@ function to_next_sample() {
     }
     // 10刺激ごとに因果関係の強さを聞く
     else if(current_test_page % EST_INTERVAL == 0 && current_test_page != 0 && current_test_page != sample_size){
-        alert('回答ページへ移ります。');
+        // alert('回答ページへ移ります。');
         draw_estimate('mid');
         return;
     }
@@ -209,7 +209,7 @@ function show_back_sample(is_mutate) {
         prediction=is_mutate
     );
     pred_i++;
-    pred_i %= sample_size;
+    
     
     document.getElementById('first_sentence').style.display = 'none';
     document.getElementById('sample_before').style.display = 'none';
@@ -252,7 +252,10 @@ function draw_estimate(c) {
 
 // 因果関係の強さの推定値を取得する
 function get_value() {
-    let est_i = parseInt(pred_i / EST_INTERVAL, 10);
+    let est_i = parseInt((pred_i-1) / EST_INTERVAL, 10);
+    pred_i %= sample_size;
+    console.log(pred_i);
+    console.log(est_i);
     append_estimation(
         est_i=est_i,
         estimation=document.getElementById('estimate_slider').value
@@ -284,7 +287,6 @@ function check_estimate() {
 // 回答を送信する
 function save_estimations() {
     export_results();
-    location.href = `../end?id=${user_id}`;
 }
 
 // ###############
@@ -332,10 +334,9 @@ function export_results() {
         },
         timeout: 50000
     }).done(function (response) {
-        alert("データ送信成功");
-        move_end_block()
+        location.href = `../end?id=${user_id}`;
     }).fail(function (jqXHR, textStatus, errorThrown) {
-        alert("回答送信中にエラーが発生しました。再送信ボタンを押して再送信してください。何度も発生する場合は直接問い合わせてください");
+        alert("回答送信中にエラーが発生しました。もう一度終了ボタンを押してください。");
         document.getElementById('finish_all_scenarios').removeAttribute("disabled");
         throw 'Server Error';
     });
