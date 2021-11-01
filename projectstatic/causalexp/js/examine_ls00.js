@@ -328,6 +328,7 @@ function export_user_info() {
             'data': JSON.stringify(user_data),
             'file_name': 'user_info_ls00'
         },
+        timeout: 50000
     }).then(
         function() { // 成功時
             // location.href = `../end?id=${user_id}`;
