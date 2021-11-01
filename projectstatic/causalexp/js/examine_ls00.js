@@ -260,6 +260,7 @@ function get_value() {
 }
 
 function get_value_fin() {
+    document.getElementById('finish_all_scenarios').setAttribute("disabled");
     get_value();
     save_estimations();
 }
@@ -269,7 +270,6 @@ function check_estimate() {
     if (document.getElementById('checkbox').checked) {
         document.getElementById('next_scenario').removeAttribute("disabled");
         document.getElementById('continue_scenario').removeAttribute("disabled");
-        document.getElementById('finish_all_scenarios').removeAttribute("disabled");
     } else {
         document.getElementById("checkbox").removeAttribute("disabled");
     }
