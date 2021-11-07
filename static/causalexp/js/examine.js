@@ -124,10 +124,10 @@ function to_next_new_sample_page() {
     // 提示するサンプルのリストを作り、サンプルサイズを求める。
     current_sample_selection = [];
     sample_size = 0;
-    Object.keys(test_order[scenarios[sce_idx]]['samples']['frequency']).forEach(function(elm) {
-        if (test_order[scenarios[sce_idx]]['samples']['frequency'][elm] > 0) {
-            sample_size += test_order[scenarios[sce_idx]]['samples']['frequency'][elm];
-            cell_size = test_order[scenarios[sce_idx]]['samples']['frequency'][elm];
+    Object.keys(test_order[scenarios[sce_idx]]['samples']['frequency_test']).forEach(function(elm) {
+        if (test_order[scenarios[sce_idx]]['samples']['frequency_test'][elm] > 0) {
+            sample_size += test_order[scenarios[sce_idx]]['samples']['frequency_test'][elm];
+            cell_size = test_order[scenarios[sce_idx]]['samples']['frequency_test'][elm];
             for (let i = 0 ; i < cell_size ; i++) {
                 current_sample_selection.push(elm);
             }
@@ -249,10 +249,7 @@ function check_estimate() {
 
 // 回答をスプレッドシートに送信する
 function save_estimations() {
-    export_user_info();
-    export_estimations();
-    export_stimulations();
-    location.href = `../end?id=${user_id}`;
+    export_results();
 }
 
 // ###############
@@ -280,7 +277,7 @@ function  append_prediction(pred_i, stimulation, cause, effect, prediction) {
     predictions.push(data);
 }
 
-function export_user_info() {
+function export_results() {
     let data = {};
     data['user_id'] = user_id;
     data['start_time'] = start_time;
@@ -293,54 +290,17 @@ function export_user_info() {
         url: '../sendtoGS/',
         async: false,
         data: {
-            'data': JSON.stringify(user_data),
-            'file_name': 'user_info'
+            'user_data': JSON.stringify(user_data),
+            'estimations': JSON.stringify(estimations),
+            'predictions': JSON.stringify(predictions),
         },
-    }).then(
-        function() { // 成功時
-            // location.href = `../end?id=${user_id}`;
-        },
-        function () { // 失敗時
-            alert('回答送信プロセスでエラーが発生しました。このページのまま少し時間を置いて再度お試しいただくか、問い合わせしていただきますようお願いします。');
-            document.getElementById('estimate_next_scenario').removeAttribute("disabled");
-    });
-}
-
-function export_estimations() {
-    $.ajax({
-        type: 'POST',
-        url: '../sendtoGS/',
-        async: false,
-        data: {
-            'data': JSON.stringify(estimations),
-            'file_name': 'estimations'
-        },
-    }).then(
-        function() { // 成功時
-            // location.href = `../end?id=${user_id}`;
-        },
-        function () { // 失敗時
-            alert('回答送信プロセスでエラーが発生しました。このページのまま少し時間を置いて再度お試しいただくか、問い合わせしていただきますようお願いします。');
-            document.getElementById('estimate_next_scenario').removeAttribute("disabled");
-    });
-}
-
-function export_stimulations() {
-    $.ajax({
-        type: 'POST',
-        url: '../sendtoGS/',
-        async: false,
-        data: {
-            'data': JSON.stringify(predictions),
-            'file_name': 'predictions'
-        },
-    }).then(
-        function() { // 成功時
-            // location.href = `../end?id=${user_id}`;
-        },
-        function () { // 失敗時
-            alert('回答送信プロセスでエラーが発生しました。このページのまま少し時間を置いて再度お試しいただくか、問い合わせしていただきますようお願いします。');
-            document.getElementById('estimate_next_scenario').removeAttribute("disabled");
+        timeout: 50000
+    }).done(function (response) {
+        location.href = `../end?id=${user_id}`;
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        alert("回答送信中にエラーが発生しました。もう一度終了ボタンを押してください。");
+        document.getElementById('finish_all_scenarios').removeAttribute("disabled");
+        throw 'Server Error';
     });
 }
 

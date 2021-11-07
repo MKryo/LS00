@@ -253,9 +253,8 @@ function draw_estimate(c) {
 // 因果関係の強さの推定値を取得する
 function get_value() {
     let est_i = parseInt((pred_i-1) / EST_INTERVAL, 10);
-    pred_i %= sample_size;
     console.log(pred_i);
-    console.log(est_i);
+    pred_i %= sample_size;
     append_estimation(
         est_i=est_i,
         estimation=document.getElementById('estimate_slider').value
