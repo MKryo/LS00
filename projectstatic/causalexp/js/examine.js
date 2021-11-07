@@ -154,8 +154,6 @@ function to_next_sample() {
         cause=stim_dict[stim]['cause'],
         effect=stim_dict[stim]['effect']
     );
-    pred_i++;
-    pred_i %= sample_size;
     select_next_sample();
 }
 
@@ -177,6 +175,9 @@ function select_next_sample() {
     progress_bar();
     current_test_page++;
     document.getElementById('current_page').innerHTML = current_test_page;
+    console.log(pred_i);
+    pred_i++;
+    pred_i %= sample_size;
 }
 
 // 進捗バーを更新する関数
