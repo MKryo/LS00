@@ -121,10 +121,10 @@ function to_next_new_sample_page() {
     // 提示するサンプルのリストを作り、サンプルサイズを求める。
     current_sample_selection = [];
     sample_size = 0;
-    Object.keys(test_order[scenarios[sce_idx]]['samples']['frequency_test']).forEach(function(elm) {
-        if (test_order[scenarios[sce_idx]]['samples']['frequency_test'][elm] > 0) {
-            sample_size += test_order[scenarios[sce_idx]]['samples']['frequency_test'][elm];
-            cell_size = test_order[scenarios[sce_idx]]['samples']['frequency_test'][elm];
+    Object.keys(test_order[scenarios[sce_idx]]['samples']['frequency']).forEach(function(elm) {
+        if (test_order[scenarios[sce_idx]]['samples']['frequency'][elm] > 0) {
+            sample_size += test_order[scenarios[sce_idx]]['samples']['frequency'][elm];
+            cell_size = test_order[scenarios[sce_idx]]['samples']['frequency'][elm];
             for (let i = 0 ; i < cell_size ; i++) {
                 current_sample_selection.push(elm);
             }
