@@ -153,12 +153,13 @@ function to_next_sample() {
         draw_estimate('mid');
         return;
     }
-    select_next_sample();
+    showStimulation();
 }
 
-function select_next_sample() {
+function showStimulation() {
     var sample = current_sample_selection[pred_i];
     var desc = test_order[scenarios[sce_idx]]['sentences'][sample];
+    console.log("showStimulation_in");
     desc = desc.split('、');
     document.getElementById('first_sentence').innerHTML = "<h4>" + desc[0] + "</h4>";
     document.getElementById('last_sentence').innerHTML = "<h4>" + desc[1] + "</h4>";
@@ -177,6 +178,7 @@ function select_next_sample() {
     // 進捗バー更新
     progress_bar();
     current_test_page++;
+    console.log("showStimulation_out");
 }
 
 // 進捗バーを更新する関数
@@ -186,7 +188,8 @@ function progress_bar(){
 }
 
 // 予測の結果を表示する関数
-function show_back_sample(is_mutate) {
+function show_back_sample(is_mutate=null) {
+    console.log("show_back_sample_in");
     let stim = current_sample_selection[pred_i];
     if (is_mutate == stim_dict[stim]['effect']){
         document.getElementById('pred_ans').innerHTML = '<h2>A. 正解です</h2>';
@@ -197,6 +200,7 @@ function show_back_sample(is_mutate) {
         document.getElementById('pred_ans').style.display = 'inline';
     }
 
+    console.log("append_prediction");
     append_prediction(
         pred_i=pred_i,
         stimulation=stim,
@@ -204,8 +208,11 @@ function show_back_sample(is_mutate) {
         effect=stim_dict[stim]['effect'], 
         prediction=is_mutate
     );
+    console.log(pred_i);
+    console.log("pred_i_inc_before");
     pred_i++;
-    
+    console.log(pred_i);
+    console.log("pred_i_inc_after");
     
     document.getElementById('first_sentence').style.display = 'none';
     document.getElementById('sample_before').style.display = 'none';
@@ -215,6 +222,7 @@ function show_back_sample(is_mutate) {
     document.getElementById('last_sentence').style.display = 'inline';
     document.getElementById('sample_after').style.display = 'inline';
     document.getElementById('next_sample').style.display = 'inline';
+    console.log("show_back_sample_out");
 }
 
 function draw_estimate(c) {
@@ -249,7 +257,6 @@ function draw_estimate(c) {
 // 因果関係の強さの推定値を取得する
 function get_value() {
     let est_i = parseInt((pred_i-1) / EST_INTERVAL, 10);
-    // console.log(pred_i);
     pred_i %= sample_size;
     append_estimation(
         est_i=est_i,

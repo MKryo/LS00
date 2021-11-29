@@ -33,7 +33,6 @@ var EST_INTERVAL = 10;
 var cell_size = 0;
 var correct_count = 0; // predictionの正解数カウント
 
-// 読み込み時に実行される
 // read_json(): jsonファイルを読み込む
 // getImages(): 画像のプリロード
 // to_next_scenario_description(): シナリオの表示
@@ -69,8 +68,6 @@ function getImages() {
 
 preventBrowserBack();
 
-// 表示・非表示処理多すぎて見づらかったので一括で処理
-// 消えないのあったら適宜追加
 function clear_page() {
     document.getElementById('estimate_input_area').style.display = "none";
     document.getElementById('check_sentence').style.display = "none";
@@ -153,14 +150,13 @@ function to_next_sample() {
     }
     // 10刺激ごとに因果関係の強さを聞く
     else if(current_test_page % EST_INTERVAL == 0 && current_test_page != 0 && current_test_page != sample_size){
-        // alert('回答ページへ移ります。');
         draw_estimate('mid');
         return;
     }
-    select_next_sample();
+    showStimulation();
 }
 
-function select_next_sample() {
+function showStimulation() {
     var sample = current_sample_selection[pred_i];
     var desc = test_order[scenarios[sce_idx]]['sentences'][sample];
     desc = desc.split('、');
@@ -253,7 +249,7 @@ function draw_estimate(c) {
 // 因果関係の強さの推定値を取得する
 function get_value() {
     let est_i = parseInt((pred_i-1) / EST_INTERVAL, 10);
-    console.log(pred_i);
+    // console.log(pred_i);
     pred_i %= sample_size;
     append_estimation(
         est_i=est_i,
@@ -262,6 +258,7 @@ function get_value() {
 }
 
 function get_value_fin() {
+    // 回答送信ボタンの連打防止
     document.getElementById('finish_all_scenarios').disabled = true;
     get_value();
     save_estimations();
