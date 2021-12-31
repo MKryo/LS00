@@ -7,6 +7,7 @@ var predictions = [];
 var sample_order = [];
 var mutation_prediction = [];
 let scenarios = shuffle(['mouse','rabbit','pigeon']);
+let sample_no = shuffle(['frequency1','frequency2','frequency3']); // 刺激シャッフル用
 let bgcolors = shuffle(['#FFFFF0','#FFF0F5','#F0F8FF']);
 let image_type = ["p", "notp", "q", "notq"];
 let img_combination = {
@@ -28,6 +29,7 @@ var sample_size = 0; // 現在の設問の事例の総数
 var user_id = 0;
 var start_time = getNow();
 var sce_idx = 0;  // 動物の判別
+var no = 0; // 刺激のランダマイズ用インデックス
 var pred_i = 0;
 var EST_INTERVAL = 10;
 var cell_size = 0;
@@ -95,7 +97,6 @@ function to_next_scenario_description(is_first_time=false) {
         document.getElementById('scenario_description'+String(i+1)).innerHTML = test_order[scenarios[sce_idx]]['descriptions'][i];
     }
 }
-
 // チェックが入っているか確認する
 function check_description() {
     let checkbox = document.getElementsByClassName("checkbox");
@@ -127,10 +128,10 @@ function to_next_new_sample_page() {
     // 提示するサンプルのリストを作り、サンプルサイズを求める。
     current_sample_selection = [];
     sample_size = 0;
-    Object.keys(test_order[scenarios[sce_idx]]['samples']['frequency']).forEach(function(elm) {
-        if (test_order[scenarios[sce_idx]]['samples']['frequency'][elm] > 0) {
-            sample_size += test_order[scenarios[sce_idx]]['samples']['frequency'][elm];
-            cell_size = test_order[scenarios[sce_idx]]['samples']['frequency'][elm];
+    Object.keys(test_order[scenarios[sce_idx]]['samples']['frequency1']).forEach(function(elm) {
+        if (test_order[scenarios[sce_idx]]['samples']['frequency1'][elm] > 0) {
+            sample_size += test_order[scenarios[sce_idx]]['samples']['frequency1'][elm];
+            cell_size = test_order[scenarios[sce_idx]]['samples']['frequency1'][elm];
             for (let i = 0 ; i < cell_size ; i++) {
                 current_sample_selection.push(elm);
             }
@@ -186,7 +187,7 @@ function progress_bar(){
 }
 
 // 予測の結果を表示する関数
-function show_back_sample(is_mutate) {
+function show_back_sample(is_mutate=null) {
     let stim = current_sample_selection[pred_i];
     if (is_mutate == stim_dict[stim]['effect']){
         document.getElementById('pred_ans').innerHTML = '<h2>A. 正解です</h2>';
@@ -205,7 +206,6 @@ function show_back_sample(is_mutate) {
         prediction=is_mutate
     );
     pred_i++;
-    
     
     document.getElementById('first_sentence').style.display = 'none';
     document.getElementById('sample_before').style.display = 'none';
@@ -249,7 +249,6 @@ function draw_estimate(c) {
 // 因果関係の強さの推定値を取得する
 function get_value() {
     let est_i = parseInt((pred_i-1) / EST_INTERVAL, 10);
-    // console.log(pred_i);
     pred_i %= sample_size;
     append_estimation(
         est_i=est_i,

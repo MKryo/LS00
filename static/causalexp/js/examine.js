@@ -137,7 +137,6 @@ function to_next_new_sample_page() {
 
 // 次の事例があるか確認し、存在しない場合は推定画面へ遷移
 function to_next_sample() {
-    let stim = current_sample_selection[pred_i];
     if (current_test_page >= sample_size) {
         alert('この動物の実験結果は以上になります。');
         draw_estimate('fin');
@@ -148,20 +147,13 @@ function to_next_sample() {
         draw_estimate('mid');
         return;
     }
-    pred_i++;
-    console.log(pred_i);
-    append_prediction(
-        pred_i=pred_i,
-        stimulation=stim,
-        cause=stim_dict[stim]['cause'],
-        effect=stim_dict[stim]['effect']
-    );
     showStimulation();
 }
 
 function showStimulation() {
     var sample = current_sample_selection[pred_i];
     var desc = test_order[scenarios[sce_idx]]['sentences'][sample];
+    console.log("showStimulation_in");
     desc = desc.split('、');
     document.getElementById('first_sentence').innerHTML = "<h4>" + desc[0] + "</h4>";
     document.getElementById('last_sentence').innerHTML = "<h4>" + desc[1] + "</h4>";
@@ -177,12 +169,65 @@ function showStimulation() {
     progress_bar();
     current_test_page++;
     document.getElementById('current_page').innerHTML = current_test_page;
+
+    // console.log("append_prediction");
+    show_back_sample();
+    // append_prediction(
+    //     pred_i=pred_i,
+    //     stimulation=stim,
+    //     cause=stim_dict[stim]['cause'],
+    //     effect=stim_dict[stim]['effect']
+    // );
+    // console.log(pred_i);
+    // console.log("pred_i_inc_before");
+    // pred_i++;
+    // console.log(pred_i);
+    // console.log("pred_i_inc_after");
+    console.log("showStimulation_out");
 }
 
 // 進捗バーを更新する関数
 function progress_bar(){
     document.getElementById('progress_bar').value = current_test_page;
     document.getElementById('progress_bar').max = sample_size;
+}
+
+// 予測の結果を表示する関数
+function show_back_sample(is_mutate=null) {
+    console.log("show_back_sample_in");
+    let stim = current_sample_selection[pred_i];
+    // if (is_mutate == stim_dict[stim]['effect']){
+    //     document.getElementById('pred_ans').innerHTML = '<h2>A. 正解です</h2>';
+    //     document.getElementById('pred_ans').style.display = 'inline';
+    //     correct_count++;
+    // } else if (is_mutate != stim_dict[stim]['effect']){
+    //     document.getElementById('pred_ans').innerHTML = '<h2>A. 不正解です</h2>';
+    //     document.getElementById('pred_ans').style.display = 'inline';
+    // }
+
+    console.log("append_prediction");
+    append_prediction(
+        pred_i=pred_i,
+        stimulation=stim,
+        cause=stim_dict[stim]['cause'],
+        effect=stim_dict[stim]['effect'], 
+        prediction=is_mutate
+    );
+    console.log(pred_i);
+    console.log("pred_i_inc_before");
+    pred_i++;
+    console.log(pred_i);
+    console.log("pred_i_inc_after");
+    
+    // document.getElementById('first_sentence').style.display = 'none';
+    // document.getElementById('sample_before').style.display = 'none';
+    // document.getElementById('predict_effect').style.display = 'none';
+    // document.getElementById('pred_button').style.display = 'none';
+    
+    // document.getElementById('last_sentence').style.display = 'inline';
+    // document.getElementById('sample_after').style.display = 'inline';
+    // document.getElementById('next_sample').style.display = 'inline';
+    console.log("show_back_sample_out");
 }
 
 function draw_estimate(c) {
