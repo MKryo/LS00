@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <title>調査に関するページ</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="{% static '/causalexp/css/top.css' %}">
+    <script>
+        function check_agreement1() {
+            if (document.getElementById('agreement').checked) {
+                document.getElementById('need_agree').style.display = "none";
+                document.getElementById('when_agreeing').style.display = "inline-grid";
+            } else {
+                document.getElementById('need_agree').style.display = "inline-grid";
+                document.getElementById('when_agreeing').style.display = "none";
+            }
+        }
+        function check_agreement2() {
+            let checks = document.getElementsByClassName("checks");
+            let count = 0;
+            for (let i = 0; i < checks.length; i++) {
+                if (checks[i].checked) count++;
+            }
+            if (count == checks.length) {
+                document.getElementById("button").removeAttribute("disabled");
+            } else {
+                document.getElementById("button").setAttribute("disabled", true);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    
+    <h1 id="examine_header">注意事項</h1>
+    <h3>以下の内容をご確認の上、ご同意いただける場合「同意します」にチェックして、「開始する」をクリックしてください。</h3>
+
+    <div style="padding: 5px 110px; ">
+    <div style="background: #f3f9fc;border: 2px skyblue dashed; padding: 10px 10px; border-radius: 15px; text-align:left">
+        <ul>
+            <li>本調査で得られたデータは、個人を特定できない統計データとして学術研究に使用させていただきます。</p>
+            <li>皆様の回答は全て暗号化し、サーバーに保存されます。</li>
+            <li>また、個人のデータを取り出して分析が行われることもありません。</li>
+            <li>アンケートが終了すると、８桁の数字列が表示されます。</li>
+            <li>コピーしてクラウドワークスの該当欄に入力してください。</li>
+            <li>回答内容を確認次第、確定処理をいたします。</li>
+        </ul>
+    </div>
+    <br>
+    
+    <div id="need_agree">
+
+    </div>
+    <br>
+    </div>
+    <input type="checkbox" id="agreement" onclick="check_agreement1()" />
+    <label for="agreement">同意します</label>
+    <br>
+    
+    <p>
+    <div id="when_agreeing" style="margin:auto; display:none;">
+        <p>ありがとうございます。</p>
+        <p>以下のストーリーをお読みいただき、回答ページに進んで下さい。</p>
+        <p>それぞれの項目を読んだら左側のチェックボックスをチェックしてください。</p>
+        <div id="scenario_descriptions" style="margin:auto; text-align: left;">
+            <form action="cgi-bin/abc.cgi" method="post">
+                <p>
+                    <input class="checks" type="checkbox" id="checkbox1" style="transform:scale(1.5)"
+                        onclick="check_agreement2()" />
+                    <label for="checkbox1">これから「化学物質の投与」と「動物の遺伝子の突然変異」という二つの事柄の関係性を調査している研究者を演じていただきます。</label>
+                </p>
+                <p>
+                    <input class="checks" type="checkbox" id="checkbox2" style="transform:scale(1.5)"
+                        onclick="check_agreement2()" />
+                    <label
+                        for="checkbox2">上記の調査のため、4種類の動物実験が行われました。以下ではその実験記録を見ていくことにします。
+                    </label>
+                </p>
+                
+                <p>
+                    <input class="checks" type="checkbox" id="checkbox3" style="transform:scale(1.5)"
+                        onclick="check_agreement2()" />
+                    <label
+                        for="checkbox3">
+                        4つの実験それぞれで、56個体の動物が用いられました。その中で、化学物質を投与された個体と投与されなかった個体がいました。注意すべきこととして、動物では、化学物質の投与の有無に関わらず、自然に遺伝子の突然変異が起こることがあります。
+                    </label>
+                </p>
+                <br>
+                <p>
+                    <input class="checks" type="checkbox" id="checkbox4" style="transform:scale(1.5)"
+                        onclick="check_agreement2()" />
+                    <label for="checkbox4">
+                        各動物56個体について、化学物質を投与した後しばらくしてから遺伝子を調べ、突然変異が起きているかどうかを確認しました。
+                    </label>
+                </p>
+            </form>
+        </div>
+    </div>
+    </p>
+    <br>
+    <form action="/examine2/" style="text-align:center; display:block;">
+        <input type="submit" id='button' value="回答を開始する" disabled>
+    </form>
+</body>
+
+</html>

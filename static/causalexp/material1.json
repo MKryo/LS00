@@ -1,0 +1,157 @@
+{    
+    "mouse": {
+        "title": "マウスに5-HSという化学物質を投与した時の実験記録",
+        "jp_name": "マウス",
+        "descriptions": [
+            "これからマウスと5-HSという化学物質についての実験結果が1匹ずつ合計60匹表示されます。",
+            "実験結果が確認できましたら、「次の事例へ」を押して次の実験結果を確認するという操作を繰り返してください。",
+            "時々、5-HSという化学物質がマウスの遺伝子の突然変異を引き起こす度合いを聞きますのであなたの考えを答えてください。",
+            "実験中のメモなどはお控えください。"
+        ],
+        "images": {
+            "p": "static/causalexp/img/mouse_blue.png",
+            "notp": "static/causalexp/img/mouse_blue_kinshi.png",
+            "q": "static/causalexp/img/mutation.png",
+            "notq": "static/causalexp/img/unmutation.png",
+            "arrow": "static/causalexp/img/yajirushi_kururi_right.png"
+        },
+        "sentences": {
+            "a": "マウスに5-HSという化学物質を投与した、遺伝子が突然変異した",
+            "b": "マウスに5-HSという化学物質を投与した、遺伝子が突然変異しなかった",
+            "c": "マウスに5-HSという化学物質を投与しなかった、遺伝子が突然変異した",
+            "d": "マウスに5-HSという化学物質を投与しなかった、遺伝子が突然変異しなかった"
+        },
+        "samples": {
+            "1": {
+                "a": 21,
+                "b": 9,
+                "c": 0,
+                "d": 30
+            },
+            "2": {
+                "a": 24,
+                "b": 6,
+                "c": 10,
+                "d": 20
+            },
+            "3": {
+                "a": 27,
+                "b": 3,
+                "c": 20,
+                "d": 10
+            },
+            "frequency_test": {
+                "a": 1,
+                "b": 1,
+                "c": 1,
+                "d": 1
+            }
+        },
+        "chemicals": "5-HS",
+        "result": "<font color='red'>マウスに5-HS</font>という化学物質を投与したことが、マウスの遺伝子の突然変異にどのような影響を及ぼす"
+    },
+
+    "rabbit": {
+        "title": "ウサギにPBTAという化学物質を投与した時の実験記録",
+        "jp_name": "ウサギ",
+        "descriptions": [
+            "これからウサギにPBTAという化学物質を投与した実験結果が一つずつ提示されます。",
+            "実験結果が確認できましたら、「次の事例へ」を押して次の実験結果を確認するという操作を繰り返してください。",
+            "時々、化学物質が遺伝子の突然変異を引き起こす度合いを聞きますのであなたの考えを答えてください。",
+            "実験中のメモなどはお控えください。"
+        ],
+        "images": {
+            "p": "static/causalexp/img/rabbit_blue.png",
+            "notp": "static/causalexp/img/rabbit_blue_kinshi.png",
+            "q": "static/causalexp/img/mutation.png",
+            "notq": "static/causalexp/img/unmutation.png",
+            "arrow": "static/causalexp/img/yajirushi_kururi_right.png"
+        },
+        "sentences": {
+            "a": "ウサギにPBTAという化学物質を投与した、遺伝子が突然変異した",
+            "b": "ウサギにPBTAという化学物質を投与した、遺伝子が突然変異しなかった",
+            "c": "ウサギにPBTAという化学物質を投与しなかった、遺伝子が突然変異した",
+            "d": "ウサギにPBTAという化学物質を投与しなかった、遺伝子が突然変異しなかった"
+            },
+        "samples": {
+            "1": {
+                "a": 21,
+                "b": 9,
+                "c": 0,
+                "d": 30
+            },
+            "2": {
+                "a": 24,
+                "b": 6,
+                "c": 10,
+                "d": 20
+            },
+            "3": {
+                "a": 27,
+                "b": 3,
+                "c": 20,
+                "d": 10
+            },
+            "frequency_test": {
+                "a": 1,
+                "b": 1,
+                "c": 1,
+                "d": 1
+            }
+        },
+        "chemicals": "PBTA",
+        "result": "<font color='red'>ウサギにPBTA</font>という化学物質を投与したことが、ウサギの遺伝子の突然変異にどのような影響を及ぼす"
+    },
+
+    "pigeon": {
+        "title": "ハトに2,3-MEという化学物質を投与した時の実験記録",
+        "jp_name": "ハト",
+        "descriptions": [
+            "これからハトに2,3-MEという化学物質を投与した実験結果が一つずつ提示されます。",
+            "実験結果が確認できましたら、「次の事例へ」を押して次の実験結果を確認するという操作を繰り返してください。",
+            "時々、化学物質が遺伝子の突然変異を引き起こす度合いを聞きますのであなたの考えを答えてください。",
+            "実験中のメモなどはお控えください。"
+        ],
+        "images": {
+            "p": "static/causalexp/img/pigeon_blue.png",
+            "notp": "static/causalexp/img/pigeon_blue_kinshi.png",
+            "q": "static/causalexp/img/mutation.png",
+            "notq": "static/causalexp/img/unmutation.png",
+            "arrow": "static/causalexp/img/yajirushi_kururi_right.png"
+        },
+        "sentences": {
+            "a": "ハトに2,3-MEという化学物質を投与した、遺伝子が突然変異した",
+            "b": "ハトに2,3-MEという化学物質を投与した、遺伝子が突然変異しなかった",
+            "c": "ハトに2,3-MEという化学物質を投与しなかった、遺伝子が突然変異した",
+            "d": "ハトに2,3-MEという化学物質を投与しなかった、遺伝子が突然変異しなかった"
+        },
+        "samples": {
+            "1": {
+                "a": 21,
+                "b": 9,
+                "c": 0,
+                "d": 30
+            },
+            "2": {
+                "a": 24,
+                "b": 6,
+                "c": 10,
+                "d": 20
+            },
+            "3": {
+                "a": 27,
+                "b": 3,
+                "c": 20,
+                "d": 10
+            },
+            "frequency_test": {
+                "a": 1,
+                "b": 1,
+                "c": 1,
+                "d": 1
+            }
+        },
+        "chemicals": "2,3-ME",
+        "result": "<font color='red'>ハトに2,3-ME</font>という化学物質を投与したことが、ハトの遺伝子の突然変異にどのような影響を及ぼす"
+    }  
+}
