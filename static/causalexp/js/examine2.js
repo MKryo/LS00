@@ -256,7 +256,7 @@ function draw_estimate(c) {
         '<p>0: ' + test_order[scenarios[sce_idx]]['chemicals'] + 'という化学物質の投与は' +
         test_order[scenarios[sce_idx]]['jp_name'] + 'の遺伝子の変異を全く引き起こさない</p><br>' + 
         '<p>100: ' + test_order[scenarios[sce_idx]]['chemicals'] + 'という化学物質の投与は' +
-        test_order[scenarios[sce_idx]]['jp_name'] + 'の遺伝子の変異を確実に引き起こす </p><br>' +
+        test_order[scenarios[sce_idx]]['jp_name'] + 'の遺伝子の変異を毎回確実に引き起こす </p><br>' +
         '<p>として、0から100の値で<b>直感的に</b>回答してください。</p><br>'
 }
 
