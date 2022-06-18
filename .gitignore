@@ -2,3 +2,16 @@
 projectstatic/causalexp/beaming-oarlock-290513-869915675292.json
 
 static/causalexp/beaming-oarlock-290513-869915675292.json
+
+# Virtualenv
+# http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
+.Python
+[Bb]in
+[Ii]nclude
+[Ll]ib
+[Ll]ib64
+[Ll]ocal
+[Ss]cripts
+pyvenv.cfg
+.venv
+pip-selfcheck.json
