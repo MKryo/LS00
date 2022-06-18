@@ -1,13 +1,29 @@
-# causalexp
+# causal induction cognitive experiment 
 
-## setup
+## explanation 
+- This is an experiment to reproduce (Lobor & Shanks 2000).
+- Lobor & Shanks 2000 https://pubmed.ncbi.nlm.nih.gov/10687407/
 
-- python3 -m venv ls00
+### setup
+on the root-directory
 
-- source ls00/bin/activate
+```
+python3 -m venv ls00
+```
 
-- pip install Django==2.1
+```
+source ls00/bin/activate
+```
 
-## run
-- python manage.py collectstatic
-- python manage.py runserver
+```
+pip install Django==2.1
+```
+
+### run
+```
+python manage.py collectstatic
+```
+
+```
+python manage.py runserver
+```
