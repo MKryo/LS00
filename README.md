@@ -4,7 +4,7 @@
 - This is an experiment to reproduce (Lobor & Shanks 2000).
 - Lobor & Shanks 2000 https://pubmed.ncbi.nlm.nih.gov/10687407/
 
-### setup
+## setup
 on the root-directory
 
 ```
@@ -19,7 +19,7 @@ source ls00/bin/activate
 pip install Django==2.1
 ```
 
-### run
+## run
 ```
 python manage.py collectstatic
 ```
