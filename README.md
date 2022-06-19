@@ -5,7 +5,6 @@
 - Lobor & Shanks 2000 https://pubmed.ncbi.nlm.nih.gov/10687407/
 
 ## setup
-on the root-directory
 
 ```
 python3 -m venv ls00
