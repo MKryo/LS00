@@ -19,6 +19,23 @@ source ls00/bin/activate
 pip install Django==2.1
 ```
 
+```
+pip install numpy
+```
+
+```
+pip install pandas
+```
+
+```
+pip install matplotlib
+```
+
+```
+pip install seaborn
+```
+
+
 ## run
 ```
 python manage.py collectstatic
