@@ -1,3 +1,5 @@
+from re import A
+from sys import api_version
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -14,21 +16,26 @@ df_est_freq2 = df_est[df_est['frequency'] == 2]
 df_est_freq3 = df_est[df_est['frequency'] == 3]
 df_est_freq4 = df_est[df_est['frequency'] == 4]
 
-print(df_est_freq1)
+est_mean = []
+est_std = []
 
 # 刺激1
-df_est_freq1['estimation'].mean()
+est_mean.append(df_est_freq1['estimation'].mean())
 # 刺激2
-df_est_freq2['estimation'].mean()
+est_mean.append(df_est_freq2['estimation'].mean())
 # 刺激3
-df_est_freq3['estimation'].mean()
+est_mean.append(df_est_freq3['estimation'].mean())
 # 刺激4
-df_est_freq4['estimation'].mean()
+est_mean.append(df_est_freq4['estimation'].mean())
+
 # 刺激1
-df_est_freq1['estimation'].std()
+est_std.append(df_est_freq1['estimation'].std())
 # 刺激2
-df_est_freq2['estimation'].std()
+est_std.append(df_est_freq2['estimation'].std())
 # 刺激3
-print(df_est_freq3['estimation'].std())
+est_std.append(df_est_freq3['estimation'].std())
 # 刺激4
-print(df_est_freq4['estimation'].std())
+est_std.append(df_est_freq4['estimation'].std())
+
+print("mean", est_mean)
+print("std", est_std)
