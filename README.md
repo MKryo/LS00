@@ -54,3 +54,34 @@ python stat.py
 ```
 python fixedeffectsmodel.py
 ```
+
+
+# data
+## Files
+- res_user_data_exp*.csv
+- res_predictions_exp*.csv
+- res_estimations_exp*.csv
+
+## Columns
+### user_data
+- user_id
+- start_time
+- end_time
+- user_agent
+
+### predictions
+- user_id
+- animal
+- frequency
+- pred_i
+- stimulation
+- cause
+- effect
+- prediction
+
+### estimation
+- user_id
+- animal
+- frequency
+- est_i
+- estimation 因果関係の強さの推定値
