@@ -5,8 +5,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import math
 import seaborn as sns
-# from sklearn.linear_model import LinearRegression
-# from sklearn.metrics import r2_score
 
 df_est = pd.read_csv('../data/exp123_data/res_estimations_exp1.csv')
 df_pred = pd.read_csv('../data/exp123_data/res_predictions_exp1.csv')
