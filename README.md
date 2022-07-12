@@ -1,3 +1,5 @@
+[![OSCS Status](https://www.oscs1024.com/platform/badge/MKryo/LS00.svg?size=small)](https://www.oscs1024.com/project/MKryo/LS00?ref=badge_small)
+
 # causal induction cognitive experiment 
 
 ## explanation 
