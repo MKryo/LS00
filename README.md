@@ -1,5 +1,3 @@
-[![OSCS Status](https://www.oscs1024.com/platform/badge/MKryo/LS00.svg?size=small)](https://www.oscs1024.com/project/MKryo/LS00?ref=badge_small)
-
 # causal induction cognitive experiment 
 
 ## explanation 
@@ -90,9 +88,23 @@ python fixedeffectsmodel.py
 
 
 # Analysis Scripts
-- analysis/src/corr.py  相関係数
-- analysis/src/plot.py  グラフプロット用
-- analysis/src/stat.py  基本統計量
-- analysis/src/test-of-no-corr.py  無相関検定
-- analysis/src/H07_ana_pro/fixedeffectsmodel.py メタ分析（固定効果モデル） analysis/data/raw_data のデータを入れ替える
+- analysis/src/main.py  実行ファイル
+- analysis/src/analysis_ls00.py  クラスファイル
+- analysis/src/test-of-no-corr.py  無相関検定実行ファイル
+- analysis/src/H07_ana_pro/fixedeffectsmodel.py メタ分析実行ファイル（固定効果モデル） analysis/data/raw_data のデータを入れ替える
 
+### Methods
+stat()  基本統計量
+
+plot()  グラフプロット用
+
+corr() 相関係数・決定係数
+
+### Parameters
+data_select {1,2,3}
+
+1: オリジナルの実験データ
+
+2: 忠実再現した追試の実験データ
+
+3: 変更再現した追試の実験データ
