@@ -16,6 +16,13 @@ def convert_array(samples: np.ndarray) -> tuple:
     return (samples[0], samples[1], samples[2], samples[3])
 
 
+def Generalized_mean(samples):
+    """ 一般化平均 method """
+    a, b, c, d = convert_array(samples)
+    res = a / (a + b + c)
+    return res
+
+
 def paris(samples):
     """ pARIs method """
     a, b, c, d = convert_array(samples)
