@@ -16,10 +16,14 @@ def convert_array(samples: np.ndarray) -> tuple:
     return (samples[0], samples[1], samples[2], samples[3])
 
 
-def Generalized_mean(samples):
+def Generalized_mean(samples, alpha, m):
     """ 一般化平均 method """
     a, b, c, d = convert_array(samples)
-    res = a / (a + b + c)
+    x=a/(a+b)
+    y=a/(a+c)
+    if m==0:
+        m=1e-8
+    res = ((1-alpha)*x**m + alpha*y**m)**(1/m)
     return res
 
 
