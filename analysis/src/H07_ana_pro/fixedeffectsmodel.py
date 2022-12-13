@@ -31,12 +31,17 @@ def linear_trans(data):
 
 # %%
 significant_figure = 10  # 有効数字
-target_model_names = ['phi', 'paris', 'delatap', 'dfh', 'dr']  # TODO: 自動で名前のリストを作るようにする
-latex_model_names = ['\phi', 'pARIs', '\delata P', 'DFH', 'DR']
-target_models = [models.phi, models.paris, models.deltap, models.dfh, models.dr]
+target_model_names = ['phi', 'paris', 'delatap', 'dfh', 'dr', 'Generalized_mean']  # TODO: 自動で名前のリストを作るようにする
+latex_model_names = ['\phi', 'pARIs', '\delata P', 'DFH', 'DR', 'Generalized_mean']
+target_models = [models.phi, models.paris, models.deltap, models.dfh, models.dr, models.Generalized_mean]
 qty_stims = pd.Series([-1 for i in range(len(experiment_filenames))], name='qty_stims')  # 各実験の刺激数
 corr_df = pd.DataFrame(columns=target_model_names)  # 各実験の相関係数
 rms_df = pd.DataFrame(columns=target_model_names)
+
+# for alpha in [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7]:
+#     for m in [-1.6, -1.5, -1.4, -1.3, -1.2, -1.1, -1.0, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3]:
+        # 一般化平均モデルの相関係数が最大のポイントのalpha, m
+
 
 for exp_i, exp_fn in enumerate(experiment_filenames):
     # 実験データの読み込み
@@ -48,7 +53,11 @@ for exp_i, exp_fn in enumerate(experiment_filenames):
     # モデルによる推定値の算出
     for stim_i in range(len(exp_df)):
         for model_i, model_v in enumerate(target_models):
-            model_value = model_v(np.round(np.array(exp_df.loc[stim_i, 'a':'d']), significant_figure))
+            # 一般化平均モデル導入
+            if model_i == len(target_models)-1:
+                model_value = models.Generalized_mean(np.round(np.array(exp_df.loc[stim_i, 'a':'d']), significant_figure), 0.38, -1.3)
+            else:
+                model_value = model_v(np.round(np.array(exp_df.loc[stim_i, 'a':'d']), significant_figure))
             exp_df.loc[stim_i, target_model_names[model_i]] = model_value
 
     # 実験の刺激数を記憶
